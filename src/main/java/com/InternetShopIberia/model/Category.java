@@ -1,4 +1,4 @@
-package com.InternetShopIberia;
+package com.InternetShopIberia.model;
 
 import java.util.List;
 
