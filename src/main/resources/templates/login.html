@@ -95,7 +95,9 @@
       <button type="submit" class="btn btn-primary">Login</button>
     </div>
   </form>
-  <a type="text" th:href="@{/registration.html}">Registration</a>
+  <form th:action="@{/registration}" method="get">
+    <button type="submit" class="btn btn-primary">Registration</button>
+  </form>
 </div>
 </body>
 </html>
