@@ -33,9 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login").not().authenticated()
-                .antMatchers("/registration").not().authenticated()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/**").permitAll()//TODO for dev
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -51,5 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(86400)
                 .and()
                 .csrf().disable();
+
+        //for h2db console
+        http.csrf().disable();//TODO for dev
+        http.headers().frameOptions().disable();
+        //
     }
 }

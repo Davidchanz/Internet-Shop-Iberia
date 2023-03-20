@@ -1,11 +1,13 @@
 package com.InternetShopIberia.dto;
 
+import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.validation.annotation.PasswordMatches;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter

@@ -1,29 +1,40 @@
 package com.InternetShopIberia.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Entity
+@Table(name = "CATEGORY")
+@Setter
+@Getter
+@NoArgsConstructor
 public class Category {
-    String name;
-    List<Category> subCategories;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    public Category(String name, List<Category> subCategories) {
-        this.name = name;
-        this.subCategories = subCategories;
-    }
+    @NotNull
+    @Column(name = "TITLE")
+    private String title;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(name = "SUB_CATEGORIES")
+    @OneToMany
+    @NotNull
+    private List<Category> subCategories;
 
-    public List<Category> getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(List<Category> subCategories) {
+    public Category(String title, String description, List<Category> subCategories) {
+        this.title = title;
+        this.description = description;
         this.subCategories = subCategories;
     }
 }
