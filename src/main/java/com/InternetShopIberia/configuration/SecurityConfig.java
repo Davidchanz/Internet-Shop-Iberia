@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login").not().authenticated()
+                .antMatchers("/registration").not().authenticated()
                 .antMatchers("/**").authenticated()
                 .and()
                 .formLogin()
@@ -42,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login")
                 .and()
                 .rememberMe()
                 .key("uniqueAndSecretKey")

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <!--<link rel="stylesheet" th:href="@{/css/login.css}" />-->
+  <style>
+      .container {
+      width: 300px;
+      margin: 0 auto;
+      margin-top: 50px;
+      text-align: center;
+  }
+
+  form {
+      margin-top: 20px;
+  }
+
+  h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 30px;
+  }
+
+  .form-group {
+      margin-bottom: 20px;
+  }
+
+  label {
+      display: block;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: left;
+  }
+
+  input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+  }
+
+  .error {
+      border-color: red;
+  }
+
+  .help-block {
+      color: red;
+      font-size: 14px;
+      text-align: left;
+      margin-top: 5px;
+  }
+
+  .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007bff;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+  }
+
+  .btn-primary {
+      background-color: #007bff;
+  }
+
+  .btn:hover {
+      background-color: #0069d9;
+  }
+
+  .btn:focus {
+      outline: none;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Registration</h1>
+    <form th:action="@{/registration}" th:object="${user}" method="POST" enctype="utf8">
+      <div class="form-group">
+        <label for="firstName">First name</label>
+        <input type="text" id="firstName" th:field="*{firstName}"/>
+        <p class="help-block" th:each="error: ${#fields.errors('firstName')}"
+           th:text="${error}">Validation error</p>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text" id="lastName" th:field="*{lastName}"/>
+        <p class="help-block" th:each="error : ${#fields.errors('lastName')}"
+           th:text="${error}">Validation error</p>
+      </div>
+      <div class="form-group">
+        <label for="userName">User name</label>
+        <input type="text" id="userName" th:field="*{userName}"/>
+        <p class="help-block" th:each="error : ${#fields.errors('userName')}"
+           th:text="${error}">Validation error</p>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" th:field="*{password}"/>
+        <p class="help-block" th:each="error : ${#fields.errors('password')}"
+           th:text="${error}">Validation error</p>
+      </div>
+      <div class="form-group">
+        <label for="matchingPassword">Confirm password</label>
+        <input type="password" id="matchingPassword" th:field="*{matchingPassword}"/>
+        <p class="help-block" th:each="error : ${#fields.errors('matchingPassword')}"
+           th:text="${error}">Validation error</p>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+</body>
+</html>

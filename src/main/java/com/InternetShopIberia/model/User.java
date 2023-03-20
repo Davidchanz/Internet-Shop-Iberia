@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -28,7 +29,10 @@ public class User {
     @Column
     private String lastName;
 
-    @Column(name="ADMIN", columnDefinition="char(3)")
+    @Column(name="ADMIN", columnDefinition="boolean")
     @NotEmpty
     private boolean admin;
+
+    /*@Column(name = "ROLES")
+    private List<String> roles;*/
 }
