@@ -22,6 +22,7 @@
       height: 150px;
       object-fit: cover;
       margin-right: 20px;
+      background-color: #cccccc;
     }
 
     .products-list li div {
@@ -70,7 +71,7 @@
                 <li>
                     <img th:src="@{/images/ProductTemplate.png}" alt="Product">
                     <div>
-                        <h2><a href="#" th:text="${product.name}"></a></h2>
+                        <h2><a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a></h2>
                         <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}">></h1></p>
                     </div>
                 </li>

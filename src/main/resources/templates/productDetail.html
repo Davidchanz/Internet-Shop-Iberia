@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Detail Page</title>
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.product-image {
+			width: 50%;
+			margin-right: 20px;
+		}
+
+		.product-image img {
+			width: 100%;
+		}
+
+		.product-details {
+			width: 50%;
+		}
+
+		.product-name {
+			font-size: 28px;
+			font-weight: bold;
+			margin: 0 0 10px;
+		}
+
+		.product-price {
+			font-size: 24px;
+			color: #c0392b;
+			margin: 0 0 20px;
+		}
+
+		.product-description {
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0 0 20px;
+		}
+
+		.product-info {
+			font-size: 16px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.product-info li {
+			margin-bottom: 5px;
+		}
+
+		.detail-name {
+			font-weight: bold;
+			margin-right: 10px;
+		}
+
+		.detail-value {
+			margin-left: 20px;
+		}
+
+		.product-info li:last-child {
+			margin-bottom: 0;
+		}
+	</style>
+</head>
+<body>
+    <div th:insert="/sideMenu :: sidebar"></div>
+    <main>
+        <div class="container">
+            <div class="product-image">
+                <img th:src="@{/images/ProductTemplate.png}" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <h1 class="product-name" th:text="${product.name}"></h1>
+                <p class="product-price" th:text="${#numbers.formatCurrency(product.price)}"></p>
+                <p class="product-description" th:text="${product.description}"></p>
+                <table class="product-info">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <div th:each="detail : ${product.details}">
+                        <tr>
+                            <td><span class="detail-name" th:text="${detail.name}"></span></td>
+                            <td><span class="detail-value" th:text="${detail.value}"></span></td>
+                        </tr>
+                    </div>
+                </table>
+            </div>
+        </div>
+    </main>
+    <div th:insert="/footer :: footer"></div>
+</body>
+</html>
