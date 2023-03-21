@@ -14,16 +14,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Product getProduct(ProductDto productDto){
-        var product = productRepository.findBypId(productDto.getPId());;
-        if(product == null)
-            throw new ProductNotExistException("Product with PID=" + productDto.getPId()+" don't exist!");
-        else
-            return product;
-    }
-
-    public List<Product> getAllProductsInCategory(Category category){
-        return productRepository.findAllByCategoryId(category.getId());
+    public Product getProductById(Long id){
+        return productRepository.findById(id).orElseThrow(() -> new ProductNotExistException("Product with Id=" + id+" don't exist!"));
     }
 
     public List<Product> getAllProductsInCategoryById(Long categoryId) {
