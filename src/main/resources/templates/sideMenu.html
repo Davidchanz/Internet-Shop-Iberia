@@ -58,13 +58,13 @@
       }
     </style>
 <div class="sidebar" id="sidebar">
-  <div th:fragment="fragment_node" th:remove="tag">
-    <div th:if="${not #lists.isEmpty(node.subCategories)}" >
-      <div th:each="child : ${node.subCategories}" th:inline="text" th:with="node = ${child}">
+  <div th:fragment="fragment_categories" th:remove="tag">
+    <div th:if="${not #lists.isEmpty(categories.subCategories)}" >
+      <div th:each="child : ${categories.subCategories}" th:inline="text" th:with="categories = ${child}">
         <a th:if="${not #lists.isEmpty(child.subCategories)}" href="#" class="active"><span th:text="${child.title}">></span></a>
         <a th:unless="${not #lists.isEmpty(child.subCategories)}" th:href="@{/products(categoryId=${child.Id})}" ><span th:text="${child.title}">></span></a>
         <div class="nested">
-          <div th:replace="this::fragment_node">List Item</div>
+          <div th:replace="this::fragment_categories">List Item</div>
         </div>
       </div>
     </div>
