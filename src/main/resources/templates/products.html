@@ -4,73 +4,77 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<style>
-.products-list {
-  list-style: none;
-  margin: auto;
-  padding: 0;
-  width: 50%;
-}
+    <style>
+    .products-list {
+      list-style: none;
+      margin: auto;
+      padding: 0;
+      width: 50%;
+    }
 
-.products-list li {
-  display: flex;
-  margin-bottom: 20px;
-}
+    .products-list li {
+      display: flex;
+      margin-bottom: 20px;
+    }
 
-.products-list li img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  margin-right: 20px;
-}
+    .products-list li img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin-right: 20px;
+    }
 
-.products-list li div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+    .products-list li div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-.products-list li h2 {
-  font-size: 24px;
-  color: #333;
-  margin: 0 0 10px;
-}
+    .products-list li h2 {
+      font-size: 24px;
+      color: #333;
+      margin: 0 0 10px;
+    }
 
-.products-list li p {
-  font-size: 16px;
-  color: #666;
-  margin: 0;
-}
+    .products-list li p {
+      font-size: 16px;
+      color: #666;
+      margin: 0;
+    }
+
+    .price {
+    font-style: oblique;
+    font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .products-list li a {
+        text-decoration: none;
+        font-size: 20px;
+        color: black;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .products-list li a:hover {
+        color: #CD6F27;
+      }
 </style>
 <body>
     <div th:insert="/sideMenu :: sidebar"></div>
     <main>
-        <h1 style="margin: auto; width: 50%; padding: 1px 16px;height: 100px;">Page Title</h1>
+        <h1 style="margin-left: 25%;padding: 1px 16px;height: 100px;">Result</h1>
         <ul class="products-list">
             <div th:each="product : ${products}">
                 <li>
                     <img th:src="@{/images/ProductTemplate.png}" alt="Product">
                     <div>
-                        <h2><span th:text="${product.name}"></span></h2>
-                        <p><span th:text="${product.price}"></span></p>
+                        <h2><a href="#" th:text="${product.name}"></a></h2>
+                        <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}">></h1></p>
                     </div>
                 </li>
             </div>
-            <li>
-                <img src="/images/ProductTemplate.png" alt="Product 1">
-                <div>
-                    <h2>Product 1</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-            </li>
-            <li>
-                <img src="/images/ProductTemplate.png" alt="Product 2">
-                <div>
-                    <h2>Product 2</h2>
-                    <p>Nullam blandit purus vitae odio maximus, at sagittis dui ullamcorper.</p>
-                </div>
-            </li>
-            <!-- more product list items will go here -->
         </ul>
     </main>
     <div th:insert="/footer :: footer"></div>
