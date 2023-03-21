@@ -17,7 +17,7 @@ public class StartPageController {
     @GetMapping("/")
     public String showStartPage(Model model) {
         var categories = categoryService.findRootCategory();
-        model.addAttribute("node", categories);
+        model.addAttribute("categories", categories);
         return "startPage";
     }
 }
