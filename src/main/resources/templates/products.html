@@ -41,18 +41,6 @@
   color: #666;
   margin: 0;
 }
-
-    footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
-
-footer p {
-  font-size: 16px;
-  margin: 0;
-}
 </style>
 <body>
     <div th:insert="/sideMenu :: sidebar"></div>
@@ -85,8 +73,6 @@ footer p {
             <!-- more product list items will go here -->
         </ul>
     </main>
-    <footer>
-        <p>&copy; 2023 Website Name. All rights reserved.</p>
-    </footer>
+    <div th:insert="/footer :: footer"></div>
 </body>
 </html>
