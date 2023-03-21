@@ -1,6 +1,7 @@
 package com.InternetShopIberia.service;
 
 import com.InternetShopIberia.model.Category;
+import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class CategoryService {
         var categories = categoryRepository.findAll();
         var root = categories.get(categories.size()-1);
         return categoryRepository.findById(root.getId()).orElseThrow(() -> new RuntimeException("No categories!"));
+    }
+
+    public Category findCategoryById(Long id){
+        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("No Category with Id="+id));
     }
 }
