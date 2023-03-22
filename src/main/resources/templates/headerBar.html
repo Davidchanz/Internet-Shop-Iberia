@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="headerBar" th:remove="tag">
+<style>
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px 0;
+  top: 0;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 5px 5px;
+  width: 100%;
+  margin: 15px;
+}
+
+.search-input {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #FEBD69;
+  border: 3px solid #FEBD69;
+  border-radius: 10px;
+  background-image: url('../images/search.png');
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+</style>
+  <header>
+    <!--<div th:insert="/sideMenu :: sidebar"></div>-->
+    <div class="header-wrapper">
+      <div class="logo">Internet-Shop Iberia</div>
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search...">
+        <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+      </div>
+      <div>
+        Cart
+      </div>
+      <div>
+        Language
+      </div>
+    </div>
+  </header>
+</div>
+</html>
