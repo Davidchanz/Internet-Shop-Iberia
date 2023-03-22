@@ -20,7 +20,7 @@
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 20px;
-        color: black;
+        color: #FAFAFA;
         display: block;
         transition: 0.3s;
       }
@@ -33,17 +33,6 @@
       .sidebar .active {
         background-color: #4CAF50;
         color: white;
-      }
-
-      /* Style for the slide button */
-      #slide-button {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 1;
-        color: #FAFAFA;
       }
 
       /* Style for the nested tree structure */
@@ -124,11 +113,18 @@
         });
       }
     </script>
-<div id="slide-button">&#9776;</div>
-<script>
+</div>
+  <div th:fragment="sidebarButton" th:remove="tag">
+    <div style="/* Style for the slide button */
+      #slide-button {
+        cursor: pointer;
+        color: #FAFAFA;
+      }" id="slide-button">&#9776;</div>
+    <script>
       /* JavaScript code for the slide side bar */
       var sidebar = document.getElementById("sidebar");
       var slideButton = document.getElementById("slide-button");
+      sidebar.style.left = "-250px"
       slideButton.onclick = function() {
         if (sidebar.style.left == "-250px") {
           sidebar.style.left = "0";
@@ -137,5 +133,5 @@
         }
       }
     </script>
-</div>
+  </div>
 </html>

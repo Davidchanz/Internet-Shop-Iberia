@@ -11,7 +11,7 @@ header {
   background-color: #333;
   color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px 0;
+  padding: 0px 0;
   top: 0;
 }
 
@@ -60,9 +60,41 @@ header {
   margin-left: 5px;
 }
 
+.navigationBar {
+        background-color: #232F3E;
+        height: 30px;
+
+    }
+
+    .navigationList {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        max-width: 1200px;
+    }
+
+    .navigationList li {
+        flex: 1;
+        text-align: center;
+    }
+
+    .navigationList a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 6px;
+        text-decoration: none;
+    }
+
+    .navigationList a:hover {
+        cursor: pointer;
+        background-color: #555;
+    }
+
 </style>
   <header>
-    <!--<div th:insert="/sideMenu :: sidebar"></div>-->
+    <div th:insert="/sideMenu :: sidebar"></div>
     <div class="header-wrapper">
       <div class="logo">Internet-Shop Iberia</div>
       <div class="search-bar">
@@ -76,6 +108,16 @@ header {
         Language
       </div>
     </div>
+    <nav class="navigationBar">
+      <ul class="navigationList">
+        <li><a><div th:insert="/sideMenu :: sidebarButton"></div></a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 </div>
 </html>
