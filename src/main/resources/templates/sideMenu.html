@@ -4,7 +4,7 @@
   <style>
       /* Style for the side bar and categories */
       .sidebar {
-        background-color: #333;
+        background-color: #FAFAFA;
         color: #fff;
         height: 100%;
         position: fixed;
@@ -20,7 +20,7 @@
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 20px;
-        color: #FAFAFA;
+        color: black;
         display: block;
         transition: 0.3s;
       }
@@ -48,6 +48,20 @@
       .active {
         display: block;
       }
+
+      #shadow{
+        background-color: rgba(0,0,0,.8);
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        will-change: opacity;
+        height: 100%;
+        width: 100%;
+        -webkit-tap-highlight-color: transparent;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+      }
     </style>
 <div class="sidebar" id="sidebar">
   <div th:fragment="fragment_categories" th:remove="tag">
@@ -62,6 +76,7 @@
     </div>
   </div>
 </div>
+  <div id="shadow"></div>
 <script>
         function d(nested){
             //this.classList.toggle("active");
@@ -126,9 +141,13 @@
       var slideButton = document.getElementById("slide-button");
       sidebar.style.left = "-250px"
       slideButton.onclick = function() {
-        if (sidebar.style.left == "-250px") {
-          sidebar.style.left = "0";
-        } else {
+        var shadow = document.getElementById("shadow");
+        shadow.style.opacity = 1;
+        shadow.style.pointerEvents = "all";
+        sidebar.style.left = "0";
+        shadow.onclick = function(){
+          shadow.style.opacity = 0;
+          shadow.style.pointerEvents = "none";
           sidebar.style.left = "-250px";
         }
       }
