@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:insert="/headerBar :: headerBar"></div>
 </head>
 <body>
-  <h1>Registration success!</h1>
-  <div th:insert="/footer :: footer"></div>
+    <div style="height: 1000px;">
+      <h1>Registration success!</h1>
+    </div>
 </body>
+    <footer>
+        <div th:insert="/footer :: footer"></div>
+    </footer>
 </html>

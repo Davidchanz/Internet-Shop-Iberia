@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="headerBar" th:remove="tag">
+<style>
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0px 0;
+  top: 0;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  color: #FAFAFA;
+  display: block;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 5px 5px;
+  width: 100%;
+  margin: 15px;
+}
+
+.search-input {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #FEBD69;
+  border: 3px solid #FEBD69;
+  border-radius: 10px;
+  background-image: url('../images/search.png');
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.navigationBar {
+        background-color: #232F3E;
+        height: 30px;
+
+    }
+
+    .navigationList {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        max-width: 1200px;
+    }
+
+    .navigationList li {
+        flex: 1;
+        text-align: center;
+    }
+
+    .navigationList a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 6px;
+        text-decoration: none;
+    }
+
+    .navigationList a:hover {
+        cursor: pointer;
+        background-color: #555;
+    }
+
+</style>
+  <header>
+    <div th:insert="/sideMenu :: sidebar"></div>
+    <div class="header-wrapper">
+      <a class="logo" th:href="@{/}">Internet-Shop Iberia</a>
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search...">
+        <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+      </div>
+      <div>
+        Cart
+      </div>
+      <div>
+        Language
+      </div>
+    </div>
+    <nav class="navigationBar">
+      <ul class="navigationList">
+        <li><a><div th:insert="/sideMenu :: sidebarButton"></div></a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+</html>

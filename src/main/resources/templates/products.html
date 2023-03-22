@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <div th:insert="/headerBar :: headerBar"></div>
 </head>
     <style>
     .products-list {
@@ -63,7 +62,6 @@
       }
 </style>
 <body>
-    <div th:insert="/sideMenu :: sidebar"></div>
     <main>
         <h1 style="margin-left: 25%;padding: 1px 16px;height: 100px;">Result</h1>
         <ul class="products-list">
@@ -78,6 +76,8 @@
             </div>
         </ul>
     </main>
-    <div th:insert="/footer :: footer"></div>
 </body>
+<footer>
+    <div th:insert="/footer :: footer"></div>
+</footer>
 </html>

@@ -4,7 +4,8 @@
   <style>
       /* Style for the side bar and categories */
       .sidebar {
-        background-color: #f1f1f1;
+        background-color: #FAFAFA;
+        color: #fff;
         height: 100%;
         position: fixed;
         left: -250px;
@@ -12,6 +13,7 @@
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
+        top: 0;
       }
 
       .sidebar a {
@@ -33,16 +35,6 @@
         color: white;
       }
 
-      /* Style for the slide button */
-      #slide-button {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 1;
-      }
-
       /* Style for the nested tree structure */
       .nested {
         display: none;
@@ -55,6 +47,20 @@
 
       .active {
         display: block;
+      }
+
+      #shadow{
+        background-color: rgba(0,0,0,.8);
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        will-change: opacity;
+        height: 100%;
+        width: 100%;
+        -webkit-tap-highlight-color: transparent;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
       }
     </style>
 <div class="sidebar" id="sidebar">
@@ -70,6 +76,7 @@
     </div>
   </div>
 </div>
+  <div id="shadow"></div>
 <script>
         function d(nested){
             //this.classList.toggle("active");
@@ -121,18 +128,29 @@
         });
       }
     </script>
-<div id="slide-button">&#9776;</div>
-<script>
+</div>
+  <div th:fragment="sidebarButton" th:remove="tag">
+    <div style="/* Style for the slide button */
+      #slide-button {
+        cursor: pointer;
+        color: #FAFAFA;
+      }" id="slide-button">&#9776;</div>
+    <script>
       /* JavaScript code for the slide side bar */
       var sidebar = document.getElementById("sidebar");
       var slideButton = document.getElementById("slide-button");
+      sidebar.style.left = "-250px"
       slideButton.onclick = function() {
-        if (sidebar.style.left == "-250px") {
-          sidebar.style.left = "0";
-        } else {
+        var shadow = document.getElementById("shadow");
+        shadow.style.opacity = 1;
+        shadow.style.pointerEvents = "all";
+        sidebar.style.left = "0";
+        shadow.onclick = function(){
+          shadow.style.opacity = 0;
+          shadow.style.pointerEvents = "none";
           sidebar.style.left = "-250px";
         }
       }
     </script>
-</div>
+  </div>
 </html>
