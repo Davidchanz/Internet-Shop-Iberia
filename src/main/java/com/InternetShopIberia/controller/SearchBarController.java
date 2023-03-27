@@ -1,19 +1,27 @@
 package com.InternetShopIberia.controller;
 
+import com.InternetShopIberia.model.SearchResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class SearchBarController {
-    @GetMapping("/event-count")
+    @GetMapping("/search")
     public String getEventCount(@RequestParam("searchInput") String searchInput, ModelMap map) {
-        // TODO: retrieve the new value here so you can add it to model map
-        map.addAttribute("numDeviceEventsWithAlarm", searchInput);
+        List<String> searchResults = new ArrayList<>();
+        searchResults.add("b");
+        searchResults.add("c");
+        searchResults.add("d");
+        SearchResult searchResult = new SearchResult();
+        searchResult.setResults(searchResults);
 
-        System.out.println(searchInput);
-        // change "myview" to the name of your view
-        return "headerBar :: #eventCount";
+        map.addAttribute("searchResults", searchResult);
+
+        return "headerBar :: #dropdown";
     }
 }
