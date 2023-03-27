@@ -27,6 +27,8 @@ header {
 .header-wrapper .dropdown-bar{
   position: absolute;
   top: 70px;
+  max-width: 907px;
+  width: 100%;
 }
 
 .logo {
@@ -186,7 +188,7 @@ header {
 		var searchInput = document.querySelector('.search-bar input[type="text"]');
 		var dropdown = document.querySelector('.search-bar .dropdown');
 		searchInput.addEventListener('focus', function() {
-			<!--dropdown.style.display = 'block';-->
+		  updateSearchResults(searchInput.value);
 		});
 		searchInput.addEventListener('blur', function() {
 			setTimeout(function() {
