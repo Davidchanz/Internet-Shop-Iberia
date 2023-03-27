@@ -25,4 +25,8 @@ public class ProductService {
     public void addProduct(Product product){
         productRepository.save(product);
     }
+
+    public List<Product> getAllProductsByName(String name){
+        return productRepository.searchByNameLike(name);
+    }
 }

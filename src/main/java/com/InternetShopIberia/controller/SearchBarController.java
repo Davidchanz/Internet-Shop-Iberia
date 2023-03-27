@@ -1,6 +1,8 @@
 package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.model.SearchResult;
+import com.InternetShopIberia.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +13,15 @@ import java.util.List;
 
 @Controller
 public class SearchBarController {
+    @Autowired
+    private ProductService productService;
     @GetMapping("/search")
     public String getEventCount(@RequestParam("searchInput") String searchInput, ModelMap map) {
-        List<String> searchResults = new ArrayList<>();
-        searchResults.add("b");
-        searchResults.add("c");
-        searchResults.add("d");
+        var products = productService.getAllProductsByName(searchInput);
         SearchResult searchResult = new SearchResult();
+        List<String> searchResults = new ArrayList<>();
+        for(var product: products)
+            searchResults.add(product.getName());
         searchResult.setResults(searchResults);
 
         map.addAttribute("searchResults", searchResult);

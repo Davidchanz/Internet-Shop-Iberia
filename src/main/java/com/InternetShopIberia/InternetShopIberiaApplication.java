@@ -30,14 +30,13 @@ public class InternetShopIberiaApplication {
 		var categoryService = context.getBean(CategoryService.class);
 		var category = categoryService.findCategoryById(1L);
 
-		for (int i = 0; i < 10; i++) {
 
 			Product product = new Product();
 			product.setName("Acer Predator Helios 300 PH315-54-760S Gaming Laptop");
 			product.setCategory(category);
 			product.setDescription("Acer Predator Helios 300 PH315-54-760S Gaming Laptop | Intel i7-11800H | NVIDIA GeForce RTX 3060 GPU | 15.6\" FHD 144Hz 3ms IPS Display | 16GB DDR4 | 512GB SSD | Killer WiFi 6 | RGB Keyboard");
 			product.setPrice(new BigDecimal("2199.00"));
-			product.setPId(i+4804708L);
+			product.setPId(4804708L);
 
 			ProductDetail pd = new ProductDetail("Screen", "15\"");
 			productDetailService.addProductDetail(pd);
@@ -52,7 +51,17 @@ public class InternetShopIberiaApplication {
 			product.setDetails(List.of(pd, pd1, pd2, pd3, pd4));
 
 			productService.addProduct(product);
-		}
+
+		Product productN = new Product();
+		productN.setName("Asus VivoBook 15S");
+		productN.setCategory(category);
+		productN.setDescription("Asus VivoBook 15S | Intel i5-17700K | NVIDIA GeForce RTX 2070 GPU | 13.0\" FHD 60Hz 15ms IPS Display | 8GB DDR4 | 512GB SSD | Killer WiFi 6");
+		productN.setPrice(new BigDecimal("56999.00"));
+		productN.setPId(1233123L);
+		ProductDetail pdN = new ProductDetail("Screen", "13\"");
+		productDetailService.addProductDetail(pdN);
+		productN.setDetails(List.of(pdN));
+		productService.addProduct(productN);
 	}
 
 	private static void addCategoryTemplate(ConfigurableApplicationContext context){
