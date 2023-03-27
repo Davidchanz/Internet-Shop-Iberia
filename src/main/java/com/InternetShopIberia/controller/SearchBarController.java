@@ -15,7 +15,7 @@ import java.util.List;
 public class SearchBarController {
     @Autowired
     private ProductService productService;
-    @GetMapping("/search")
+    @GetMapping("/s")
     public String getEventCount(@RequestParam("searchInput") String searchInput, ModelMap map) {
         SearchResult searchResult = new SearchResult();
         List<String> searchResults = new ArrayList<>();

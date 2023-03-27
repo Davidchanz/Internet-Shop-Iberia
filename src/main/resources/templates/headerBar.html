@@ -127,8 +127,10 @@ header {
     <div class="header-wrapper">
       <a class="logo" th:href="@{/}">Internet-Shop Iberia</a>
       <div class="search-bar">
-        <input class="search-input" type="text" placeholder="Search...">
-        <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+        <form method="get" th:action="@{/search}">
+          <input class="search-input" type="text" th:value="${searchRequest}" name="searchRequest" placeholder="Search...">
+          <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+        </form>
         <div class="dropdown-bar">
           <div class="dropdown">
             <div id="dropdown">
@@ -140,7 +142,7 @@ header {
                   }
                 </script>
                 <div th:each="result : ${searchResults.results}">
-                  <a href="#" th:text="${result}"></a>
+                  <a th:href="@{/search(searchRequest=${result})}" th:text="${result}"></a>
                 </div>
               </div>
               <div th:unless="${searchResults != null} and ${#lists.size(searchResults.results) >= 1}">
@@ -176,7 +178,7 @@ header {
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <script type="text/javascript">
         function updateSearchResults(value) {
-            $.get("search?searchInput="+value).done(function(fragment) { // get from controller
+            $.get("s?searchInput="+value).done(function(fragment) { // get from controller
                 $("#dropdown").replaceWith(fragment); // update snippet of page
             });
         }
