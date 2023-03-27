@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="headerBar" th:remove="tag">
-<style>
+  <style>
 
 body {
   margin: 0;
@@ -22,6 +22,11 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.header-wrapper .dropdown-bar{
+  position: absolute;
+  top: 70px;
 }
 
 .logo {
@@ -96,6 +101,26 @@ header {
         background-color: #555;
     }
 
+    /* Style for dropdown */
+		.dropdown {
+			position: relative;
+			display: none;
+			padding: 10px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			z-index: 1;
+		}
+		.dropdown a {
+			display: block;
+			padding: 5px;
+			color: #333;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		.dropdown a:hover {
+			background-color: #f4f4f4;
+		}
+
 </style>
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
@@ -104,7 +129,17 @@ header {
       <div class="search-bar">
         <input class="search-input" type="text" placeholder="Search...">
         <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+        <div class="dropdown-bar">
+          <div class="dropdown">
+            <a href="#">Result 1</a>
+            <a href="#">Result 2</a>
+            <a href="#">Result 3</a>
+            <a href="#">Result 4</a>
+            <a href="#">Result 511111111111111111111111</a>
+          </div>
+        </div>
       </div>
+      <span id="eventCount" th:text="${numDeviceEventsWithAlarm}"></span>
       <div>
         Cart
       </div>
@@ -123,5 +158,45 @@ header {
       </ul>
     </nav>
   </header>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+        function updateEventCount(value) {
+            $.get("event-count?searchInput="+value).done(function(fragment) { // get from controller
+                $("#eventCount").replaceWith(fragment); // update snippet of page
+            });
+        }
+
+		// Show/hide dropdown on input focus/blur
+		var searchInput = document.querySelector('.search-bar input[type="text"]');
+		var dropdown = document.querySelector('.search-bar .dropdown');
+		searchInput.addEventListener('focus', function() {
+			dropdown.style.display = 'block';
+		});
+		searchInput.addEventListener('blur', function() {
+			setTimeout(function() {
+				dropdown.style.display = 'none';
+			}, 200);
+		});
+		// Select dropdown item on click
+		var dropdownLinks = document.querySelectorAll('.search-bar .dropdown a');
+		for (var i = 0; i < dropdownLinks.length; i++) {
+			dropdownLinks[i].addEventListener('click', function(e) {
+				e.preventDefault();
+				searchInput.value = this.textContent;
+				dropdown.style.display = 'none';
+
+                updateEventCount(this.textContent);
+
+			});
+		}
+
+        const input = document.querySelector(".search-input");
+        input.addEventListener("input", updateValue);
+
+        function updateValue(e) {
+          updateEventCount(e.target.value);
+        }
+	</script>
 </div>
 </html>
