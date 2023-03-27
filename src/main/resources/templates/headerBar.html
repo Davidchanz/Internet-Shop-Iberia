@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="headerBar" th:remove="tag">
-<style>
+  <style>
 
 body {
   margin: 0;
@@ -22,6 +22,13 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.header-wrapper .dropdown-bar{
+  position: absolute;
+  top: 70px;
+  max-width: 907px;
+  width: 100%;
 }
 
 .logo {
@@ -96,14 +103,61 @@ header {
         background-color: #555;
     }
 
+    /* Style for dropdown */
+		.dropdown {
+			position: relative;
+			display: none;
+			padding: 10px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			z-index: 1;
+		}
+		.dropdown a {
+			display: block;
+			padding: 5px;
+			color: #333;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		.dropdown a:hover {
+			background-color: #f4f4f4;
+		}
+
 </style>
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
     <div class="header-wrapper">
       <a class="logo" th:href="@{/}">Internet-Shop Iberia</a>
       <div class="search-bar">
-        <input class="search-input" type="text" placeholder="Search...">
-        <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+        <form style="display: flex; width: 100%;" method="get" th:action="@{/search}">
+          <input class="search-input" type="text" th:value="${searchRequest}" name="searchRequest" placeholder="Search...">
+          <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <div class="dropdown-bar">
+          <div class="dropdown">
+            <div id="dropdown">
+              <div th:if="${searchResults != null} and ${#lists.size(searchResults.results) >= 1}">
+                <script th:inline="javascript">
+                  var dropdown = document.querySelector('.search-bar .dropdown');
+                  if(dropdown.style.display != 'block'){
+                    dropdown.style.display = 'block';
+                  }
+                </script>
+                <div th:each="result : ${searchResults.results}">
+                  <a th:href="@{/search(searchRequest=${result})}" th:text="${result}"></a>
+                </div>
+              </div>
+              <div th:unless="${searchResults != null} and ${#lists.size(searchResults.results) >= 1}">
+                <script th:inline="javascript">
+                  var dropdown = document.querySelector('.search-bar .dropdown');
+                  if(dropdown.style.display != 'none'){
+                    dropdown.style.display = 'none';
+                  }
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
         Cart
@@ -123,5 +177,37 @@ header {
       </ul>
     </nav>
   </header>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+        function updateSearchResults(value) {
+            $.get("s?searchInput="+value).done(function(fragment) { // get from controller
+                $("#dropdown").replaceWith(fragment); // update snippet of page
+            });
+        }
+		// Show/hide dropdown on input focus/blur
+		var searchInput = document.querySelector('.search-bar input[type="text"]');
+		var dropdown = document.querySelector('.search-bar .dropdown');
+		searchInput.addEventListener('focus', function() {
+		  updateSearchResults(searchInput.value);
+		});
+		searchInput.addEventListener('blur', function() {
+			setTimeout(function() {
+				dropdown.style.display = 'none';
+			}, 200);
+		});
+		searchInput.addEventListener("input", function(e) {
+		  updateSearchResults(e.target.value);
+		});
+		// Select dropdown item on click
+		var dropdownLinks = document.querySelectorAll('.search-bar .dropdown a');
+		for (var i = 0; i < dropdownLinks.length; i++) {
+			dropdownLinks[i].addEventListener('click', function(e) {
+				e.preventDefault();
+				searchInput.value = this.textContent;
+				dropdown.style.display = 'none';
+                updateSearchResults(this.textContent);
+			});
+		}
+	</script>
 </div>
 </html>
