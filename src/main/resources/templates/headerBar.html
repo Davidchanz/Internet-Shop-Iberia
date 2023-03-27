@@ -127,7 +127,7 @@ header {
     <div class="header-wrapper">
       <a class="logo" th:href="@{/}">Internet-Shop Iberia</a>
       <div class="search-bar">
-        <form method="get" th:action="@{/search}">
+        <form style="display: flex; width: 100%;" method="get" th:action="@{/search}">
           <input class="search-input" type="text" th:value="${searchRequest}" name="searchRequest" placeholder="Search...">
           <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
         </form>
