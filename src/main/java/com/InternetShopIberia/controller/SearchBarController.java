@@ -17,13 +17,16 @@ public class SearchBarController {
     private ProductService productService;
     @GetMapping("/search")
     public String getEventCount(@RequestParam("searchInput") String searchInput, ModelMap map) {
-        var products = productService.getAllProductsByName(searchInput);
         SearchResult searchResult = new SearchResult();
         List<String> searchResults = new ArrayList<>();
-        for(var product: products)
-            searchResults.add(product.getName());
-        searchResult.setResults(searchResults);
-
+        if(searchInput.isEmpty()){
+            searchResult.setResults(searchResults);
+        }else {
+            var products = productService.getAllProductsByName(searchInput);
+            for (var product : products)
+                searchResults.add(product.getName());
+            searchResult.setResults(searchResults);
+        }
         map.addAttribute("searchResults", searchResult);
 
         return "headerBar :: #dropdown";

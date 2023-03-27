@@ -132,10 +132,24 @@ header {
         <div class="dropdown-bar">
           <div class="dropdown">
             <div id="dropdown">
-              <div th:if="${searchResults != null}">
+              <div th:if="${searchResults != null} and ${#lists.size(searchResults.results) >= 1}">
+                <script th:inline="javascript">
+                  var dropdown = document.querySelector('.search-bar .dropdown');
+                  if(dropdown.style.display != 'block'){
+                    dropdown.style.display = 'block';
+                  }
+                </script>
                 <div th:each="result : ${searchResults.results}">
                   <a href="#" th:text="${result}"></a>
                 </div>
+              </div>
+              <div th:unless="${searchResults != null} and ${#lists.size(searchResults.results) >= 1}">
+                <script th:inline="javascript">
+                  var dropdown = document.querySelector('.search-bar .dropdown');
+                  if(dropdown.style.display != 'none'){
+                    dropdown.style.display = 'none';
+                  }
+                </script>
               </div>
             </div>
           </div>
@@ -170,7 +184,7 @@ header {
 		var searchInput = document.querySelector('.search-bar input[type="text"]');
 		var dropdown = document.querySelector('.search-bar .dropdown');
 		searchInput.addEventListener('focus', function() {
-			dropdown.style.display = 'block';
+			<!--dropdown.style.display = 'block';-->
 		});
 		searchInput.addEventListener('blur', function() {
 			setTimeout(function() {
