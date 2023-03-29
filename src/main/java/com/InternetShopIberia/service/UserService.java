@@ -40,4 +40,8 @@ public class UserService {
     private String encryptPassword(String password){
         return new BCryptPasswordEncoder().encode(password);
     }
+
+    public User findUserByUserName(String userName){
+        return userRepository.findByUsername(userName);
+    }
 }
