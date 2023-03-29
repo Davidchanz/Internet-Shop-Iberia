@@ -1,11 +1,13 @@
 package com.InternetShopIberia;
 
+import com.InternetShopIberia.dto.UserDto;
 import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.ProductDetail;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductDetailService;
 import com.InternetShopIberia.service.ProductService;
+import com.InternetShopIberia.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,7 +23,19 @@ public class InternetShopIberiaApplication {
 		var context = SpringApplication.run(InternetShopIberiaApplication.class, args);
 		addCategoryTemplate(context);
 		addProductsTemplate(context);
+		addUser(context);
 		//192.168.100.10
+	}
+
+	private static void addUser(ConfigurableApplicationContext context) {
+		var userService = context.getBean(UserService.class);
+		UserDto user = new UserDto();
+		user.setUserName("Admin");
+		user.setFirstName("Admin");
+		user.setLastName("Admin");
+		user.setPassword("Admin");
+		user.setMatchingPassword("Admin");
+		userService.registerNewUserAccount(user);
 	}
 
 	private static void addProductsTemplate(ConfigurableApplicationContext context) {

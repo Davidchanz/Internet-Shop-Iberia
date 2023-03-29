@@ -1,6 +1,5 @@
 package com.InternetShopIberia.repository;
 
-import com.InternetShopIberia.dto.ProductDto;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

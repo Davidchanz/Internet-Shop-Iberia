@@ -17,7 +17,6 @@ public class SearchResultsController {
 
     @GetMapping("/search")
     private String showSearchResult(@RequestParam("searchRequest") String searchRequest, Model model){
-        System.out.println(searchRequest);
         var products = productService.getAllProductsByName(searchRequest);
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryService.findRootCategory());
