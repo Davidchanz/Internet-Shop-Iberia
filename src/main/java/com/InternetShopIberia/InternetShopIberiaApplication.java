@@ -1,11 +1,11 @@
 package com.InternetShopIberia;
 
+import com.InternetShopIberia.dto.UserDto;
+import com.InternetShopIberia.model.Cart;
 import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.ProductDetail;
-import com.InternetShopIberia.service.CategoryService;
-import com.InternetShopIberia.service.ProductDetailService;
-import com.InternetShopIberia.service.ProductService;
+import com.InternetShopIberia.service.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,7 +21,34 @@ public class InternetShopIberiaApplication {
 		var context = SpringApplication.run(InternetShopIberiaApplication.class, args);
 		addCategoryTemplate(context);
 		addProductsTemplate(context);
+		addUser(context);
 		//192.168.100.10
+	}
+
+	private static void addUser(ConfigurableApplicationContext context) {
+		var userService = context.getBean(UserService.class);
+		var cartService = context.getBean(CartService.class);
+
+		UserDto user = new UserDto();
+		user.setUserName("Admin");
+		user.setFirstName("Admin");
+		user.setLastName("Admin");
+		user.setPassword("Admin");
+		user.setMatchingPassword("Admin");
+		userService.registerNewUserAccount(user);
+
+		UserDto user2 = new UserDto();
+		user2.setUserName("GN");
+		user2.setFirstName("Giorgi");
+		user2.setLastName("Nodia");
+		user2.setPassword("123");
+		user2.setMatchingPassword("123");
+		var registered = userService.registerNewUserAccount(user2);
+
+		Cart cart = new Cart();
+		cart.setUser(registered);
+		cart.setProducts(new ArrayList<>());
+		cartService.addCart(cart);
 	}
 
 	private static void addProductsTemplate(ConfigurableApplicationContext context) {

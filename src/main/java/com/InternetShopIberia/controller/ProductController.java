@@ -1,6 +1,5 @@
 package com.InternetShopIberia.controller;
 
-import com.InternetShopIberia.dto.ProductDto;
 import com.InternetShopIberia.dto.UserDto;
 import com.InternetShopIberia.exception.ProductNotExistException;
 import com.InternetShopIberia.model.Category;
