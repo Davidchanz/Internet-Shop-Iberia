@@ -15,9 +15,7 @@
 			margin: 0 auto;
 			padding: 20px;
 			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
+			justify-content: space-between;
 			background-color: #fff;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		}
@@ -78,56 +76,69 @@
 		}
 
 		.btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      background-color: #007bff;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      }
-
-      .btn-primary {
+          padding: 10px 20px;
+          font-size: 16px;
+          font-weight: bold;
+          color: #fff;
           background-color: #007bff;
-      }
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          }
 
-      .btn:hover {
-          background-color: #0069d9;
-      }
+          .btn-primary {
+              background-color: #007bff;
+          }
 
-      .btn:focus {
-          outline: none;
-      }
+          .btn:hover {
+              background-color: #0069d9;
+          }
+
+          .btn:focus {
+              outline: none;
+          }
+
+          .price {
+            margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
 	</style>
 </head>
 <body>
 <div style="height: 1000px;">
     <main>
         <div class="container">
-            <div class="product-image">
-                <img th:src="@{/images/ProductTemplate.png}" alt="Product Image">
+            <div class="images">
+                <div class="product-image">
+                    <img th:src="@{/images/ProductTemplate.png}" alt="Product Image">
+                </div>
             </div>
-            <div class="product-details">
-                <h1 class="product-name" th:text="${product.name}"></h1>
-                <p class="product-price" th:text="${#numbers.formatCurrency(product.price)}"></p>
-                <p class="product-description" th:text="${product.description}"></p>
-                <table class="product-info">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    <div th:each="detail : ${product.details}">
+            <div class="description">
+                <div class="product-details">
+                    <h1 class="product-name" th:text="${product.name}"></h1>
+                    <p class="product-description" th:text="${product.description}"></p>
+                    <table class="product-info">
                         <tr>
-                            <td><span class="detail-name" th:text="${detail.name}"></span></td>
-                            <td><span class="detail-value" th:text="${detail.value}"></span></td>
+                            <th></th>
+                            <th></th>
                         </tr>
-                    </div>
-                </table>
+                        <div th:each="detail : ${product.details}">
+                            <tr>
+                                <td><span class="detail-name" th:text="${detail.name}"></span></td>
+                                <td><span class="detail-value" th:text="${detail.value}"></span></td>
+                            </tr>
+                        </div>
+                    </table>
+                </div>
             </div>
-            <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
-                <button type="submit" class="btn btn-primary">Buy</button>
-            </form>
+            <div class="price">
+                <p class="product-price" th:text="${#numbers.formatCurrency(product.price)}"></p>
+                <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                </form>
+            </div>
         </div>
     </main>
 </div>
