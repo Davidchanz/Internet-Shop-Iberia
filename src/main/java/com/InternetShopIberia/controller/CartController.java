@@ -52,11 +52,10 @@ public class CartController {
         User currentUser = userService.findUserByUserName(principal.getName());
         Cart cart = cartService.findCartByUser(currentUser);
         Product product = productService.getProductById(Long.parseLong(productId));
-        System.out.println(product.getName());
         cart.addProduct(product);
         cartService.updateCart(cart);
         model.addAttribute("products", cart.getProducts());
         model.addAttribute("categories", categoryService.findRootCategory());
-        return "products";
+        return "cart";
     }
 }

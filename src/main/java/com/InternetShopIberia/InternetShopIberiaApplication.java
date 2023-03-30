@@ -64,6 +64,7 @@ public class InternetShopIberiaApplication {
 		product.setDescription("Acer Predator Helios 300 PH315-54-760S Gaming Laptop | Intel i7-11800H | NVIDIA GeForce RTX 3060 GPU | 15.6\" FHD 144Hz 3ms IPS Display | 16GB DDR4 | 512GB SSD | Killer WiFi 6 | RGB Keyboard");
 		product.setPrice(new BigDecimal("2199.00"));
 		product.setPId(4804708L);
+		product.setMainImageSrc("71AGOX9MORL._AC_SX466_.jpg");
 
 		ProductDetail pd = new ProductDetail("Screen", "15\"");
 		productDetailService.addProductDetail(pd);

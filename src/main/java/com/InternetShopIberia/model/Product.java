@@ -29,6 +29,9 @@ public class Product {
     @Column(name = "PID", nullable = false, unique = true)
     private Long pId;
 
+    @Column(name = "MAIN_IMAGE")
+    private String mainImageSrc;
+
     @OneToOne
     private Category category;
 
