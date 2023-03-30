@@ -123,6 +123,16 @@ header {
 			background-color: #f4f4f4;
 		}
 
+		.cart-button {
+          background-color: rgb(255, 2, 2, 0);
+          color: rgb(255, 2, 2, 0);
+		  border-color: rgba(250, 247, 247);
+          border-style: none;
+
+
+          cursor: pointer;
+        }
+
 </style>
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
@@ -160,7 +170,9 @@ header {
         </div>
       </div>
       <div>
-        <a th:href="@{/cart}">Cart</a>
+        <form method="get" th:action="@{/cart}">
+          <button class="cart-button" type="submit"><img width="40px" th:src="@{/images/cart.png}"></button>
+        </form>
       </div>
       <div>
         Language

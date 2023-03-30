@@ -67,7 +67,7 @@ public class InternetShopIberiaApplication {
 
 		ProductDetail pd = new ProductDetail("Screen", "15\"");
 		productDetailService.addProductDetail(pd);
-		ProductDetail pd1 = new ProductDetail("Display", "FHD 144Hz 3ms IPS Display");
+		ProductDetail pd1 = new ProductDetail("Display", "FHD 144Hz 3ms IPS");
 		productDetailService.addProductDetail(pd1);
 		ProductDetail pd2 = new ProductDetail("CPU", "Intel i7-11800H");
 		productDetailService.addProductDetail(pd2);
