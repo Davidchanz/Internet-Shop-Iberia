@@ -20,14 +20,13 @@ public class Cart {
 
     @Column(nullable = false)
     @OneToMany
-    @JoinColumn(name = "product_id", unique = false)
-    private List<Product> products;
+    private List<CartProduct> products;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void addProduct(Product product){
+    public void addProduct(CartProduct product){
         this.products.add(product);
     }
 }
