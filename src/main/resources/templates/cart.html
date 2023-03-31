@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:insert="/headerBar :: headerBar"></div>
+</head>
+<style>
+    .products-list {
+      list-style: none;
+      margin: auto;
+      padding: 0;
+      width: 50%;
+    }
+
+    .products-list li {
+      display: flex;
+	  align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .products-list li img {
+       width: 150px;
+      object-fit: cover;
+      margin-right: 20px;
+      background-color: #cccccc;
+    }
+
+    .products-list li div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .products-list li h2 {
+      font-size: 24px;
+      color: #333;
+      margin: 0 0 10px;
+    }
+
+    .products-list li p {
+      font-size: 16px;
+      color: #666;
+      margin: 0;
+    }
+
+    .price {
+    font-style: oblique;
+    font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .products-list li a {
+        text-decoration: none;
+        font-size: 20px;
+        color: black;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .products-list li a:hover {
+        color: #CD6F27;
+      }
+</style>
+<style>
+	/* Style for combo box */
+	.combo-box {
+		display: inline-flex;
+		position: relative;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+		overflow: hidden;
+		max-width: 45px;
+		background-color: #f2f2f2;
+	}
+    .combo-box span{
+	  position: relative;
+      margin: 5px;
+	}
+	.combo-box:after {
+		content: '\25BC';
+		position: absolute;
+		top: 2px;
+		right: 1px;
+		font-size: 20px;
+		color: #999;
+		pointer-events: none;
+	}
+
+    .select {
+		width: 46px;
+		display: none;
+		position: absolute;
+		top: 0;
+		z-index: 1;
+      	border: 1px solid #ccc;
+		border-radius: 10px;
+		overflow: auto;
+		margin: 0;
+		padding: 0;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		background-color: #f2f2f2;
+		font-size: 16px;
+		font-weight: bold;
+    }
+
+    .select li{
+			position: relative;
+      		text-align: center;
+			overflow: hidden;
+    }
+
+    .select li:hover{
+			background-color: #ccc;
+      cursor: pointer;
+    }
+	</style>
+<body>
+    <main>
+        <h1 style="margin-left: 25%;padding: 1px 16px;">Shopping Cart</h1>
+        <ul id="products-list" class="products-list">
+            <div th:each="product : ${products}">
+                <li>
+                    <div th:if="${product.mainImageSrc != null}">
+                        <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
+                    </div>
+                    <div th:unless="${product.mainImageSrc != null}">
+                        <img th:src="@{/images/ProductTemplate.png}" alt="Product">
+                    </div>
+                    <div>
+                        <h2><a th:href="@{/productDetail(productId=${product.productId})}" th:text="${product.name}"></a></h2>
+                        <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}"></h1></p>
+                        <div class="drop-label">
+                            <div class="combo-box">
+                                <span th:text="${product.quantity}"></span>
+                                <span style="display: none;" th:text="${product.productId}"></span>
+                            </div>
+                            <ul class="select">
+                                <li value="1">1</li>
+                                <li value="2">2</li>
+                                <li value="3">3</li>
+                                <li value="4">4</li>
+                                <li value="5">5</li>
+                                <li value="6">6</li>
+                                <li value="7">7</li>
+                                <li value="8">8</li>
+                                <li value="9">9</li>
+                                <li value="10+">10+</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+            <script>
+    function updateProductQuantity(combId, productId, quantity) {
+
+            $.get("q?productId="+productId+"&quantity="+quantity).done(function(fragment) { // get from controller
+                $("#products-list").replaceWith(fragment); // update snippet of page
+            });
+        }
+
+	var combobox = document.getElementsByClassName("combo-box");
+	for(var i = 0; i < combobox.length; i++){
+		var select = combobox[i].nextElementSibling;
+		//select.style.top = combobox[i].offsetTop+"px";
+		combobox[i].onclick = function(){
+			var another_select = document.getElementsByClassName("select");
+			for(var j = 0; j < another_select.length; j++){
+				another_select[j].style.display = "none";
+			}
+			var select = this.nextElementSibling;
+			select.style.top = this.offsetTop+"px";
+			select.style.display = "block";
+		}
+
+		var lis = select.getElementsByTagName("li");
+		for(var k = 0; k < lis.length; k++){
+			lis[k].onclick = function(){
+				var select = this.parentNode;
+				select.style.display = "none";
+				var combId;
+				var comb = document.getElementsByClassName("combo-box");
+				for(var l = 0; l < combobox.length; l++){
+					if(comb[l] === select.previousSibling.previousSibling){
+						combId = l;
+					}
+				}
+				updateProductQuantity(combId, select.previousSibling.previousSibling.children[1].textContent, this.value);
+			}
+		}
+	}
+</script>
+        </ul>
+    </main>
+</body>
+    <div th:insert="/footer :: footer"></div>
+</html>

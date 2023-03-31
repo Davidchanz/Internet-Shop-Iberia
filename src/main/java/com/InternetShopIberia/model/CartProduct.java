@@ -1,41 +1,37 @@
 package com.InternetShopIberia.model;
 
+import com.InternetShopIberia.model.Product;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "CART_PRODUCT")
 @Setter
 @Getter
-public class Product {
+public class CartProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "PRODUCT_ID")
+    private Long productId;
+
     @Column(name = "NAME", nullable = false)
     private String name;
-
-    @Column(name = "DESCRIPTION" , length = 10000)
-    private String description;
 
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "PID", nullable = false, unique = true)
-    private Long pId;
-
     @Column(name = "MAIN_IMAGE")
     private String mainImageSrc;
 
-    @OneToOne
-    private Category category;
-
-    @Column(name = "DETAIL")
-    @OneToMany
-    private List<ProductDetail> details;
+    @Column(name = "QUANTITY")
+    private int quantity;
 }

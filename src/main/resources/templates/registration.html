@@ -77,7 +77,7 @@
   }
   </style>
 <body>
-<div style="height: 1000px;">
+<div>
   <div class="container">
     <h1>Registration</h1>
     <form th:action="@{/registration}" th:object="${user}" method="POST" enctype="utf8">
@@ -116,7 +116,5 @@
   </div>
 </div>
 </body>
-<footer>
   <div th:insert="/footer :: footer"></div>
-</footer>
 </html>
