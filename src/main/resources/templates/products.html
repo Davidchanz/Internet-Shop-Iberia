@@ -9,6 +9,7 @@
       margin: auto;
       padding: 0;
       width: 50%;
+      min-width: 500px;
     }
 
     .products-list li {
@@ -18,7 +19,6 @@
 
     .products-list li img {
       width: 150px;
-      height: 150px;
       object-fit: cover;
       margin-right: 20px;
       background-color: #cccccc;
@@ -62,20 +62,27 @@
       }
 </style>
 <body>
-    <main>
-        <h1 style="margin-left: 25%;padding: 1px 16px;height: 100px;">Result</h1>
-        <ul class="products-list">
-            <div th:each="product : ${products}">
-                <li>
-                    <img th:src="@{/images/ProductTemplate.png}" alt="Product">
-                    <div>
-                        <h2><a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a></h2>
-                        <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}">></h1></p>
-                    </div>
-                </li>
-            </div>
-        </ul>
-    </main>
+    <div style="height: 1000px;">
+        <main>
+            <h1 style="margin-left: 25%;padding: 1px 16px;height: 100px;">Result</h1>
+            <ul class="products-list">
+                <div th:each="product : ${products}">
+                    <li>
+                        <div th:if="${product.mainImageSrc != null}">
+                            <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
+                        </div>
+                        <div th:unless="${product.mainImageSrc != null}">
+                            <img th:src="@{/images/ProductTemplate.png}" alt="Product">
+                        </div>
+                        <div>
+                            <h2><a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a></h2>
+                            <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}">></h1></p>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </main>
+    </div>
 </body>
 <footer>
     <div th:insert="/footer :: footer"></div>

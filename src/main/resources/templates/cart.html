@@ -17,8 +17,7 @@
     }
 
     .products-list li img {
-      width: 150px;
-      height: 150px;
+       width: 150px;
       object-fit: cover;
       margin-right: 20px;
       background-color: #cccccc;
@@ -67,10 +66,10 @@
     <ul class="products-list">
         <div th:each="product : ${products}">
             <li>
-                <div th:if="product.mainImageSrc != null">
+                <div th:if="${product.mainImageSrc != null}">
                     <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
                 </div>
-                <div th:unless="product.mainImageSrc != null">
+                <div th:unless="${product.mainImageSrc != null}">
                     <img th:src="@{/images/ProductTemplate.png}" alt="Product">
                 </div>
                 <div>

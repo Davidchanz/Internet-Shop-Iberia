@@ -12,10 +12,11 @@
 
 		.container {
 			max-width: 1200px;
+			min-width: 1200px;
 			margin: 0 auto;
 			padding: 20px;
 			display: flex;
-			justify-content: space-between;
+			justify-content: top;
 			background-color: #fff;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		}
@@ -26,11 +27,12 @@
 		}
 
 		.product-image img {
-			width: 100%;
+			overflow-clip-margin: content-box;
+            overflow: clip;
 		}
 
 		.product-details {
-			width: 50%;
+			width: 100%;
 		}
 
 		.product-name {
@@ -104,6 +106,17 @@
 			background-color: #fff;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
           }
+
+          .td th {
+            padding: 3px;
+          }
+
+          .description {
+            min-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+
 	</style>
 </head>
 <body>
@@ -112,7 +125,12 @@
         <div class="container">
             <div class="images">
                 <div class="product-image">
-                    <img th:src="@{/images/ProductTemplate.png}" alt="Product Image">
+                    <div th:if="${product.mainImageSrc != null}">
+                        <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
+                    </div>
+                    <div th:unless="${product.mainImageSrc != null}">
+                        <img th:src="@{/images/ProductTemplate.png}" alt="Product">
+                    </div>
                 </div>
             </div>
             <div class="description">
