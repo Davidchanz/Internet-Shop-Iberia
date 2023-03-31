@@ -13,6 +13,7 @@
 
     .products-list li {
       display: flex;
+	  align-items: center;
       margin-bottom: 20px;
     }
 
@@ -60,28 +61,121 @@
         color: #CD6F27;
       }
 </style>
+<style>
+	/* Style for combo box */
+	.combo-box {
+		display: inline-flex;
+		position: relative;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+		overflow: hidden;
+		max-width: 45px;
+		background-color: #f2f2f2;
+	}
+    .combo-box span{
+	  position: relative;
+      margin: 5px;
+	}
+	.combo-box:after {
+		content: '\25BC';
+		position: absolute;
+		top: 2px;
+		right: 1px;
+		font-size: 20px;
+		color: #999;
+		pointer-events: none;
+	}
+
+    .select {
+		width: 46px;
+		display: none;
+		position: absolute;
+		top: 0;
+		z-index: 1;
+      	border: 1px solid #ccc;
+		border-radius: 10px;
+		overflow: auto;
+		margin: 0;
+		padding: 0;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		background-color: #f2f2f2;
+		font-size: 16px;
+		font-weight: bold;
+    }
+
+    .select li{
+			position: relative;
+      		text-align: center;
+			overflow: hidden;
+    }
+
+    .select li:hover{
+			background-color: #ccc;
+      cursor: pointer;
+    }
+	</style>
 <body>
-<main>
-    <h1 style="margin-left: 25%;padding: 1px 16px;height: 100px;">Shopping Cart</h1>
-    <ul class="products-list">
-        <div th:each="product : ${products}">
-            <li>
-                <div th:if="${product.mainImageSrc != null}">
-                    <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
-                </div>
-                <div th:unless="${product.mainImageSrc != null}">
-                    <img th:src="@{/images/ProductTemplate.png}" alt="Product">
-                </div>
-                <div>
-                    <h2><a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a></h2>
-                    <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}">></h1></p>
-                </div>
-            </li>
-        </div>
-    </ul>
-</main>
+    <main>
+        <h1 style="margin-left: 25%;padding: 1px 16px;">Shopping Cart</h1>
+        <ul class="products-list">
+            <div th:each="product : ${products}">
+                <li>
+                    <div th:if="${product.mainImageSrc != null}">
+                        <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
+                    </div>
+                    <div th:unless="${product.mainImageSrc != null}">
+                        <img th:src="@{/images/ProductTemplate.png}" alt="Product">
+                    </div>
+                    <div>
+                        <h2><a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a></h2>
+                        <p><h1 class="price" th:text="${#numbers.formatCurrency(product.price)}"></h1></p>
+                        <div class="drop-label">
+                            <div class="combo-box">
+                                <span>10</span>
+                            </div>
+                            <ul class="select">
+                                <li value="1">1</li>
+                                <li value="2">2</li>
+                                <li value="3">3</li>
+                                <li value="4">4</li>
+                                <li value="5">5</li>
+                                <li value="6">6</li>
+                                <li value="7">7</li>
+                                <li value="8">8</li>
+                                <li value="9">9</li>
+                                <li value="10+">10+</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </ul>
+    </main>
 </body>
-<footer>
+<script>
+	var combobox = document.getElementsByClassName("combo-box");
+	for(var i = 0; i < combobox.length; i++){
+		var select = combobox[i].nextElementSibling;
+		//select.style.top = combobox[i].offsetTop+"px";
+		combobox[i].onclick = function(){
+			var another_select = document.getElementsByClassName("select");
+			for(var j = 0; j < another_select.length; j++){
+				another_select[j].style.display = "none";
+			}
+			var select = this.nextElementSibling;
+			select.style.top = this.offsetTop+"px";
+			select.style.display = "block";
+		}
+
+		var lis = select.getElementsByTagName("li");
+		for(var k = 0; k < lis.length; k++){
+			lis[k].onclick = function(){
+				var select = this.parentNode;
+				select.style.display = "none";
+			}
+		}
+	}
+</script>
     <div th:insert="/footer :: footer"></div>
-</footer>
 </html>

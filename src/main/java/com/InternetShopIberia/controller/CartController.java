@@ -44,7 +44,7 @@ public class CartController {
         Cart cart = cartService.findCartByUser(currentUser);
         model.addAttribute("products", cart.getProducts());
         model.addAttribute("categories", categoryService.findRootCategory());
-        return "products";
+        return "cart";
     }
 
     @PostMapping("/cart")

@@ -58,27 +58,29 @@ public class InternetShopIberiaApplication {
 		var category = categoryService.findCategoryById(1L);
 		var categoryA = categoryService.findCategoryById(3L);
 
-		Product product = new Product();
-		product.setName("Acer Predator Helios 300 PH315-54-760S Gaming Laptop");
-		product.setCategory(category);
-		product.setDescription("Acer Predator Helios 300 PH315-54-760S Gaming Laptop | Intel i7-11800H | NVIDIA GeForce RTX 3060 GPU | 15.6\" FHD 144Hz 3ms IPS Display | 16GB DDR4 | 512GB SSD | Killer WiFi 6 | RGB Keyboard");
-		product.setPrice(new BigDecimal("2199.00"));
-		product.setPId(4804708L);
-		product.setMainImageSrc("71AGOX9MORL._AC_SX466_.jpg");
+		for(int i = 0; i < 5; i++) {
+			Product product = new Product();
+			product.setName("Acer Predator Helios 300 PH315-54-760S Gaming Laptop");
+			product.setCategory(category);
+			product.setDescription("Acer Predator Helios 300 PH315-54-760S Gaming Laptop | Intel i7-11800H | NVIDIA GeForce RTX 3060 GPU | 15.6\" FHD 144Hz 3ms IPS Display | 16GB DDR4 | 512GB SSD | Killer WiFi 6 | RGB Keyboard");
+			product.setPrice(new BigDecimal("2199.00"));
+			product.setPId(i+4804708L);
+			product.setMainImageSrc("71AGOX9MORL._AC_SX466_.jpg");
 
-		ProductDetail pd = new ProductDetail("Screen", "15\"");
-		productDetailService.addProductDetail(pd);
-		ProductDetail pd1 = new ProductDetail("Display", "FHD 144Hz 3ms IPS");
-		productDetailService.addProductDetail(pd1);
-		ProductDetail pd2 = new ProductDetail("CPU", "Intel i7-11800H");
-		productDetailService.addProductDetail(pd2);
-		ProductDetail pd3 = new ProductDetail("GPU", "NVIDIA GeForce RTX 3060");
-		productDetailService.addProductDetail(pd3);
-		ProductDetail pd4 = new ProductDetail("RAM", "16GB DDR4");
-		productDetailService.addProductDetail(pd4);
-		product.setDetails(List.of(pd, pd1, pd2, pd3, pd4));
+			ProductDetail pd = new ProductDetail("Screen", "15\"");
+			productDetailService.addProductDetail(pd);
+			ProductDetail pd1 = new ProductDetail("Display", "FHD 144Hz 3ms IPS");
+			productDetailService.addProductDetail(pd1);
+			ProductDetail pd2 = new ProductDetail("CPU", "Intel i7-11800H");
+			productDetailService.addProductDetail(pd2);
+			ProductDetail pd3 = new ProductDetail("GPU", "NVIDIA GeForce RTX 3060");
+			productDetailService.addProductDetail(pd3);
+			ProductDetail pd4 = new ProductDetail("RAM", "16GB DDR4");
+			productDetailService.addProductDetail(pd4);
+			product.setDetails(List.of(pd, pd1, pd2, pd3, pd4));
 
-		productService.addProduct(product);
+			productService.addProduct(product);
+		}
 
 		Product productN = new Product();
 		productN.setName("Asus VivoBook 15S");
