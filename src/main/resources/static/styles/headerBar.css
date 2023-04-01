@@ -70,64 +70,61 @@ header {
 }
 
 .navigationBar {
-        background-color: #232F3E;
-        height: 30px;
+  background-color: #232F3E;
+  height: 30px;
+}
 
-    }
+.navigationList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  max-width: 1200px;
+}
 
-    .navigationList {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        display: flex;
-        max-width: 1200px;
-    }
+.navigationList li {
+  flex: 1;
+  text-align: center;
+}
 
-    .navigationList li {
-        flex: 1;
-        text-align: center;
-    }
+.navigationList a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 6px;
+  text-decoration: none;
+}
 
-    .navigationList a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 6px;
-        text-decoration: none;
-    }
+.navigationList a:hover {
+  cursor: pointer;
+  background-color: #555;
+}
 
-    .navigationList a:hover {
-        cursor: pointer;
-        background-color: #555;
-    }
+/* Style for dropdown */
+.dropdown {
+  border-radius: 10px;
+  position: relative;
+  display: none;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+.dropdown a {
+  display: block;
+  padding: 5px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dropdown a:hover {
+  background-color: #f4f4f4;
+}
 
-    /* Style for dropdown */
-		.dropdown {
-		    border-radius: 10px;
-			position: relative;
-			display: none;
-			padding: 10px;
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0,0,0,0.2);
-			z-index: 1000;
-		}
-		.dropdown a {
-			display: block;
-			padding: 5px;
-			color: #333;
-			text-decoration: none;
-			cursor: pointer;
-		}
-		.dropdown a:hover {
-			background-color: #f4f4f4;
-		}
-
-		.cart-button {
-          background-color: rgb(255, 2, 2, 0);
-          color: rgb(255, 2, 2, 0);
-		  border-color: rgba(250, 247, 247);
-          border-style: none;
-
-
-          cursor: pointer;
-        }
+.cart-button {
+  background-color: rgb(255, 2, 2, 0);
+  color: rgb(255, 2, 2, 0);
+  border-color: rgba(250, 247, 247);
+  border-style: none;
+  cursor: pointer;
+}

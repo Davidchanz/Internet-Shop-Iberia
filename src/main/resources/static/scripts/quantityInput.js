@@ -8,7 +8,6 @@ function setInputFilter(textbox, inputFilter, errMsg) {
           this.classList.remove("input-error");
           this.setCustomValidity("");
         }
-
         if(this.value.length == 2 &&  this.value[0] == "0"){
           this.value = this.value[1];
         }
@@ -35,6 +34,6 @@ function setInputFilter(textbox, inputFilter, errMsg) {
 var quantityInputs = document.getElementsByClassName("custom-quantity-input");
 for(var i = 0; i < quantityInputs.length; i++){
   setInputFilter(quantityInputs[i], function(value) {
-    return /^\d*\d*$/.test(value); // Allow digits and '.' only, using a RegExp.
+    return /^\d*\d*$/.test(value);
   }, "Only digits are allowed");
 }

@@ -1,56 +1,56 @@
 .products-list {
-      list-style: none;
-      margin: auto;
-      padding: 0;
-      width: 50%;
-      min-width: 500px;
-    }
+  list-style: none;
+  margin: auto;
+  padding: 0;
+  width: 50%;
+  min-width: 500px;
+}
 
-    .products-list li {
-      display: flex;
-      margin-bottom: 20px;
-    }
+.products-list li {
+  display: flex;
+  margin-bottom: 20px;
+}
 
-    .products-list li img {
-      width: 150px;
-      object-fit: cover;
-      margin-right: 20px;
-      background-color: #cccccc;
-    }
+.products-list li img {
+  width: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+  background-color: #cccccc;
+}
 
-    .products-list li div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+.products-list li div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    .products-list li h2 {
-      font-size: 24px;
-      color: #333;
-      margin: 0 0 10px;
-    }
+.products-list li h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 0 0 10px;
+}
 
-    .products-list li p {
-      font-size: 16px;
-      color: #666;
-      margin: 0;
-    }
+.products-list li p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
 
-    .price {
-    font-style: oblique;
-    font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+.price {
+font-style: oblique;
+font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
 
-    .products-list li a {
-        text-decoration: none;
-        font-size: 20px;
-        color: black;
-        display: block;
-        transition: 0.3s;
-      }
+.products-list li a {
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
 
-      .products-list li a:hover {
-        color: #CD6F27;
-      }
+.products-list li a:hover {
+  color: #CD6F27;
+}
