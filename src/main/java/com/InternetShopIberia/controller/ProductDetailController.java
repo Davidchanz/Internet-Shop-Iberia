@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProductDetailController {
-    @Autowired
-    private CategoryService categoryService;
 
     @Autowired
     private ProductService productService;
@@ -20,7 +18,6 @@ public class ProductDetailController {
     public String showProductDetail(@RequestParam("productId") String productId, Model model){
         var product = productService.getProductById(Long.parseLong(productId));
         model.addAttribute("product", product);
-        model.addAttribute("categories", categoryService.findRootCategory());
         return "productDetail";
     }
 }

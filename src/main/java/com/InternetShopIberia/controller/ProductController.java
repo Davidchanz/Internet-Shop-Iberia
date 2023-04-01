@@ -23,14 +23,10 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private CategoryService categoryService;
-
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam("categoryId") String categoryId, Model model){
         var products = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
         model.addAttribute("products", products);
-        model.addAttribute("categories", categoryService.findRootCategory());
         return "products";
     }
 }

@@ -1,33 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="footer" th:remove="tag">
-    <style>
-            body {
-                margin: 0;
-            }
-
-             footer {
-              min-width: 1300px;
-              background-color: #333;
-              color: #fff;
-              text-align: center;
-              padding-top: 20px;
-              padding-bottom: 20px;
-              position: relative;
-              right: 0;
-              left: 0;
-            }
-
-            footer p {
-              font-size: 16px;
-              margin: 0;
-            }
-        </style>
-    <div style="height: 1000px;">
-
+    <link type="text/css" th:href="@{/styles/footer.css}" rel="stylesheet" />
+    <div style="height: 1000px;"></div>
+        <footer>
+            <p>&copy; 2023 Internet Shop Iberia. All rights reserved.</p>
+        </footer>
     </div>
-    <footer>
-        <p>&copy; 2023 Internet Shop Iberia. All rights reserved.</p>
-    </footer>
-</div>
 </html>

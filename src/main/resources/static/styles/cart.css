@@ -1,0 +1,19 @@
+.products-list .cart-action-bar{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  padding-right: 10px;
+  align-items: center;
+}
+
+.products-list .cart-action-bar a{
+  padding-left: 10px;
+  color: blue;
+}
+
+.products-list .standard-quantity{
+  padding-right: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,130 @@
+
+body {
+  margin: 0;
+}
+
+header {
+  min-width: 1300px;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0px 0;
+  top: 0;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header-wrapper .dropdown-bar{
+  position: absolute;
+  left: 0;
+  top: 50px;
+  width: 100%;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  color: #FAFAFA;
+  display: block;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 5px 5px;
+  width: 100%;
+  margin: 15px;
+}
+
+.search-input {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #FEBD69;
+  border: 3px solid #FEBD69;
+  border-radius: 10px;
+  background-image: url('../images/search.png');
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.navigationBar {
+  background-color: #232F3E;
+  height: 30px;
+}
+
+.navigationList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  max-width: 1200px;
+}
+
+.navigationList li {
+  flex: 1;
+  text-align: center;
+}
+
+.navigationList a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 6px;
+  text-decoration: none;
+}
+
+.navigationList a:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+
+/* Style for dropdown */
+.dropdown {
+  border-radius: 10px;
+  position: relative;
+  display: none;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+.dropdown a {
+  display: block;
+  padding: 5px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dropdown a:hover {
+  background-color: #f4f4f4;
+}
+
+.cart-button {
+  background-color: rgb(255, 2, 2, 0);
+  color: rgb(255, 2, 2, 0);
+  border-color: rgba(250, 247, 247);
+  border-style: none;
+  cursor: pointer;
+}
