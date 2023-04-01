@@ -63,8 +63,8 @@ public class CartController {
         for(var cartProduct: cart.getProducts()){
             if(Objects.equals(cartProduct.getProductId(), product.getId())) {
                 cartProductExist = true;
-                System.out.println("exist");
-                cartProduct.setQuantity(cartProduct.getQuantity() + 1);
+                if(cartProduct.getQuantity() < 999)
+                    cartProduct.setQuantity(cartProduct.getQuantity() + 1);
                 cartProductService.updateCartProduct(cartProduct);
                 break;
             }
@@ -88,11 +88,11 @@ public class CartController {
         User currentUser = userService.findUserByUserName(principal.getName());
         Cart cart = cartService.findCartByUser(currentUser);
         Product product = productService.getProductById(Long.parseLong(productId));
-        CartProduct cp = null;
         for(var cartProduct: cart.getProducts()){
             if(Objects.equals(cartProduct.getProductId(), product.getId())) {
-                cp = cartProduct;
                 cartProduct.setQuantity(Integer.parseInt(quantity));
+                if(cartProduct.getQuantity() > 999)
+                    cartProduct.setQuantity(999);
                 cartProductService.updateCartProduct(cartProduct);
                 break;
             }
