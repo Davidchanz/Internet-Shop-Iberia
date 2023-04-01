@@ -1,0 +1,20 @@
+ body {
+                margin: 0;
+            }
+
+             footer {
+              min-width: 1300px;
+              background-color: #333;
+              color: #fff;
+              text-align: center;
+              padding-top: 20px;
+              padding-bottom: 20px;
+              position: relative;
+              right: 0;
+              left: 0;
+            }
+
+            footer p {
+              font-size: 16px;
+              margin: 0;
+            }
