@@ -27,9 +27,6 @@ public class CartController {
     private UserService userService;
 
     @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -50,7 +47,6 @@ public class CartController {
             cartProducts.add(cartProduct);
         }
         model.addAttribute("products", cartProducts);
-        model.addAttribute("categories", categoryService.findRootCategory());
         return "cart";
     }
 

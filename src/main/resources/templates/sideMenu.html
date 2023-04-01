@@ -3,20 +3,28 @@
   <div th:fragment="sidebar" th:remove="tag">
     <link type="text/css" th:href="@{/styles/sideMenu.css}" rel="stylesheet" />
     <div class="sidebar" id="sidebar">
+      <div th:if="${categories == null}" >
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/loadCategories.js}"></script>
+      </div>
+      <div id="sidemenu">
+      <div th:unless="${categories == null}" >
       <div th:fragment="fragment_categories" th:remove="tag">
-        <div th:if="${not #lists.isEmpty(categories.subCategories)}" >
-          <div th:each="child : ${categories.subCategories}" th:inline="text" th:with="categories = ${child}">
-            <a th:if="${not #lists.isEmpty(child.subCategories)}" href="#" class="active"><span th:text="${child.title}">></span></a>
-            <a th:unless="${not #lists.isEmpty(child.subCategories)}" th:href="@{/products(categoryId=${child.Id})}" ><span th:text="${child.title}">></span></a>
-            <div class="nested">
-              <div th:replace="this::fragment_categories">List Item</div>
+          <div th:if="${not #lists.isEmpty(categories.subCategories)}" >
+            <div th:each="child : ${categories.subCategories}" th:inline="text" th:with="categories = ${child}">
+              <a th:if="${not #lists.isEmpty(child.subCategories)}" href="#" class="active"><span th:text="${child.title}">></span></a>
+              <a th:unless="${not #lists.isEmpty(child.subCategories)}" th:href="@{/products(categoryId=${child.Id})}" ><span th:text="${child.title}">></span></a>
+              <div class="nested">
+                <div th:replace="this::fragment_categories">List Item</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+        <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/sideMenu.js}"></script>
+      </div>
     </div>
     <div id="shadow"></div>
-    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/sideMenu.js}"></script>
   </div>
   <div th:fragment="sidebarButton" th:remove="tag">
     <link type="text/css" th:href="@{/styles/sidebarButton.css}" rel="stylesheet" />

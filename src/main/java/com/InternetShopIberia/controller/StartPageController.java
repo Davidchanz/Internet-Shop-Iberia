@@ -12,12 +12,8 @@ import java.util.List;
 
 @Controller
 public class StartPageController {
-    @Autowired
-    private CategoryService categoryService;
     @GetMapping("/")
     public String showStartPage(Model model) {
-        var categories = categoryService.findRootCategory();
-        model.addAttribute("categories", categories);
         return "startPage";
     }
 }
