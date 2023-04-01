@@ -8,6 +8,7 @@
 
 .products-list li {
   display: flex;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -21,7 +22,6 @@
 .products-list li div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .products-list li h2 {
@@ -36,13 +36,6 @@
   margin: 0;
 }
 
-.price {
-font-style: oblique;
-font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
 .products-list li a {
   text-decoration: none;
   font-size: 20px;
@@ -53,4 +46,11 @@ font-size: 26px;
 
 .products-list li a:hover {
   color: #CD6F27;
+}
+
+.price {
+  font-style: oblique;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }

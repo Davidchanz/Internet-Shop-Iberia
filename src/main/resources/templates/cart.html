@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <div th:insert="/headerBar :: headerBar"></div>
+    <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/products.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/cart.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/comboBox.css}" rel="stylesheet" />
 <body>
@@ -38,7 +40,7 @@
                                 </ul>
                             </div>
                             <input maxlength="3" class="custom-quantity-input"></input>
-                            <button style="margin-left: 10px;" class="custom-quantity-button">Update</button>
+                            <button style="margin-left: 10px;" class="btn btn-primary custom-quantity-button">Update</button>
                             <a>Delete</a>
                         </div>
                     </div>
