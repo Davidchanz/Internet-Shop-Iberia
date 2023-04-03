@@ -11,10 +11,10 @@
         <ul id="products-list" class="products-list">
             <div th:each="product : ${products}">
                 <li>
-                    <div th:if="${product.mainImageSrc != null}">
-                        <img th:src="@{${'/images/' + product.mainImageSrc}}" alt="Product">
+                    <div th:if="${product.mainImage != null}">
+                        <img th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
                     </div>
-                    <div th:unless="${product.mainImageSrc != null}">
+                    <div th:unless="${product.mainImage != null}">
                         <img th:src="@{/images/ProductTemplate.png}" alt="Product">
                     </div>
                     <div>
