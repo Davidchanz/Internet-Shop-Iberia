@@ -29,8 +29,8 @@ public class CartProduct {
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "MAIN_IMAGE")
-    private String mainImageSrc;
+    @OneToOne
+    private ProductImage mainImage;
 
     @Column(name = "QUANTITY")
     private int quantity;

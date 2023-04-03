@@ -29,8 +29,12 @@ public class Product {
     @Column(name = "PID", nullable = false, unique = true)
     private Long pId;
 
-    @Column(name = "MAIN_IMAGE")
-    private String mainImageSrc;
+    @OneToOne
+    private ProductImage mainImage;
+
+    @Column(name = "ALL_IMAGES")
+    @OneToMany
+    private List<ProductImage> allImages;
 
     @OneToOne
     private Category category;

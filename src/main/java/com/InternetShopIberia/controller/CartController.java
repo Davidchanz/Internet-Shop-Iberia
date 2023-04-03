@@ -42,7 +42,7 @@ public class CartController {
             cartProduct.setProductId(product.getProductId());
             cartProduct.setName(product.getName());
             cartProduct.setPrice(product.getPrice());
-            cartProduct.setMainImageSrc(product.getMainImageSrc());
+            cartProduct.setMainImage(product.getMainImage());
             cartProduct.setQuantity(product.getQuantity());
             cartProducts.add(cartProduct);
         }
@@ -70,7 +70,7 @@ public class CartController {
             cartProduct.setProductId(product.getId());
             cartProduct.setName(product.getName());
             cartProduct.setPrice(product.getPrice());
-            cartProduct.setMainImageSrc(product.getMainImageSrc());
+            cartProduct.setMainImage(product.getMainImage());
             cartProduct.setQuantity(1);
             cartProduct = cartProductService.addCartProduct(cartProduct);
             cart.addProduct(cartProduct);
@@ -99,7 +99,7 @@ public class CartController {
             cartProduct.setProductId(p.getProductId());
             cartProduct.setName(p.getName());
             cartProduct.setPrice(p.getPrice());
-            cartProduct.setMainImageSrc(p.getMainImageSrc());
+            cartProduct.setMainImage(p.getMainImage());
             cartProduct.setQuantity(p.getQuantity());
             cartProducts.add(cartProduct);
         }

@@ -1,18 +1,12 @@
 package com.InternetShopIberia;
 
 import com.InternetShopIberia.dto.UserDto;
-import com.InternetShopIberia.model.Cart;
-import com.InternetShopIberia.model.Category;
-import com.InternetShopIberia.model.Product;
-import com.InternetShopIberia.model.ProductDetail;
+import com.InternetShopIberia.model.*;
 import com.InternetShopIberia.service.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +52,7 @@ public class InternetShopIberiaApplication {
 		var productService = context.getBean(ProductService.class);
 		var productDetailService = context.getBean(ProductDetailService.class);
 		var categoryService = context.getBean(CategoryService.class);
+		var productImageService = context.getBean(ProductImageService.class);
 		var category = categoryService.findCategoryById(1L);
 		var categoryA = categoryService.findCategoryById(3L);
 
@@ -68,7 +63,11 @@ public class InternetShopIberiaApplication {
 			product.setDescription("Acer Predator Helios 300 PH315-54-760S Gaming Laptop | Intel i7-11800H | NVIDIA GeForce RTX 3060 GPU | 15.6\" FHD 144Hz 3ms IPS Display | 16GB DDR4 | 512GB SSD | Killer WiFi 6 | RGB Keyboard");
 			product.setPrice(new BigDecimal("2199.00"));
 			product.setPId(i+4804708L);
-			product.setMainImageSrc("71AGOX9MORL._AC_SX466_.jpg");
+
+			ProductImage mPI = new ProductImage();
+			mPI.setPath("71AGOX9MORL._AC_SX466_.jpg");
+			productImageService.addProductImage(mPI);
+			product.setMainImage(mPI);
 
 			ProductDetail pd = new ProductDetail("Screen", "15\"");
 			productDetailService.addProductDetail(pd);
@@ -82,6 +81,15 @@ public class InternetShopIberiaApplication {
 			productDetailService.addProductDetail(pd4);
 			product.setDetails(List.of(pd, pd1, pd2, pd3, pd4));
 
+			List<ProductImage> pIL = new ArrayList<>();
+			for(int j = 1; j <= 5; j++){
+				ProductImage pI = new ProductImage();
+				pI.setPath(j+".jpg");
+				productImageService.addProductImage(pI);
+				pIL.add(pI);
+			}
+			product.setAllImages(pIL);
+
 			productService.addProduct(product);
 		}
 
@@ -94,6 +102,16 @@ public class InternetShopIberiaApplication {
 		ProductDetail pdN = new ProductDetail("Screen", "13\"");
 		productDetailService.addProductDetail(pdN);
 		productN.setDetails(List.of(pdN));
+
+		List<ProductImage> pIL = new ArrayList<>();
+		for(int j = 1; j <= 3; j++){
+			ProductImage pI = new ProductImage();
+			pI.setPath(j+".jpg");
+			productImageService.addProductImage(pI);
+			pIL.add(pI);
+		}
+		productN.setAllImages(pIL);
+
 		productService.addProduct(productN);
 	}
 
