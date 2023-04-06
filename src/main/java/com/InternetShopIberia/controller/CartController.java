@@ -6,6 +6,7 @@ import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
+@Scope("session")
 public class CartController {
     @Autowired
     private CartService cartService;
