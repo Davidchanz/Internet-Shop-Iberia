@@ -49,11 +49,9 @@
     <nav class="navigationBar">
       <ul class="navigationList">
         <li><a><div th:insert="/sideMenu :: sidebarButton"></div></a></li>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/about}">About</a></li>
+        <li><a th:href="@{/}">Contact</a></li>
       </ul>
     </nav>
   </header>
