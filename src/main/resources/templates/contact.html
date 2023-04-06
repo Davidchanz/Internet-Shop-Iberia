@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link type="text/css" th:href="@{/styles/contact.css}" rel="stylesheet" />
+  <title>Contact Us - Internet Shop Iberia</title>
+</head>
+<div th:insert="/headerBar :: headerBar"></div>
+<body>
+<main>
+  <section>
+    <h2>Get In Touch</h2>
+    <p>Have a question or concern? Fill out the form below and we'll get back to you as soon as possible.</p>
+    <form class="support_form" th:action="@{/contact}" th:object="${supportRequest}" method="POST" enctype="utf8">
+      <label for="subject">Subject:</label>
+      <input th:field="*{subject}" type="text" id="subject" name="subject" required>
+      <label for="email">Email:</label>
+      <input th:field="*{email}" type="email" pattern="[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="email" name="email" required>
+      <label for="message">Message:</label>
+      <textarea th:field="*{message}" id="message" name="message" required></textarea>
+      <input type="submit" value="Submit">
+    </form>
+  </section>
+  <section>
+    <h2>Customer Service</h2>
+    <p>If you need immediate assistance, please call our customer service line:</p>
+    <p>1-800-123-4567</p>
+    <p>Our customer service team is available Monday through Friday from 9am to 5pm EST.</p>
+  </section>
+  <section>
+    <h2>Visit Us</h2>
+    <p>If you're in the area, come visit our brick-and-mortar store:</p>
+    <p>123 Main St.</p>
+    <p>New York, NY 10001</p>
+  </section>
+</main>
+</body>
+<div th:insert="/footer :: footer"></div>
+</html>
