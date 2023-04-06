@@ -17,9 +17,13 @@ public class SearchResultsController {
 
     @GetMapping("/search")
     private String showSearchResult(@RequestParam("searchRequest") String searchRequest, HttpSession session, Model model){
-        var products = productService.getAllProductsByName(searchRequest);
-        model.addAttribute("products", products);
-        session.setAttribute("searchRequest", searchRequest);
-        return "products";
+        if(searchRequest.isEmpty())
+            return "redirect:/";
+        else {
+            var products = productService.getAllProductsByName(searchRequest);
+            model.addAttribute("products", products);
+            session.setAttribute("searchRequest", searchRequest);
+            return "products";
+        }
     }
 }
