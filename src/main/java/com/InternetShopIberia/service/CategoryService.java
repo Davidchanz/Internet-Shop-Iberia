@@ -29,4 +29,8 @@ public class CategoryService {
     public Category findCategoryById(Long id){
         return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("No Category with Id="+id));
     }
+
+    public List<Category> findCategoryTitleLike(String title){
+        return categoryRepository.findCategoryTitleLike(title);
+    }
 }

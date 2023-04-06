@@ -1,6 +1,7 @@
 package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.model.SearchResult;
+import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ import java.util.List;
 public class SearchBarController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
     @GetMapping("/s")
     public String getEventCount(@RequestParam("searchInput") String searchInput, ModelMap map) {
         SearchResult searchResult = new SearchResult();
@@ -22,9 +26,13 @@ public class SearchBarController {
         if(searchInput.isEmpty()){
             searchResult.setResults(searchResults);
         }else {
-            var products = productService.getAllProductsByName(searchInput);
+            var products = productService.getAllProductsNameLike(searchInput);
             for (var product : products)
                 searchResults.add(product.getName());
+            var categories = categoryService.findCategoryTitleLike(searchInput);
+            for (var category : categories)
+                searchResults.add(category.getTitle());
+
             searchResult.setResults(searchResults);
         }
         map.addAttribute("searchResults", searchResult);
