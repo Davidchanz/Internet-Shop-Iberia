@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "PRODUCT")
 @Setter
 @Getter
-public class Product {
+public class Product implements Comparable<Product>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -42,4 +42,9 @@ public class Product {
     @Column(name = "DETAIL")
     @OneToMany
     private List<ProductDetail> details;
+
+    @Override
+    public int compareTo(Product product) {
+        return this.getId().compareTo(product.getId());
+    }
 }
