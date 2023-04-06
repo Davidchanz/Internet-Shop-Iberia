@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - Internet Shop Iberia</title>
+  <link type="text/css" th:href="@{/styles/about.css}" rel="stylesheet" />
+</head>
+<div th:insert="/headerBar :: headerBar"></div>
+<body>
+<main>
+  <main>
+    <section class="about">
+      <h2>About Us</h2>
+      <p>Welcome to Internet Shop, your one-stop-shop for all your technology needs. Our mission is to provide our customers with high-quality products at competitive prices, all while delivering exceptional customer service.</p>
+
+      <p>At Internet Shop, we understand that technology is constantly evolving, which is why we always stay up-to-date with the latest trends and advancements in the industry. Our knowledgeable staff is always here to answer any questions you may have and to help you find the perfect product to fit your needs.</p>
+
+      <p>We believe in transparency and honesty, which is why we offer a 30-day money-back guarantee on all our products. If for any reason you are not completely satisfied with your purchase, we will gladly issue you a full refund.</p>
+    </section>
+  </main>
+  <section class="team">
+    <h2>Meet Our Team</h2>
+    <ul class="memberships">
+      <li><img class="membership_image" th:src="@{/images/me.png}"><h3>Giorgi Nodia</h3><p>Creator</p></li>
+    </ul>
+  </section>
+</main>
+</body>
+<div th:insert="/footer :: footer"></div>
+</html>

@@ -1,0 +1,54 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	padding: 20px;
+}
+
+.about {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.about h2 {
+	text-align: center;
+	margin-top: 0;
+}
+
+.about p {
+	line-height: 1.5;
+}
+
+
+.team {
+	max-width: 800px;
+	margin: 0 auto;
+    text-align: center;
+}
+
+.memberships {
+	list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.memberships li {
+	margin-right: 40px;
+}
+
+.memberships li:last-child {
+	margin-right: 0;
+}
+
+.membership_image {
+	width: 100%;
+	max-width: 200px;
+	height: auto;
+	margin-bottom: 10px;
+}
