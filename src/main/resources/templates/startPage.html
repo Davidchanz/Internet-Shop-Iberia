@@ -1,11 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <link type="text/css" th:href="@{/styles/startPage.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/right-arrow.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/left-arrow.css}" rel="stylesheet" />
     <div th:insert="/headerBar :: headerBar"></div>
     <body>
-        <div style="margin-left: 25%;padding: 1px 16px;">
-            <h1>Internet Shop Iberia</h1>
-            <p>Welcome to our shop! Please browse our products and categories.</p>
+        <div class="content">
+            <div class="product-carousel">
+                <button class="slide slide-backward"><i class="gg-push-chevron-left"></i></button>
+                <div class="carousel-wrapper">
+                    <div class="carousel-card">
+                        <img th:src="@{/images/a1.jpg}" alt="Product 1">
+                    </div>
+                    <div class="carousel-card">
+                        <img th:src="@{/images/a2.jpg}" alt="Product 1">
+                    </div>
+                    <div class="carousel-card">
+                        <img th:src="@{/images/a3.jpg}" alt="Product 1">
+                    </div>
+                </div>
+                <button class="slide slide-forward"><i class="gg-push-chevron-right"></i></button>
+            </div>
+
+            <section class="info-section">
+                <h2>Welcome to Our Internet Shop</h2>
+                <p>Our Internet shop is a one-stop destination for all your shopping needs. Whether you're looking for electronics, fashion, home goods, or groceries, we have a wide range of products to choose from.</p>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <img th:src="@{/images/Shipping Icon.png}" alt="Shipping Icon">
+                        <h3>Free Shipping</h3>
+                        <p>Enjoy free shipping on all orders over $50. We offer fast and reliable shipping to anywhere in the world.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <img th:src="@{/images/Support Icon.png}" alt="Support Icon">
+                        <h3>24/7 Customer Support</h3>
+                        <p>Our customer support team is available 24/7 to assist you with any questions or concerns you may have. Contact us by phone, email, or live chat.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <img th:src="@{/images/Secure Icon.png}" alt="Secure Icon">
+                        <h3>Secure Checkout</h3>
+                        <p>Shop with confidence knowing that your information is secure. We use the latest encryption technology to protect your data.</p>
+                    </div>
+                </div>
+
+                <p>At our Internet shop, we believe in providing our customers with the best possible shopping experience. That's why we offer a 30-day money-back guarantee on all purchases. If you're not completely satisfied with your order, simply return it for a full refund.</p>
+            </section>
+
+            <div class="product-list">
+                <div class="list-wrapper">
+                    <div class="list-card">
+                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
+                        <h3>Product 1</h3>
+                        <p>$19.99</p>
+                        <a href="#" class="btn btn-primary">Buy Now</a>
+                    </div>
+                    <div class="list-card">
+                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
+                        <h3>Product 2</h3>
+                        <p>$29.99</p>
+                        <a href="#" class="btn btn-primary">Buy Now</a>
+                    </div>
+                    <div class="list-card">
+                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
+                        <h3>Product 3</h3>
+                        <p>$39.99</p>
+                        <a href="#" class="btn btn-primary">Buy Now</a>
+                    </div>
+                    <div class="list-card">
+                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
+                        <h3>Product 4</h3>
+                        <p>$49.99</p>
+                        <a href="#" class="btn btn-primary">Buy Now</a>
+                    </div>
+                    <div class="list-card">
+                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
+                        <h3>Product 5</h3>
+                        <p>$59.99</p>
+                        <a href="#" class="btn btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
+    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/startPage.js}"></script>
     <div th:insert="/footer :: footer"></div>
 </html>

@@ -3,7 +3,7 @@
     <div th:insert="/headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/products.css}" rel="stylesheet" />
 <body>
-    <main>
+    <main class="content">
         <h1 style="margin-left: 25%;padding: 1px 16px;">Result</h1>
         <ul class="products-list">
             <div th:each="product : ${products}">
