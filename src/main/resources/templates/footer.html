@@ -4,78 +4,30 @@
     <link type="text/css" th:href="@{/styles/footer.css}" rel="stylesheet" />
     <div style="margin-top: 50px;">
         <footer>
-            <p>&copy; 2023 Internet Shop Iberia. All rights reserved.</p>
-            <div>
-                <span th:text="#{lang.change}"></span>:
-                <select id="locales">
-                    <option value=""></option>
-                    <option value="en" th:text="#{lang.eng}"></option>
-                    <option value="fr" th:text="#{lang.fr}"></option>
-                </select>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-                </script>
-                <script type="text/javascript">
-          $(document).ready(function() {
-              $("#locales").change(function () {
-                  var selectedOption = $('#locales').val();
-                  if (selectedOption != ''){
-                     if(window.location.search != ""){
-                        if(window.location.search.includes("lang=")){
-                          var params = window.location.search.substring(0, window.location.search.indexOf("lang")+5);
-                          var curr = window.location.search.substring(window.location.search.indexOf("lang")+7);
-                          window.location.replace(params + selectedOption + curr);
-                        }else{
-                          var userLocal = navigator.language || navigator.userLanguage;
-                          var userCurr = userLocal.substring(3);
-                          window.location.replace(window.location.pathname + window.location.search + '&lang=' + selectedOption + '-' + userCurr);
-                        }
-                    }
-                    else{
-                      var userLocal = navigator.language || navigator.userLanguage;
-                      var userCurr = userLocal.substring(3);
-                      window.location.replace(window.location.pathname + '?lang=' + selectedOption + '-' + userCurr);
-                    }
-                  }
-              });
-          });
-        </script>
-            </div>
-            <div>
-                <span th:text="#{curr.change}"></span>:
-                <select id="curr">
-                    <option value=""></option>
-                    <option value="US" th:text="#{curr.US}"></option>
-                    <option value="FR" th:text="#{curr.FR}"></option>
-                </select>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-                </script>
-                <script type="text/javascript">
-          $(document).ready(function() {
-              $("#curr").change(function () {
-                  var selectedOption = $('#curr').val();
-                  if (selectedOption != ''){
-                     if(window.location.search != ""){
-                        if(window.location.search.includes("lang=")){
-                          if(window.location.search.includes("-")){
-                            var params = window.location.search.substring(0, window.location.search.indexOf("-"));
-                            window.location.replace(params + '-' + selectedOption);
-                          }else
-                            window.location.replace(window.location.search + '-' + selectedOption);
-                        }else{
-                          var userLang = navigator.language || navigator.userLanguage;
-                          userLang = userLang.substring(0, 2);
-                          window.location.replace(window.location.pathname + window.location.search + '&lang=' + userLang + '-' + selectedOption);
-                        }
-                    }
-                    else{
-                      var userLocal = navigator.language || navigator.userLanguage;
-                      var userLang = userLocal.substring(0, 2);
-                      window.location.replace(window.location.pathname + '?lang=' + userLang + '-' + selectedOption);
-                    }
-                  }
-              });
-          });
-        </script>
+            <p>&copy; <span th:text="#{footer}"></span></p>
+            <div class="local-changers">
+                <div>
+                    <span th:text="#{lang.change}"></span>:
+                    <select id="locales">
+                        <option value=""></option>
+                        <option value="en" th:text="#{lang.eng}"></option>
+                        <option value="fr" th:text="#{lang.fr}"></option>
+                        <option value="ru" th:text="#{lang.ru}"></option>
+                    </select>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/languageChange.js}"></script>
+                </div>
+                <div>
+                    <span th:text="#{curr.change}"></span>:
+                    <select id="curr">
+                        <option value=""></option>
+                        <option value="US" th:text="#{curr.US}"></option>
+                        <option value="FR" th:text="#{curr.FR}"></option>
+                        <option value="RU" th:text="#{curr.RU}"></option>
+                    </select>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/currencyChange.js}"></script>
+                </div>
             </div>
         </footer>
     </div>

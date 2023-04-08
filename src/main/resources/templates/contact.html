@@ -9,29 +9,29 @@
 <body>
 <main class="content">
   <section>
-    <h2>Get In Touch</h2>
-    <p>Have a question or concern? Fill out the form below and we'll get back to you as soon as possible.</p>
+    <h2 th:text="#{contact.contact}"></h2>
+    <p th:text="#{contact.description}"></p>
     <form class="support_form" th:action="@{/contact}" th:object="${supportRequest}" method="POST" enctype="utf8">
-      <label for="subject">Subject:</label>
+      <label for="subject" th:text="#{contact.subject}"></label>
       <input th:field="*{subject}" type="text" id="subject" name="subject" required>
-      <label for="email">Email:</label>
+      <label for="email" th:text="#{contact.email}"></label>
       <input th:field="*{email}" type="email" pattern="[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="email" name="email" required>
-      <label for="message">Message:</label>
+      <label for="message" th:text="#{contact.message}"></label>
       <textarea th:field="*{message}" id="message" name="message" required></textarea>
-      <input type="submit" value="Submit">
+      <button type="submit" th:text="#{button.submit}"></button>
     </form>
   </section>
   <section>
-    <h2>Customer Service</h2>
-    <p>If you need immediate assistance, please call our customer service line:</p>
-    <p>1-800-123-4567</p>
-    <p>Our customer service team is available Monday through Friday from 9am to 5pm EST.</p>
+    <h2 th:text="#{contact.customerService}"></h2>
+    <p th:text="#{contact.customerService.description}"></p>
+    <p th:text="#{contact.customerService.phone}"></p>
+    <p th:text="#{contact.customerService.timetable}"></p>
   </section>
   <section>
-    <h2>Visit Us</h2>
-    <p>If you're in the area, come visit our brick-and-mortar store:</p>
-    <p>123 Main St.</p>
-    <p>New York, NY 10001</p>
+    <h2 th:text="#{contact.visit}">Visit Us</h2>
+    <p th:text="#{contact.visit.description}">If you're in the area, come visit our brick-and-mortar store:</p>
+    <p th:text="#{contact.visit.address.street}">123 Main St.</p>
+    <p th:text="#{contact.visit.address.city}">New York, NY 10001</p>
   </section>
 </main>
 </body>

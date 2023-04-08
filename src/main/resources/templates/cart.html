@@ -7,7 +7,7 @@
     <link type="text/css" th:href="@{/styles/comboBox.css}" rel="stylesheet" />
 <body>
     <main class="content">
-        <h1 style="margin-left: 25%;padding: 1px 16px;">Shopping Cart</h1>
+        <h1 style="margin-left: 25%;padding: 1px 16px;" th:text="#{cart}">Shopping Cart</h1>
         <ul id="products-list" class="products-list">
             <div th:each="product : ${products}">
                 <li>
@@ -40,8 +40,8 @@
                                 </ul>
                             </div>
                             <input maxlength="3" class="custom-quantity-input"></input>
-                            <button style="margin-left: 10px;" class="btn btn-primary custom-quantity-button">Update</button>
-                            <a>Delete</a>
+                            <button style="margin-left: 10px;" class="btn btn-primary custom-quantity-button" th:text="#{button.update}"></button>
+                            <a th:text="#{cart.delete}"></a>
                         </div>
                     </div>
                 </li>

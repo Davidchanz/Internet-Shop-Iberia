@@ -54,7 +54,7 @@
             <div class="price">
                 <p class="product-price" th:text="${#numbers.formatCurrency(product.price)}"></p>
                 <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
-                    <button type="submit" class="btn btn-primary">Buy</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
                 </form>
             </div>
         </div>

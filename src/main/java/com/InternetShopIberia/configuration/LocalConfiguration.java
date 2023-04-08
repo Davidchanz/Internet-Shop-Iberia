@@ -2,6 +2,10 @@ package com.InternetShopIberia.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,6 +16,15 @@ import java.util.Locale;
 
 @Configuration
 public class LocalConfiguration implements WebMvcConfigurer {
+
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    CharacterEncodingFilter characterEncodingFilter() {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        return filter;
+    }
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -26,6 +39,7 @@ public class LocalConfiguration implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
