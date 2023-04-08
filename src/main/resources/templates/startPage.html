@@ -24,30 +24,30 @@
             </div>
 
             <section class="info-section">
-                <h2>Welcome to Our Internet Shop</h2>
-                <p>Our Internet shop is a one-stop destination for all your shopping needs. Whether you're looking for electronics, fashion, home goods, or groceries, we have a wide range of products to choose from.</p>
+                <h2 th:text="#{greeting}"></h2>
+                <p th:text="#{greeting.description}"></p>
 
                 <div class="info-grid">
                     <div class="info-box">
                         <img th:src="@{/images/Shipping Icon.png}" alt="Shipping Icon">
-                        <h3>Free Shipping</h3>
-                        <p>Enjoy free shipping on all orders over $50. We offer fast and reliable shipping to anywhere in the world.</p>
+                        <h3 th:text="#{opportunity.shipping}"></h3>
+                        <p th:text="#{opportunity.shipping.description}"></p>
                     </div>
 
                     <div class="info-box">
                         <img th:src="@{/images/Support Icon.png}" alt="Support Icon">
-                        <h3>24/7 Customer Support</h3>
-                        <p>Our customer support team is available 24/7 to assist you with any questions or concerns you may have. Contact us by phone, email, or live chat.</p>
+                        <h3 th:text="#{opportunity.support}"></h3>
+                        <p th:text="#{opportunity.support.description}"></p>
                     </div>
 
                     <div class="info-box">
                         <img th:src="@{/images/Secure Icon.png}" alt="Secure Icon">
-                        <h3>Secure Checkout</h3>
-                        <p>Shop with confidence knowing that your information is secure. We use the latest encryption technology to protect your data.</p>
+                        <h3 th:text="#{opportunity.secure}"></h3>
+                        <p th:text="#{opportunity.secure.description}"></p>
                     </div>
                 </div>
 
-                <p>At our Internet shop, we believe in providing our customers with the best possible shopping experience. That's why we offer a 30-day money-back guarantee on all purchases. If you're not completely satisfied with your order, simply return it for a full refund.</p>
+                <p th:text="#{greeting.ps}"></p>
             </section>
 
             <div class="product-list">

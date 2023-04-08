@@ -36,7 +36,7 @@ label {
 	resize: vertical;
 }
 
-.support_form input[type="submit"] {
+.support_form button[type="submit"] {
 	background-color: #333;
 	color: #fff;
 	padding: 10px 20px;
@@ -45,7 +45,7 @@ label {
 	cursor: pointer;
 }
 
-.support_form input[type="submit"]:hover {
+.support_form button[type="submit"]:hover {
 	background-color: #555;
 }
 

@@ -5,39 +5,34 @@
 <body>
 <div class="content">
   <div class="container">
-    <h1>Registration</h1>
+    <h1 th:text="#{registration}"></h1>
     <form th:action="@{/registration}" th:object="${user}" method="POST" enctype="utf8">
       <div class="form-group">
-        <label for="firstName">First name</label>
-        <input type="text" id="firstName" th:field="*{firstName}"/>
-        <p class="help-block" th:each="error: ${#fields.errors('firstName')}"
-           th:text="${error}">Validation error</p>
+        <label for="firstName" th:text="#{user.firstName}"></label>
+        <input type="text" id="firstName" th:field="*{firstName}" required="required" th:classappend="${#fields.hasErrors('firstName')} ? 'error' : ''"/>
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="help-block"></span>
       </div>
       <div class="form-group">
-        <label for="lastName">Last name</label>
-        <input type="text" id="lastName" th:field="*{lastName}"/>
-        <p class="help-block" th:each="error : ${#fields.errors('lastName')}"
-           th:text="${error}">Validation error</p>
+        <label for="lastName" th:text="#{user.lastName}"></label>
+        <input type="text" id="lastName" th:field="*{lastName}" required="required" th:classappend="${#fields.hasErrors('lastName')} ? 'error' : ''"/>
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="help-block"></span>
       </div>
       <div class="form-group">
-        <label for="userName">User name</label>
-        <input type="text" id="userName" th:field="*{userName}"/>
-        <p class="help-block" th:each="error : ${#fields.errors('userName')}"
-           th:text="${error}">Validation error</p>
+        <label for="userName" th:text="#{user.userName}"></label>
+        <input type="text" id="userName" th:field="*{userName}" required="required" th:classappend="${#fields.hasErrors('userName')} ? 'error' : ''"/>
+        <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="help-block"></span>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" th:field="*{password}"/>
-        <p class="help-block" th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
+        <label for="password" th:text="#{user.password}"></label>
+        <input type="password" id="password" th:field="*{password}" required="required" th:classappend="${#fields.hasErrors('password')} ? 'error' : ''"/>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help-block"></span>
       </div>
       <div class="form-group">
-        <label for="matchingPassword">Confirm password</label>
-        <input type="password" id="matchingPassword" th:field="*{matchingPassword}"/>
-        <p class="help-block" th:each="error : ${#fields.errors('matchingPassword')}"
-           th:text="${error}">Validation error</p>
+        <label for="matchingPassword" th:text="#{registration.confirmPassword}"></label>
+        <input type="password" id="matchingPassword" th:field="*{matchingPassword}" required="required" th:classappend="${#fields.hasErrors('matchingPassword')} ? 'error' : ''"/>
+        <span th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}" class="help-block"></span>
       </div>
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-primary" th:text="#{button.register}"></button>
     </form>
   </div>
 </div>

@@ -5,7 +5,7 @@
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
     <div class="header-wrapper">
-      <a class="logo" th:href="@{/}">Internet-Shop Iberia</a>
+      <a class="logo" th:href="@{/}" th:text="#{title}"></a>
       <div class="search-bar">
         <form style="display: flex; width: 100%;" method="get" th:action="@{/search}">
           <input class="search-input" type="text" th:value="${session.searchRequest}" name="searchRequest" placeholder="Search...">
@@ -42,16 +42,13 @@
           <button class="cart-button" type="submit"><img width="40px" th:src="@{/images/cart.png}"></button>
         </form>
       </div>
-      <div>
-        Language
-      </div>
     </div>
     <nav class="navigationBar">
       <ul class="navigationList">
         <li><a><div th:insert="/sideMenu :: sidebarButton"></div></a></li>
-        <li><a th:href="@{/}">Home</a></li>
-        <li><a th:href="@{/about}">About</a></li>
-        <li><a th:href="@{/contact}">Contact</a></li>
+        <li><a th:href="@{/}" th:text="#{home}"></a></li>
+        <li><a th:href="@{/about}" th:text="#{about}"></a></li>
+        <li><a th:href="@{/contact}" th:text="#{contact}"></a></li>
       </ul>
     </nav>
   </header>
