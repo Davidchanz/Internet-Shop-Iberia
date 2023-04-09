@@ -36,7 +36,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors) {
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("registration", "user", userDto);
         try {
             User registered = userService.registerNewUserAccount(userDto);
             Cart cart = new Cart();

@@ -23,12 +23,17 @@ public class UserService {
             throw new UserAlreadyExistException("There is an account with that email address: "
                     + userDto.getUserName());
         }
+        if (emailExists(userDto.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address: "
+                    + userDto.getEmail());
+        }
 
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setPassword(encryptPassword(userDto.getPassword()));
         user.setUsername(userDto.getUserName());
+        user.setEmail(userDto.getEmail());
         //user.setRoles(List.of("ROLE_USER"));
 
         return userRepository.save(user);
@@ -43,5 +48,9 @@ public class UserService {
 
     public User findUserByUserName(String userName){
         return userRepository.findByUsername(userName);
+    }
+
+    private boolean emailExists(String email) {
+        return userRepository.findByEmail(email) != null;
     }
 }

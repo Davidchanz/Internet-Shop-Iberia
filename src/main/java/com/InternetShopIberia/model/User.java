@@ -33,6 +33,9 @@ public class User {
     @NotEmpty
     private boolean admin;
 
+    @Column(unique = true, nullable = false)
+    private String email;
+
     /*@Column(name = "ROLES")
     private List<String> roles;*/
 }

@@ -1,5 +1,6 @@
 package com.InternetShopIberia.configuration;
 
+import com.InternetShopIberia.service.ShopUsersDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,7 +23,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Inject
-    private UserDetailsService userDetailsService;
+    private ShopUsersDetailService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -46,8 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
                 .and()
                 .rememberMe()
+                .rememberMeParameter("remember-me")
                 .key("uniqueAndSecretKey")
                 .userDetailsService(userDetailsService)
                 .tokenValiditySeconds(86400)
