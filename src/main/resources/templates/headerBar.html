@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="headerBar" th:remove="tag">
+  <div th:insert="/error :: errorSection"></div>
+
   <link type="text/css" th:href="@{/styles/headerBar.css}" rel="stylesheet" />
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
