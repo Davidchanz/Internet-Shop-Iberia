@@ -22,6 +22,11 @@
         <input type="text" id="userName" th:field="*{userName}" required="required" th:classappend="${#fields.hasErrors('userName')} ? 'error' : ''"/>
         <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="help-block"></span>
       </div>
+      <div>
+        <label th:text="#{label.user.email}">email</label>
+        <input type="email" th:field="*{email}"/>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block"></span>
+      </div>
       <div class="form-group">
         <label for="password" th:text="#{user.password}"></label>
         <input type="password" id="password" th:field="*{password}" required="required" th:classappend="${#fields.hasErrors('password')} ? 'error' : ''"/>

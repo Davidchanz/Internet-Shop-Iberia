@@ -2,6 +2,7 @@ package com.InternetShopIberia.dto;
 
 import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.validation.annotation.PasswordMatches;
+import com.InternetShopIberia.validation.annotation.ValidEmail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,4 +33,9 @@ public class UserDto {
     @NotNull
     @NotEmpty
     private String matchingPassword;
+
+    @ValidEmail
+    @NotNull
+    @NotEmpty
+    private String email;
 }

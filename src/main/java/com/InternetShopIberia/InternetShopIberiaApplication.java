@@ -28,6 +28,7 @@ public class InternetShopIberiaApplication {
 
 		UserDto user = new UserDto();
 		user.setUserName("Admin");
+		user.setEmail("admin@mail.com");
 		user.setFirstName("Admin");
 		user.setLastName("Admin");
 		user.setPassword("Admin");
@@ -36,6 +37,7 @@ public class InternetShopIberiaApplication {
 
 		UserDto user2 = new UserDto();
 		user2.setUserName("GN");
+		user2.setEmail("GN@mail.com");
 		user2.setFirstName("Giorgi");
 		user2.setLastName("Nodia");
 		user2.setPassword("123");
