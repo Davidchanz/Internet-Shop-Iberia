@@ -1,0 +1,36 @@
+#error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  display: none;
+}
+
+.error-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.error-container img {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.error-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.error-container p {
+  margin-bottom: 20px;
+}
