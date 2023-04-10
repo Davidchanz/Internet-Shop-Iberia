@@ -1,6 +1,12 @@
+.product-filter-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
 .products-list {
   list-style: none;
-  margin: auto;
+  margin: 30px;
   padding: 0;
   width: 50%;
   min-width: 500px;

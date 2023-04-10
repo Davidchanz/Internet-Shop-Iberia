@@ -1,5 +1,6 @@
 package com.InternetShopIberia.controller;
 
+import com.InternetShopIberia.dto.ProductList;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
@@ -34,7 +35,8 @@ public class SearchResultsController {
             for(var category: categories){
                 uniqueProducts.addAll(productService.getAllProductsInCategoryById(category.getId()));
             }
-            List<Product> productList = new ArrayList<>(uniqueProducts);
+            ProductList productList = new ProductList();
+            productList.setProducts(uniqueProducts.stream().toList());
             model.addAttribute("products", productList);
             session.setAttribute("searchRequest", searchRequest);
             return "products";

@@ -8,13 +8,13 @@
                 <h2>Oops! Something went wrong.</h2>
                 <p>We're sorry, it looks like there was an error.</p>
                 <p>Please try again later or contact our customer support.</p>
-                <div th:if="${error != null}">
-                    <p th:text="${error.message}"></p>
+                <div th:if="${userError != null}">
+                    <p th:text="${userError.message}"></p>
                 </div>
                 <button id="errorBtn" class="btn btn-primary">Go back to home</button>
             </div>
         </section>
-        <div th:if="${error != null}">
+        <div th:if="${userError != null}">
             <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/error.js}"></script>
         </div>
     </div>

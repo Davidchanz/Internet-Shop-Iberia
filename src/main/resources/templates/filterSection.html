@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="filter" th:remove="tag">
+    <link type="text/css" th:href="@{/styles/filterSection.css}" rel="stylesheet" />
+    <div class="filter-section">
+      <h2>Filter</h2>
+      <form th:action="@{/products/filter}" th:object="${products}" method="get">
+        <input style="display: none;" type="text" th:value="*{products}" th:field="*{products}">
+        <div class="filter-category" id="filter-category">
+          <div th:if="${filters != null}">
+            <div th:each="filter : ${filters.filters}">
+              <h3 th:text="${filter.name}"></h3>
+              <ul>
+                <div th:each="filterValue : ${filter.values}">
+                  <li>
+                    <input type="checkbox" th:name="${filter.name}" th:id="${filterValue}" th:value="${filterValue}">
+                    <label th:for="${filterValue}" th:text="${filterValue}"></label>
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="filter-button">Filter</button>
+      </form>
+    </div>
+  </div>
+</html>

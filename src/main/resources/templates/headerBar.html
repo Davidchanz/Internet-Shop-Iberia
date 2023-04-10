@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="headerBar" th:remove="tag">
   <div th:insert="/error :: errorSection"></div>
-
   <link type="text/css" th:href="@{/styles/headerBar.css}" rel="stylesheet" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
     <div class="header-wrapper">
@@ -44,16 +44,14 @@
       </div>
       <div id="cart-quantity-form">
         <div th:if="${cartQuantity == null}" >
-          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-          <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/loadCartQuantity.js}"></script>
+          <script referrerpolicy="origin" th:src="@{/scripts/loadCartQuantity.js}"></script>
         </div>
         <form method="get" th:action="@{/cart}">
           <button class="cart-button" type="submit"><img width="50px" th:src="@{/images/cart2.png}">
             <span id="cart-quantity" th:text="${cartQuantity}"></span>
           </button>
         </form>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-        <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/updateCartQuantityPosition.js}"></script>
+        <script referrerpolicy="origin" th:src="@{/scripts/updateCartQuantityPosition.js}"></script>
       </div>
     </div>
     <nav class="navigationBar">
@@ -65,7 +63,6 @@
       </ul>
     </nav>
   </header>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/headerBar.js}"></script>
+  <script referrerpolicy="origin" th:src="@{/scripts/headerBar.js}"></script>
 </div>
 </html>
