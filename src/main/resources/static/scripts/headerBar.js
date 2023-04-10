@@ -27,3 +27,8 @@ for (var i = 0; i < dropdownLinks.length; i++) {
 		updateSearchResults(this.textContent);
 	});
 }
+
+var logoImage = document.querySelector('#header-logo-img');
+logoImage.onclick = function(){
+    window.location.href = "/";
+}
