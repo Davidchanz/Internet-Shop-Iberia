@@ -29,4 +29,12 @@ public class Cart {
     public void addProduct(CartProduct product){
         this.products.add(product);
     }
+
+    public int getQuantity(){
+        int quantity = 0;
+        for (var product: getProducts()){
+            quantity += product.getQuantity();
+        }
+        return quantity;
+    }
 }

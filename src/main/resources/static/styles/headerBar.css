@@ -128,3 +128,9 @@ header {
   border-style: none;
   cursor: pointer;
 }
+
+#cart-quantity{
+    color: #FEBD69;
+    position: absolute;
+    font-size: 28px;
+}
