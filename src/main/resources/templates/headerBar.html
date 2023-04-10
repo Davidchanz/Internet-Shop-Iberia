@@ -7,7 +7,10 @@
   <header>
     <div th:insert="/sideMenu :: sidebar"></div>
     <div class="header-wrapper">
-      <a class="logo" th:href="@{/}" th:text="#{title}"></a>
+      <div class="logo-wrapper">
+        <img id="header-logo-img" style="width: 70px; cursor: pointer;" th:src="@{/images/logo.png}">
+        <a class="logo" th:href="@{/}" th:text="#{title}"></a>
+      </div>
       <div class="search-bar">
         <form style="display: flex; width: 100%;" method="get" th:action="@{/search}">
           <input class="search-input" type="text" th:value="${session.searchRequest}" name="searchRequest" placeholder="Search...">
