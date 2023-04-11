@@ -24,7 +24,7 @@ public class SearchResultsController {
     private CategoryService categoryService;
 
     @GetMapping("/search")
-    private String showSearchResult(@RequestParam("searchRequest") String searchRequest, HttpSession session, Model model){
+    private String showSearchResult(@RequestParam("searchRequest") String searchRequest, Model model){
         if(searchRequest.isEmpty())
             return "redirect:/";
         else {
@@ -38,8 +38,8 @@ public class SearchResultsController {
             ProductList productList = new ProductList();
             productList.setProducts(uniqueProducts.stream().toList());
             model.addAttribute("products", productList);
-            session.setAttribute("searchRequest", searchRequest);
-            return "products";
+            model.addAttribute("searchRequest", searchRequest);
+            return "redirect:/products?searchRequest=" + searchRequest;
         }
     }
 }
