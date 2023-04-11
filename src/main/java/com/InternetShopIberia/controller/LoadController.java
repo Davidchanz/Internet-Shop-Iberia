@@ -52,45 +52,4 @@ public class LoadController {
         map.addAttribute("cartQuantity", cart.getQuantity());
         return "headerBar :: #cart-quantity-form";
     }
-
-    @GetMapping("/f")
-    public String loadFilters(@RequestParam("categoryId") String categoryId, HttpSession session, ModelMap map){//pass products
-        TreeMap<String, TreeSet<String>> details = new TreeMap<>();
-        List<Product> productList = null;
-        if(session.getAttribute("searchRequest") != null) {
-            String searchRequest = (String) session.getAttribute("searchRequest");
-            productList = productService.getAllProductsNameLike(searchRequest);
-        }else {
-            productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
-        }
-
-        for(var product: productList) {
-            for (var detail : product.getDetails()) {
-                if (details.get(detail.getName()) == null) {
-                    var value = new TreeSet<String>();
-                    value.add(detail.getValue());
-                    details.put(detail.getName(), value);
-                } else {
-                    details.get(detail.getName()).add(detail.getValue());
-                }
-            }
-        }
-
-        FilterList filters = new FilterList();
-        filters.setFilters(new ArrayList<>());
-        details.forEach((s, strings) -> {
-            Filter filter = new Filter();
-            filter.setName(s);
-            List<FilterValue> filterValues = new ArrayList<>();
-            strings.forEach(value -> {
-                filterValues.add(new FilterValue(value, false));
-            });
-            filter.setValues(filterValues);
-            filters.getFilters().add(filter);
-        });
-
-        map.addAttribute("filters", filters);
-
-        return "filterSection :: #filter-category";
-    }
 }

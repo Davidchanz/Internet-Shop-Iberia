@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 public class StartPageController {
     @GetMapping("/")
     public String showStartPage(HttpSession session, Model model) {
-        session.removeAttribute("searchRequest");
 
         //Error handle and show
         /*try{}

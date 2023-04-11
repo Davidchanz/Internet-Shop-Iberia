@@ -5,14 +5,18 @@
     <div class="filter-section">
       <h2>Filter</h2>
       <form th:action="@{/products/filter}" method="get">
-        <input style="display: none;" type="text" th:name="categoryId" th:id="categoryId" value="0">
+        <input style="display: none;" type="checkbox" th:name="categoryId" th:id="categoryId" value="">
+        <input style="display: none;" type="checkbox" th:name="searchRequest" th:id="searchRequest" value="">
         <script th:inline="javascript">
           var params = window.location.search;
           if(params.includes("categoryId=")){
-            var categoryId = params.substring(params.indexOf("=")+1);
+            var categoryId = params.split("&")[0].substring(params.indexOf("=")+1);
             document.getElementById("categoryId").value = categoryId;
+            document.getElementById("categoryId").checked = true;
           }else{
-            document.getElementById("categoryId").value = "";
+            var searchRequest = params.split("&")[0].substring(params.indexOf("=")+1);
+            document.getElementById("searchRequest").value = searchRequest;
+            document.getElementById("searchRequest").checked = true;
           }
         </script>
         <div class="filter-category" id="filter-category">
