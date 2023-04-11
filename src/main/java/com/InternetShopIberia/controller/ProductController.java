@@ -3,7 +3,9 @@ package com.InternetShopIberia.controller;
 import com.InternetShopIberia.dto.Filter;
 import com.InternetShopIberia.dto.FilterList;
 import com.InternetShopIberia.dto.ProductList;
+import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
+import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -25,7 +28,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam(value = "categoryId", required = false) String categoryId, @ModelAttribute("filters") FilterList filterList, @ModelAttribute("products") ProductList productList, Model model){
-        if(categoryId != null) {
+        if(categoryId != null && !categoryId.isEmpty()) {
             ProductList products = new ProductList();
             products.setProducts(new ArrayList<>());
             products.getProducts().addAll(productService.getAllProductsInCategoryById(Long.parseLong(categoryId)));
@@ -39,9 +42,17 @@ public class ProductController {
     }
 
     @GetMapping("/products/filter")
-    public RedirectView filterProducts(@RequestParam Map<String,String> allRequestParams, @ModelAttribute("products") ProductList productList, RedirectAttributes redirectAttributes){
+    public RedirectView filterProducts(@RequestParam Map<String,String> allRequestParams, HttpSession session, RedirectAttributes redirectAttributes){
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
-        for(var product: productList.getProducts()){
+        List<Product> productList = null;
+        if(session.getAttribute("searchRequest") != null) {
+            String searchRequest = (String) session.getAttribute("searchRequest");
+            productList = productService.getAllProductsNameLike(searchRequest);
+        }else {
+            String categoryId = allRequestParams.get("categoryId");
+            productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
+        }
+        for(var product: productList){
             for(var detail: product.getDetails()){
                 if(details.get(detail.getName()) == null){
                     var value = new TreeSet<String>();
@@ -52,6 +63,7 @@ public class ProductController {
                 }
             }
         }
+
         FilterList filters = new FilterList();
         filters.setFilters(new ArrayList<>());
         details.forEach((s, strings) -> {
@@ -60,14 +72,14 @@ public class ProductController {
             filter.setValues(strings.stream().toList());
             filters.getFilters().add(filter);
         });
+
         redirectAttributes.addFlashAttribute("filters", filters);
 
         allRequestParams.remove("products");
-        System.out.println(allRequestParams);
 
         ProductList filteredProducts = new ProductList();
         filteredProducts.setProducts(new ArrayList<>());
-        for(var product: productList.getProducts()) {
+        for(var product: productList) {
             AtomicBoolean fit = new AtomicBoolean(true);
             for(var detail: product.getDetails()) {
                 allRequestParams.forEach((name, value) -> {
@@ -86,11 +98,13 @@ public class ProductController {
                 filteredProducts.getProducts().add(product);
             }
         }
-
-
         redirectAttributes.addFlashAttribute("products", filteredProducts);
+        RedirectView redirView;
+        if(allRequestParams.get("categoryId") != null && !allRequestParams.get("categoryId").isEmpty()) {
+            redirView = new RedirectView("/products?categoryId="+allRequestParams.get("categoryId"), true);
+        }else
+            redirView = new RedirectView("/products", true);
 
-        final RedirectView redirectView = new RedirectView("/products", true);
-        return redirectView;
+        return redirView;
     }
 }

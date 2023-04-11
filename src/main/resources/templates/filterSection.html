@@ -4,8 +4,17 @@
     <link type="text/css" th:href="@{/styles/filterSection.css}" rel="stylesheet" />
     <div class="filter-section">
       <h2>Filter</h2>
-      <form th:action="@{/products/filter}" th:object="${products}" method="get">
-        <input style="display: none;" type="text" th:value="*{products}" th:field="*{products}">
+      <form th:action="@{/products/filter}" method="get">
+        <input style="display: none;" type="text" th:name="categoryId" th:id="categoryId" value="0">
+        <script th:inline="javascript">
+          var params = window.location.search;
+          if(params.includes("categoryId=")){
+            var categoryId = params.substring(params.indexOf("=")+1);
+            document.getElementById("categoryId").value = categoryId;
+          }else{
+            document.getElementById("categoryId").value = "";
+          }
+        </script>
         <div class="filter-category" id="filter-category">
           <div th:if="${filters != null}">
             <div th:each="filter : ${filters.filters}">
@@ -21,7 +30,7 @@
             </div>
           </div>
         </div>
-        <button class="filter-button">Filter</button>
+        <button id="filter-button" class="filter-button">Filter</button>
       </form>
     </div>
   </div>
