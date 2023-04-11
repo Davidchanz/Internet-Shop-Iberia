@@ -1,4 +1,4 @@
-function updateFilters(params) {
+function updateFilters(categoryId) {
     $(document).ready(function(){
       $.ajaxSetup({
         headers: {
@@ -6,15 +6,10 @@ function updateFilters(params) {
         }
       });
     });
-    $("#filter-category").load("f", params);
+    $("#filter-category").load("f", categoryId);
 }
 
-var iDs = document.getElementsByClassName("product-id");
-let params = "products=";
-for(var i = 0; i < iDs.length; i++){
-    params += iDs[i].innerText + ",";
-}
+var params = window.location.search;
+var categoryId = "categoryId=" + params.substring(params.indexOf("=")+1);
 
-updateFilters(params);
-
-console.log("sdfg");
+updateFilters(categoryId);

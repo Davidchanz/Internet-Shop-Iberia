@@ -2,6 +2,7 @@ package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.Filter;
 import com.InternetShopIberia.dto.FilterList;
+import com.InternetShopIberia.dto.FilterValue;
 import com.InternetShopIberia.model.Cart;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.User;
@@ -53,16 +54,16 @@ public class LoadController {
     }
 
     @GetMapping("/f")
-    public String loadFilters(@RequestParam("products") String products, ModelMap map){//pass products
-        ArrayList<Product> productList = new ArrayList<>();
-        products = products.substring(0, products.length()-1);
-        Scanner sc = new Scanner(products);
-        sc.useDelimiter(",");
-        while (sc.hasNext()){
-            productList.add(productService.getProductById(Long.parseLong(sc.next())));
+    public String loadFilters(@RequestParam("categoryId") String categoryId, HttpSession session, ModelMap map){//pass products
+        TreeMap<String, TreeSet<String>> details = new TreeMap<>();
+        List<Product> productList = null;
+        if(session.getAttribute("searchRequest") != null) {
+            String searchRequest = (String) session.getAttribute("searchRequest");
+            productList = productService.getAllProductsNameLike(searchRequest);
+        }else {
+            productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
         }
 
-        TreeMap<String, TreeSet<String>> details = new TreeMap<>();
         for(var product: productList) {
             for (var detail : product.getDetails()) {
                 if (details.get(detail.getName()) == null) {
@@ -80,10 +81,16 @@ public class LoadController {
         details.forEach((s, strings) -> {
             Filter filter = new Filter();
             filter.setName(s);
-            filter.setValues(strings.stream().toList());
+            List<FilterValue> filterValues = new ArrayList<>();
+            strings.forEach(value -> {
+                filterValues.add(new FilterValue(value, false));
+            });
+            filter.setValues(filterValues);
             filters.getFilters().add(filter);
         });
+
         map.addAttribute("filters", filters);
+
         return "filterSection :: #filter-category";
     }
 }

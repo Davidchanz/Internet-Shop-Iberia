@@ -4,8 +4,17 @@
     <link type="text/css" th:href="@{/styles/filterSection.css}" rel="stylesheet" />
     <div class="filter-section">
       <h2>Filter</h2>
-      <form th:action="@{/products/filter}" th:object="${products}" method="get">
-        <input style="display: none;" type="text" th:value="*{products}" th:field="*{products}">
+      <form th:action="@{/products/filter}" method="get">
+        <input style="display: none;" type="text" th:name="categoryId" th:id="categoryId" value="0">
+        <script th:inline="javascript">
+          var params = window.location.search;
+          if(params.includes("categoryId=")){
+            var categoryId = params.substring(params.indexOf("=")+1);
+            document.getElementById("categoryId").value = categoryId;
+          }else{
+            document.getElementById("categoryId").value = "";
+          }
+        </script>
         <div class="filter-category" id="filter-category">
           <div th:if="${filters != null}">
             <div th:each="filter : ${filters.filters}">
@@ -13,15 +22,15 @@
               <ul>
                 <div th:each="filterValue : ${filter.values}">
                   <li>
-                    <input type="checkbox" th:name="${filter.name}" th:id="${filterValue}" th:value="${filterValue}">
-                    <label th:for="${filterValue}" th:text="${filterValue}"></label>
+                    <input type="checkbox" th:name="${filter.name}" th:id="${filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
+                    <label th:for="${filterValue.value}" th:text="${filterValue.value}"></label>
                   </li>
                 </div>
               </ul>
             </div>
           </div>
         </div>
-        <button class="filter-button">Filter</button>
+        <button id="filter-button" class="filter-button">Filter</button>
       </form>
     </div>
   </div>
