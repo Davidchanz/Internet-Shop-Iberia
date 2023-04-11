@@ -22,8 +22,8 @@
               <ul>
                 <div th:each="filterValue : ${filter.values}">
                   <li>
-                    <input type="checkbox" th:name="${filter.name}" th:id="${filterValue}" th:value="${filterValue}">
-                    <label th:for="${filterValue}" th:text="${filterValue}"></label>
+                    <input type="checkbox" th:name="${filter.name}" th:id="${filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
+                    <label th:for="${filterValue.value}" th:text="${filterValue.value}"></label>
                   </li>
                 </div>
               </ul>

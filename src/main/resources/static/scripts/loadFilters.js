@@ -1,4 +1,4 @@
-function updateFilters(params) {
+function updateFilters(categoryId) {
     $(document).ready(function(){
       $.ajaxSetup({
         headers: {

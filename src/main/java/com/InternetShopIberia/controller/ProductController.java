@@ -2,6 +2,7 @@ package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.Filter;
 import com.InternetShopIberia.dto.FilterList;
+import com.InternetShopIberia.dto.FilterValue;
 import com.InternetShopIberia.dto.ProductList;
 import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
@@ -33,7 +34,10 @@ public class ProductController {
             products.setProducts(new ArrayList<>());
             products.getProducts().addAll(productService.getAllProductsInCategoryById(Long.parseLong(categoryId)));
             model.addAttribute("products", products);
-            model.addAttribute("filters", null);
+            if(filterList.getFilters() == null)
+                model.addAttribute("filters", null);
+            else
+                model.addAttribute("filters", filterList);
         }else {
             model.addAttribute("filters", filterList);
             model.addAttribute("products", productList);
@@ -69,13 +73,19 @@ public class ProductController {
         details.forEach((s, strings) -> {
             Filter filter = new Filter();
             filter.setName(s);
-            filter.setValues(strings.stream().toList());
+            List<FilterValue> filterValues = new ArrayList<>();
+            strings.forEach(value -> {
+                if(allRequestParams.containsValue(value)) {
+                    filterValues.add(new FilterValue(value, true));
+                }
+                else
+                    filterValues.add(new FilterValue(value, false));
+            });
+            filter.setValues(filterValues);
             filters.getFilters().add(filter);
         });
 
         redirectAttributes.addFlashAttribute("filters", filters);
-
-        allRequestParams.remove("products");
 
         ProductList filteredProducts = new ProductList();
         filteredProducts.setProducts(new ArrayList<>());

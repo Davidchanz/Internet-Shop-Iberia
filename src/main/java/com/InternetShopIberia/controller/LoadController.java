@@ -2,6 +2,7 @@ package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.Filter;
 import com.InternetShopIberia.dto.FilterList;
+import com.InternetShopIberia.dto.FilterValue;
 import com.InternetShopIberia.model.Cart;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.User;
@@ -80,7 +81,11 @@ public class LoadController {
         details.forEach((s, strings) -> {
             Filter filter = new Filter();
             filter.setName(s);
-            filter.setValues(strings.stream().toList());
+            List<FilterValue> filterValues = new ArrayList<>();
+            strings.forEach(value -> {
+                filterValues.add(new FilterValue(value, false));
+            });
+            filter.setValues(filterValues);
             filters.getFilters().add(filter);
         });
 
