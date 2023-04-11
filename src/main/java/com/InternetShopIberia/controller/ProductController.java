@@ -28,35 +28,45 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public String showProductCategoryPage(@RequestParam(value = "categoryId", required = false) String categoryId, @ModelAttribute("filters") FilterList filterList, @ModelAttribute("products") ProductList productList, Model model){
-        if(categoryId != null && !categoryId.isEmpty()) {
+    public String showProductCategoryPage(@RequestParam(value = "categoryId", required = false) String categoryId, @RequestParam Map<String,String> allRequestParams, @ModelAttribute("filters") FilterList filterList, @ModelAttribute("products") ProductList productList, HttpSession session, Model model){
+        allRequestParams.remove("categoryId");
+        if(categoryId != null && !categoryId.isEmpty() && allRequestParams.isEmpty()) {
             ProductList products = new ProductList();
             products.setProducts(new ArrayList<>());
             products.getProducts().addAll(productService.getAllProductsInCategoryById(Long.parseLong(categoryId)));
             model.addAttribute("products", products);
-            if(filterList.getFilters() == null)
-                model.addAttribute("filters", null);
-            else
-                model.addAttribute("filters", filterList);
+            model.addAttribute("filters", null);
         }else {
-            model.addAttribute("filters", filterList);
-            model.addAttribute("products", productList);
+            allRequestParams.remove("categoryId");
+            var filteredProducts = getProducts(session, categoryId, allRequestParams);
+
+            TreeMap<String, TreeSet<String>> details = new TreeMap<>();
+            for(var product: filteredProducts.getProducts()){
+                for(var detail: product.getDetails()){
+                    if(details.get(detail.getName()) == null){
+                        var value = new TreeSet<String>();
+                        value.add(detail.getValue());
+                        details.put(detail.getName(), value);
+                    }else {
+                        details.get(detail.getName()).add(detail.getValue());
+                    }
+                }
+            }
+            var filters = getFilters(details, allRequestParams);
+
+            model.addAttribute("filters", filters);
+            model.addAttribute("products", filteredProducts);
         }
         return "products";
     }
 
     @GetMapping("/products/filter")
     public RedirectView filterProducts(@RequestParam Map<String,String> allRequestParams, HttpSession session, RedirectAttributes redirectAttributes){
+        var filteredProducts = getProducts(session, allRequestParams.get("categoryId"), allRequestParams);
+        redirectAttributes.addFlashAttribute("products", filteredProducts);
+
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
-        List<Product> productList = null;
-        if(session.getAttribute("searchRequest") != null) {
-            String searchRequest = (String) session.getAttribute("searchRequest");
-            productList = productService.getAllProductsNameLike(searchRequest);
-        }else {
-            String categoryId = allRequestParams.get("categoryId");
-            productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
-        }
-        for(var product: productList){
+        for(var product: filteredProducts.getProducts()){
             for(var detail: product.getDetails()){
                 if(details.get(detail.getName()) == null){
                     var value = new TreeSet<String>();
@@ -67,7 +77,27 @@ public class ProductController {
                 }
             }
         }
+        var filters = getFilters(details, allRequestParams);
+        redirectAttributes.addFlashAttribute("filters", filters);
 
+
+        RedirectView redirView;
+        StringBuilder filterStr = new StringBuilder();
+        allRequestParams.forEach((name, value) -> {
+            if(!name.equals("categoryId") && !name.equals("searchRequest"))
+                filterStr.append(name).append("=").append(value).append("&");
+        });
+        if(filterStr.length() != 0)
+            filterStr.deleteCharAt(filterStr.length()-1);
+        if(allRequestParams.get("categoryId") != null && !allRequestParams.get("categoryId").isEmpty()) {
+            redirView = new RedirectView("/products?categoryId="+allRequestParams.get("categoryId") + "&" + filterStr.toString(), true);
+        }else
+            redirView = new RedirectView("/products?" + filterStr.toString(), true);
+
+        return redirView;
+    }
+
+    private FilterList getFilters(TreeMap<String, TreeSet<String>> details, Map<String,String> allRequestParams){
         FilterList filters = new FilterList();
         filters.setFilters(new ArrayList<>());
         details.forEach((s, strings) -> {
@@ -84,8 +114,17 @@ public class ProductController {
             filter.setValues(filterValues);
             filters.getFilters().add(filter);
         });
+        return filters;
+    }
 
-        redirectAttributes.addFlashAttribute("filters", filters);
+    private ProductList getProducts(HttpSession session, String categoryId, Map<String,String> allRequestParams){
+        List<Product> productList = null;
+        if(session.getAttribute("searchRequest") != null) {
+            String searchRequest = (String) session.getAttribute("searchRequest");
+            productList = productService.getAllProductsNameLike(searchRequest);
+        }else {
+            productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
+        }
 
         ProductList filteredProducts = new ProductList();
         filteredProducts.setProducts(new ArrayList<>());
@@ -108,13 +147,6 @@ public class ProductController {
                 filteredProducts.getProducts().add(product);
             }
         }
-        redirectAttributes.addFlashAttribute("products", filteredProducts);
-        RedirectView redirView;
-        if(allRequestParams.get("categoryId") != null && !allRequestParams.get("categoryId").isEmpty()) {
-            redirView = new RedirectView("/products?categoryId="+allRequestParams.get("categoryId"), true);
-        }else
-            redirView = new RedirectView("/products", true);
-
-        return redirView;
+        return filteredProducts;
     }
 }

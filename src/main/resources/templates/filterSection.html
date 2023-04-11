@@ -9,7 +9,7 @@
         <script th:inline="javascript">
           var params = window.location.search;
           if(params.includes("categoryId=")){
-            var categoryId = params.substring(params.indexOf("=")+1);
+            var categoryId = params.split("&")[0].substring(params.indexOf("=")+1);
             document.getElementById("categoryId").value = categoryId;
           }else{
             document.getElementById("categoryId").value = "";
