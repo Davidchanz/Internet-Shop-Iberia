@@ -2,9 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <div th:insert="/headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/products.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/sortingComboBox.css}" rel="stylesheet" />
 <body>
     <main class="content">
         <h1 style="margin-left: 25%;padding: 1px 16px;" th:text="#{products.result}"></h1>
+        <div class="sorting-combo-box">
+            <select class="sortBox" id="sortBox">
+                <div th:each="sort : ${sortingList.sorts}">
+                    <option th:value="${sort.sortBy}" th:text="${sort.sortBy}" th:selected="${sort.selected ? true : false}"></option>
+                </div>
+            </select>
+            <div class="sorting-indicator">
+                <div th:if="${sortingList.sortTo == 'asc'}">
+                    <span id="asc" class="asc active">▲</span>
+                    <span id="desc" class="desc">▼</span>
+                </div>
+                <div th:unless="${sortingList.sortTo == 'asc'}">
+                    <span id="asc" class="asc">▲</span>
+                    <span id="desc" class="desc active">▼</span>
+                </div>
+            </div>
+        </div>
         <div class="product-filter-wrapper">
             <div th:insert="/filterSection :: filter"></div>
             <ul class="products-list">
@@ -26,6 +44,7 @@
             </ul>
         </div>
     </main>
+    <script referrerpolicy="origin" th:src="@{/scripts/sortingComboBox.js}"></script>
 </body>
     <div th:insert="/footer :: footer"></div>
 </html>

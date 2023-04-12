@@ -7,18 +7,6 @@
       <form th:action="@{/products/filter}" method="get">
         <input style="display: none;" type="checkbox" th:name="categoryId" th:id="categoryId" value="">
         <input style="display: none;" type="checkbox" th:name="searchRequest" th:id="searchRequest" value="">
-        <script th:inline="javascript">
-          var params = window.location.search;
-          if(params.includes("categoryId=")){
-            var categoryId = params.split("&")[0].substring(params.indexOf("=")+1);
-            document.getElementById("categoryId").value = categoryId;
-            document.getElementById("categoryId").checked = true;
-          }else{
-            var searchRequest = params.split("&")[0].substring(params.indexOf("=")+1);
-            document.getElementById("searchRequest").value = searchRequest;
-            document.getElementById("searchRequest").checked = true;
-          }
-        </script>
         <div class="filter-category" id="filter-category">
           <div th:if="${filters != null}">
             <div th:each="filter : ${filters.filters}">
@@ -34,6 +22,33 @@
             </div>
           </div>
         </div>
+        <input style="display: none;" type="checkbox" th:name="sortBy" th:id="sortBy" value="">
+        <input style="display: none;" type="checkbox" th:name="sortTo" th:id="sortTo" value="">
+        <script th:inline="javascript">
+          var params = window.location.search;
+          if(params.includes("categoryId=")){
+            var categoryId = params.split("&")[0].substring(params.indexOf("=")+1);
+            document.getElementById("categoryId").value = categoryId;
+            document.getElementById("categoryId").checked = true;
+          }else{
+            var searchRequest = params.split("&")[0].substring(params.indexOf("=")+1);
+            document.getElementById("searchRequest").value = searchRequest;
+            document.getElementById("searchRequest").checked = true;
+          }
+          var sort = document.getElementById("sortBox");
+          var sortName = sort.options[sort.selectedIndex].text;
+          document.getElementById("sortBy").value = sortName;
+          document.getElementById("sortBy").checked = true;
+
+          var sortToValue = "";
+          if(asc.classList[1] == "active"){
+              sortToValue = "asc";
+          }else{
+              sortToValue = "desc";
+          }
+          document.getElementById("sortTo").value = sortToValue;
+          document.getElementById("sortTo").checked = true;
+        </script>
         <button id="filter-button" class="filter-button">Filter</button>
       </form>
     </div>

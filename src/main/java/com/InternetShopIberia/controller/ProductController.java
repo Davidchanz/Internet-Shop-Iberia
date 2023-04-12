@@ -1,9 +1,6 @@
 package com.InternetShopIberia.controller;
 
-import com.InternetShopIberia.dto.Filter;
-import com.InternetShopIberia.dto.FilterList;
-import com.InternetShopIberia.dto.FilterValue;
-import com.InternetShopIberia.dto.ProductList;
+import com.InternetShopIberia.dto.*;
 import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.service.CategoryService;
@@ -31,10 +28,17 @@ public class ProductController {
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
         String categoryId = allRequestParams.get("categoryId");
         String searchRequest = allRequestParams.get("searchRequest");
+        String sortBy = allRequestParams.get("sortBy");
+        String sortTo = allRequestParams.get("sortTo");
         allRequestParams.remove("categoryId");
         allRequestParams.remove("searchRequest");
+        allRequestParams.remove("sortBy");
+        allRequestParams.remove("sortTo");
 
-        var filteredProducts = getProducts(categoryId, searchRequest, allRequestParams);
+        Sort sort = null;
+        if(sortBy != null && sortTo != null)
+            sort = new Sort(sortBy, sortTo, true);
+        var filteredProducts = getProducts(categoryId, searchRequest, allRequestParams, sort);
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
         for(var product: filteredProducts.getProducts()){
             for(var detail: product.getDetails()){
@@ -48,8 +52,23 @@ public class ProductController {
             }
         }
         var filters = getFilters(details, allRequestParams);
+
+        SortList sortList = new SortList();
+        List<String> sortNames = List.of("name", "price", "rating");
+        List<Sort> sorts = new ArrayList<>();
+        for(var sortName: sortNames){
+            if(sortName.equals(sortBy))
+                sorts.add(new Sort(sortName, sortTo, true));
+            else
+                sorts.add(new Sort(sortName, sortTo, false));
+        }
+
+        sortList.setSorts(sorts);
+        sortList.setSortTo(sortTo);
+
         model.addAttribute("filters", filters);
         model.addAttribute("products", filteredProducts);
+        model.addAttribute("sortingList", sortList);
 
         return "products";
     }
@@ -91,12 +110,20 @@ public class ProductController {
         return filters;
     }
 
-    private ProductList getProducts(String categoryId, String searchRequest, Map<String,String> allRequestParams){
+    private ProductList getProducts(String categoryId, String searchRequest, Map<String,String> allRequestParams, Sort sort){
         List<Product> productList = null;
-        if(categoryId == null) {
-            productList = productService.getAllProductsNameLike(searchRequest);
+        if(sort == null) {
+            if (categoryId == null) {
+                productList = productService.getAllProductsNameLike(searchRequest);
+            } else {
+                productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
+            }
         }else {
-            productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
+            if (categoryId == null) {
+                productList = productService.getAllProductsNameLikeSortBy(searchRequest, sort);
+            } else {
+                productList = productService.getAllProductsInCategoryByIdSortBy(Long.parseLong(categoryId), sort);
+            }
         }
 
         ProductList filteredProducts = new ProductList();

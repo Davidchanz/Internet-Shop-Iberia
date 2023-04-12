@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositorySorting {
     public Product findBypId(Long pId);
 
     public List<Product> findAllByCategoryId(Long Id);
