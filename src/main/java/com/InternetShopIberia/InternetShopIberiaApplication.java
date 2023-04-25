@@ -89,6 +89,10 @@ public class InternetShopIberiaApplication {
 		productN.setDescription("Asus VivoBook 15S | Intel i5-17700K | NVIDIA GeForce RTX 2070 GPU | 13.0\" FHD 60Hz 15ms IPS Display | 8GB DDR4 | 512GB SSD | Killer WiFi 6");
 		productN.setPrice(new BigDecimal("56999.00"));
 		productN.setPId(1233123L);
+		productN.setAbout("SUPERCHARGED RTX GRAPHICS - Gameplay graphics are silky smooth with the NVIDIA GeForce RTX 3060 6GB GDDR6 at 1050W with Dynamic Boost, with cutting-edge AI features like NVIDIA DLSS and Ray-Tracing\n" +
+				"MUX SWITCH BOOST - A MUX Switch lets the GPU communicate directly with the display, increasing performance and decreasing latency\n" +
+				"READY FOR ANYTHING - Use your gaming laptop to stream and multi-task with ease thanks to an  Intel Core i7-12650H Processor with 24MB Cache, up to 4.7 GHz, 10 cores (6 P-cores and 4 E-cores) and 16GB of blisteringly fast 4800MHz DDR5 RAM on Windows 11\n" +
+				"SWIFT VISUALS – Stay one step ahead of the competition thanks to its 144Hz 15.6” Full HD (1920 x 1080) IPS Type Display");
 		ProductDetail pdN = new ProductDetail("Screen", "13\"");
 		productDetailService.addProductDetail(pdN);
 		productN.setDetails(List.of(pdN));
@@ -116,6 +120,10 @@ public class InternetShopIberiaApplication {
 		product.setDescription("Acer Predator Helios 300 PH315-54-760S Gaming Laptop | Intel i7-11800H | NVIDIA GeForce RTX 3060 GPU | 15.6\" FHD 144Hz 3ms IPS Display | 16GB DDR4 | 512GB SSD | Killer WiFi 6 | RGB Keyboard");
 		product.setPrice(price);
 		product.setPId(pId);
+		product.setAbout("SUPERCHARGED RTX GRAPHICS - Gameplay graphics are silky smooth with the NVIDIA GeForce RTX 3060 6GB GDDR6 at 1050W with Dynamic Boost, with cutting-edge AI features like NVIDIA DLSS and Ray-Tracing\n" +
+				"MUX SWITCH BOOST - A MUX Switch lets the GPU communicate directly with the display, increasing performance and decreasing latency\n" +
+				"READY FOR ANYTHING - Use your gaming laptop to stream and multi-task with ease thanks to an  Intel Core i7-12650H Processor with 24MB Cache, up to 4.7 GHz, 10 cores (6 P-cores and 4 E-cores) and 16GB of blisteringly fast 4800MHz DDR5 RAM on Windows 11\n" +
+				"SWIFT VISUALS – Stay one step ahead of the competition thanks to its 144Hz 15.6” Full HD (1920 x 1080) IPS Type Display");
 
 		ProductImage mPI = new ProductImage();
 		mPI.setPath("71AGOX9MORL._AC_SX466_.jpg");
