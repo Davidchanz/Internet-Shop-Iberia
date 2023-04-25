@@ -34,7 +34,7 @@ public class ProductRepositorySortingImpl implements ProductRepositorySorting {
     }
 
     @Override
-    public List<Product> findAllByCategoryId(Long Id, String sortBy, String sortTo) {
+    public List<Product> findAllByCategoryIdSortBy(Long Id, String sortBy, String sortTo) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> query = cb.createQuery(Product.class);
         Root<Product> product = query.from(Product.class);

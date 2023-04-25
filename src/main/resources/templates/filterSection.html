@@ -7,6 +7,7 @@
       <form th:action="@{/products/filter}" method="get">
         <input style="display: none;" type="checkbox" th:name="categoryId" th:id="categoryId" value="">
         <input style="display: none;" type="checkbox" th:name="searchRequest" th:id="searchRequest" value="">
+        <input style="display: none;" type="checkbox" th:name="collectionId" th:id="collectionId" value="">
         <div class="filter-category" id="filter-category">
           <div th:if="${filters != null}">
             <div th:each="filter : ${filters.filters}">
@@ -30,10 +31,14 @@
             var categoryId = params.split("&")[0].substring(params.indexOf("=")+1);
             document.getElementById("categoryId").value = categoryId;
             document.getElementById("categoryId").checked = true;
-          }else{
+          }else if(params.includes("searchRequest=")){
             var searchRequest = params.split("&")[0].substring(params.indexOf("=")+1);
             document.getElementById("searchRequest").value = searchRequest;
             document.getElementById("searchRequest").checked = true;
+          } else{
+            var collectionId = params.split("&")[0].substring(params.indexOf("=")+1);
+            document.getElementById("collectionId").value = collectionId;
+            document.getElementById("collectionId").checked = true;
           }
           var sort = document.getElementById("sortBox");
           var sortName = sort.options[sort.selectedIndex].text;

@@ -60,6 +60,17 @@
                 <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
                     <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
                 </form>
+                <div id="add-to-list-select">
+                    <div th:if="${collections == null}">
+                        <script referrerpolicy="origin" th:src="@{/scripts/loadCollections.js}"></script>
+                    </div>
+                    <select class="add-to-list">
+                        <option disabled selected value="blank">Add to Collection</option>
+                        <div th:each="collection : ${collections}">
+                            <option value="${collection.name}"><span th:text="${collection.name}"></span></option>
+                        </div>
+                    </select>
+                </div>
             </div>
         </div>
     </main>
