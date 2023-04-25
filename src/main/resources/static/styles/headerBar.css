@@ -141,3 +141,16 @@ header {
     position: absolute;
     font-size: 28px;
 }
+
+.user-button{
+    background-color: rgb(255, 2, 2, 0);
+    color: rgb(255, 2, 2, 0);
+    border-color: rgba(250, 247, 247);
+    border-style: none;
+    cursor: pointer;
+}
+
+#userName{
+    color: #FEBD69;
+    font-size: 12px;
+}

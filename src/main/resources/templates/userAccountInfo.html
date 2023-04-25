@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:insert="/headerBar :: headerBar"></div>
+    <link type="text/css" th:href="@{/styles/userAccountInfo.css}" rel="stylesheet" />
+</head>
+<body>
+  <div class="content">
+    <div class="userInfo">
+      <h1>User Account Info</h1>
+      <table>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>First name:</td>
+          <td><span th:text="${user.firstName}"></span></td>
+        </tr>
+        <tr>
+          <td>Last name:</td>
+          <td><span th:text="${user.lastName}"></span></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><span th:text="${user.email}"></span></td>
+        </tr>
+        <tr>
+          <td>UserName:</td>
+          <td><span th:text="${user.username}"></span></td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td><span>********</span></td>
+        </tr>
+      </table>
+    </div>
+    <div class="collections-list">
+      <h2>My Collections</h2>
+      <ul>
+        <li><a href="#">Favorites</a></li>
+        <div th:each="collection : ${user.collections}">
+          <li><a href="#" th:text="${collection.name}"></a></li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</body>
+  <div th:insert="/footer :: footer"></div>
+</html>

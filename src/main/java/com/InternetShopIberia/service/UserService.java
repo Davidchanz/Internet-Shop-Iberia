@@ -3,12 +3,15 @@ package com.InternetShopIberia.service;
 import com.InternetShopIberia.dto.UserDto;
 import com.InternetShopIberia.exception.UserAlreadyExistException;
 import com.InternetShopIberia.model.User;
+import com.InternetShopIberia.model.UserProductList;
+import com.InternetShopIberia.repository.UserProductListRepository;
 import com.InternetShopIberia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +20,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserProductListService userProductListService;
 
     public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
         if (userExists(userDto.getUserName())) {
@@ -34,6 +40,13 @@ public class UserService {
         user.setPassword(encryptPassword(userDto.getPassword()));
         user.setUsername(userDto.getUserName());
         user.setEmail(userDto.getEmail());
+
+        UserProductList userProductList = new UserProductList();
+        userProductList.setName("My Laptops");
+        userProductList.setProducts(new ArrayList<>());
+        userProductListService.save(userProductList);
+
+        user.setCollections(List.of(userProductList));
         //user.setRoles(List.of("ROLE_USER"));
 
         return userRepository.save(user);

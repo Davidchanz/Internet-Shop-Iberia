@@ -52,4 +52,11 @@ public class LoadController {
         map.addAttribute("cartQuantity", cart.getQuantity());
         return "headerBar :: #cart-quantity-form";
     }
+
+    @GetMapping("u")
+    public String loadUserName(Principal principal, ModelMap map){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        map.addAttribute("userName", currentUser.getUsername());
+        return "headerBar :: #userAccount";
+    }
 }
