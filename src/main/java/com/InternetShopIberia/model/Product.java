@@ -43,9 +43,6 @@ public class Product implements Comparable<Product>{
     @OneToMany
     private List<ProductDetail> details;
 
-    @Column(name = "ABOUT", length = 1000)
-    private String about;
-
     @Override
     public int compareTo(Product product) {
         return this.getId().compareTo(product.getId());
