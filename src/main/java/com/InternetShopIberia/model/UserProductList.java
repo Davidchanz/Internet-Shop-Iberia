@@ -13,12 +13,14 @@ import java.util.List;
 public class UserProductList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "NAME")
     private String name;
 
     @Column(nullable = false)
-    @OneToMany
+    @ManyToMany
+    @JoinColumn
     private List<Product> products;
 }

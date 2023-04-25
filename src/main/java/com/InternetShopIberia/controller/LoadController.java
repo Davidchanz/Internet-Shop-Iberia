@@ -59,4 +59,12 @@ public class LoadController {
         map.addAttribute("userName", currentUser.getUsername());
         return "headerBar :: #userAccount";
     }
+
+    @GetMapping("user")
+    public String loadCollections(Principal principal, ModelMap map){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        map.addAttribute("collections", currentUser.getCollections());
+        System.out.println(currentUser.getCollections());
+        return "productDetail :: #add-to-list-select";
+    }
 }

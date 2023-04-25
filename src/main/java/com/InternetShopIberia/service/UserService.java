@@ -44,15 +44,23 @@ public class UserService {
         user.setUsername(userDto.getUserName());
         user.setEmail(userDto.getEmail());
 
+        UserProductList userProductList2 = new UserProductList();
+        userProductList2.setName("Favorites");
+        userProductList2.setProducts(List.of(
+                productService.getProductById(85L),
+                productService.getProductById(56L)));
+        userProductListService.save(userProductList2);
 
         UserProductList userProductList = new UserProductList();
         userProductList.setName("My Laptops");
-        userProductList.setProducts(List.of(productService.getProductById(85L),
+        userProductList.setProducts(List.of(
+                productService.getProductById(85L),
                 productService.getProductById(56L),
                 productService.getProductById(68L),
                 productService.getProductById(80L)));
         userProductListService.save(userProductList);
-        user.setCollections(List.of(userProductList));
+
+        user.setCollections(List.of(userProductList, userProductList2));
 
 
         //user.setRoles(List.of("ROLE_USER"));
