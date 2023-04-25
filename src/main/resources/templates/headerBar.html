@@ -53,6 +53,16 @@
         </form>
         <script referrerpolicy="origin" th:src="@{/scripts/updateCartQuantityPosition.js}"></script>
       </div>
+      <div id="userAccount">
+        <div th:if="${userName == null}" >
+          <script referrerpolicy="origin" th:src="@{/scripts/loadUserName.js}"></script>
+        </div>
+        <form method="get" th:action="@{/userAccount}">
+          <button class="user-button" type="submit"><img width="50px" th:src="@{/images/User.webp}">
+            <span id="userName" th:text="${userName}"></span>
+          </button>
+        </form>
+      </div>
     </div>
     <nav class="navigationBar">
       <ul class="navigationList">
