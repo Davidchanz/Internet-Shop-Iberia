@@ -5,6 +5,7 @@ import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
+import com.InternetShopIberia.service.UserProductListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,21 +25,26 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserProductListService userProductListService;
+
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
         String categoryId = allRequestParams.get("categoryId");
         String searchRequest = allRequestParams.get("searchRequest");
+        String collectionId = allRequestParams.get("collectionId");
         String sortBy = allRequestParams.get("sortBy");
         String sortTo = allRequestParams.get("sortTo");
         allRequestParams.remove("categoryId");
         allRequestParams.remove("searchRequest");
+        allRequestParams.remove("collectionId");
         allRequestParams.remove("sortBy");
         allRequestParams.remove("sortTo");
 
         Sort sort = null;
         if(sortBy != null && sortTo != null)
             sort = new Sort(sortBy, sortTo, true);
-        var filteredProducts = getProducts(categoryId, searchRequest, allRequestParams, sort);
+        var filteredProducts = getProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
         for(var product: filteredProducts.getProducts()){
             for(var detail: product.getDetails()){
@@ -79,13 +85,15 @@ public class ProductController {
         RedirectView redirectView;
         StringBuilder filterStr = new StringBuilder();
         allRequestParams.forEach((name, value) -> {
-            if(!name.equals("categoryId") && !name.equals("searchRequest"))
+            if(!name.equals("categoryId") && !name.equals("searchRequest") && !name.equals("collectionId"))
                 filterStr.append("&").append(name).append("=").append(value);
         });
         if(allRequestParams.get("categoryId") != null)
             redirectView = new RedirectView("/products?categoryId="+allRequestParams.get("categoryId") + filterStr.toString(), true);
-        else
+        else if(allRequestParams.get("searchRequest") != null)
             redirectView = new RedirectView("/products?searchRequest="+allRequestParams.get("searchRequest") + filterStr.toString(), true);
+        else
+            redirectView = new RedirectView("/products?collectionId="+allRequestParams.get("collectionId") + filterStr.toString(), true);
 
         return redirectView;
     }
@@ -110,19 +118,23 @@ public class ProductController {
         return filters;
     }
 
-    private ProductList getProducts(String categoryId, String searchRequest, Map<String,String> allRequestParams, Sort sort){
+    private ProductList getProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort){
         List<Product> productList = null;
         if(sort == null) {
-            if (categoryId == null) {
+            if (searchRequest != null) {
                 productList = productService.getAllProductsNameLike(searchRequest);
-            } else {
+            } else if(categoryId != null) {
                 productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
+            } else {
+                productList = userProductListService.findUserProductListById(Long.parseLong(collectionId)).getProducts();
             }
         }else {
-            if (categoryId == null) {
+            if (searchRequest != null) {
                 productList = productService.getAllProductsNameLikeSortBy(searchRequest, sort);
-            } else {
+            } else if(categoryId != null){
                 productList = productService.getAllProductsInCategoryByIdSortBy(Long.parseLong(categoryId), sort);
+            } else {
+                productList = userProductListService.findAllProductsInUserListByIdSortBy(Long.parseLong(collectionId), sort);
             }
         }
 

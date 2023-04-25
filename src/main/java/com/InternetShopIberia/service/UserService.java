@@ -24,6 +24,9 @@ public class UserService {
     @Autowired
     private UserProductListService userProductListService;
 
+    @Autowired
+    private ProductService productService;
+
     public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
         if (userExists(userDto.getUserName())) {
             throw new UserAlreadyExistException("There is an account with that email address: "
@@ -41,12 +44,17 @@ public class UserService {
         user.setUsername(userDto.getUserName());
         user.setEmail(userDto.getEmail());
 
+
         UserProductList userProductList = new UserProductList();
         userProductList.setName("My Laptops");
-        userProductList.setProducts(new ArrayList<>());
+        userProductList.setProducts(List.of(productService.getProductById(85L),
+                productService.getProductById(56L),
+                productService.getProductById(68L),
+                productService.getProductById(80L)));
         userProductListService.save(userProductList);
-
         user.setCollections(List.of(userProductList));
+
+
         //user.setRoles(List.of("ROLE_USER"));
 
         return userRepository.save(user);

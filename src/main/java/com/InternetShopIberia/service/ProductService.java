@@ -22,8 +22,8 @@ public class ProductService {
         return productRepository.findAllByCategoryId(categoryId);
     }
 
-    public void addProduct(Product product){
-        productRepository.save(product);
+    public Product addProduct(Product product){
+        return productRepository.save(product);
     }
 
     public List<Product> getAllProductsNameLike(String name){
@@ -35,6 +35,6 @@ public class ProductService {
     }
 
     public List<Product> getAllProductsInCategoryByIdSortBy(Long categoryId, Sort sort) {
-        return productRepository.findAllByCategoryId(categoryId, sort.getSortBy(), sort.getSortTo());
+        return productRepository.findAllByCategoryIdSortBy(categoryId, sort.getSortBy(), sort.getSortTo());
     }
 }

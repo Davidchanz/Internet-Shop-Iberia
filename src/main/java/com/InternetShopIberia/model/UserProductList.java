@@ -20,5 +20,5 @@ public class UserProductList {
 
     @Column(nullable = false)
     @OneToMany
-    private List<CartProduct> products;
+    private List<Product> products;
 }
