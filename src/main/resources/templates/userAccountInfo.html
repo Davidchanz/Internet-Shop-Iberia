@@ -39,7 +39,6 @@
     <div class="collections-list">
       <h2>My Collections</h2>
       <ul>
-        <li><a href="#">Favorites</a></li>
         <div th:each="collection : ${user.collections}">
           <li><a th:href="@{/userCollection(id=${collection.id})}" th:text="${collection.name}"></a></li>
         </div>

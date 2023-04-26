@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER_COLLECTION")
@@ -19,8 +21,7 @@ public class UserProductList {
     @Column(name = "NAME")
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @ManyToMany
-    @JoinColumn
-    private List<Product> products;
+    Set<Product> products;
 }
