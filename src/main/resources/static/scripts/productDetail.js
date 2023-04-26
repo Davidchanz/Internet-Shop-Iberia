@@ -1,3 +1,7 @@
+function addToCollection(value) {
+    $("#add-to-list-status").load("coll?collectionId="+value+"&"+window.location.search.substring(1));
+}
+
 function updateMainImage(value) {
 	$.get("update/image?image="+value).done(function(fragment) { // get from controller
 		$("#mainImage").replaceWith(fragment); // update snippet of page
@@ -10,3 +14,10 @@ for(var i = 0; i < smallImages.length; i++){
         updateMainImage(this.src);
     }
 }
+
+console.log(window.location.search);
+
+$('#add-to-list').change(function(){ 
+    var value = $(this).val();
+    addToCollection(value);
+});

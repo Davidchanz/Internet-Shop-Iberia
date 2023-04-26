@@ -126,7 +126,7 @@ public class ProductController {
             } else if(categoryId != null) {
                 productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
             } else {
-                productList = userProductListService.findUserProductListById(Long.parseLong(collectionId)).getProducts();
+                productList = userProductListService.findUserProductListById(Long.parseLong(collectionId)).getProducts().stream().toList();
             }
         }else {
             if (searchRequest != null) {

@@ -32,7 +32,7 @@ td {
 
 
 
-.collections-list {
+#collections-list {
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 20px;
@@ -40,24 +40,27 @@ td {
   max-width: 800px;
 }
 
-.collections-list h2 {
+#collections-list h2 {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 24px;
   font-weight: bold;
 }
 
-.collections-list ul {
+#collections-list ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.collections-list li {
+#collections-list li {
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
-.collections-list a {
+#collections-list a {
   display: block;
   padding: 10px;
   background-color: #fff;
@@ -65,8 +68,35 @@ td {
   text-decoration: none;
   color: #333;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
-.collections-list a:hover {
+#collections-list a:hover {
   background-color: #eee;
+}
+
+.collection-functional-button {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    min-width: 50px;
+    max-width: 50px;
+    margin-right: 5px;
+}
+
+.collection-functional-button {
+    background-color: #007bff;
+}
+
+.collection-functional-button:hover {
+    background-color: #0069d9;
+}
+
+.collection-functional-button:focus {
+    outline: none;
 }

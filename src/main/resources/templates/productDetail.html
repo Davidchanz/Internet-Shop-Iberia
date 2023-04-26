@@ -64,12 +64,25 @@
                     <div th:if="${collections == null}">
                         <script referrerpolicy="origin" th:src="@{/scripts/loadCollections.js}"></script>
                     </div>
-                    <select class="add-to-list">
+                    <select id="add-to-list">
                         <option disabled selected value="blank">Add to Collection</option>
                         <div th:each="collection : ${collections}">
-                            <option value="${collection.name}"><span th:text="${collection.name}"></span></option>
+                            <option th:value="${collection.id}"><span th:text="${collection.name}"></span></option>
                         </div>
                     </select>
+                    <div id="add-to-list-status">
+                        <div th:if="${status == null}">
+                            <span class="add-to-list-status" style="display: none;"></span>
+                        </div>
+                        <div th:unless="${status == null}">
+                            <div th:if="${status == true}">
+                                <span class="add-to-list-status" style="display: block; color: #00ff00;">OK!</span>
+                            </div>
+                            <div th:unless="${status == true}">
+                                <span class="add-to-list-status" style="display: block; color: #ff0000;">ERROR!</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

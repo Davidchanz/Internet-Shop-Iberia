@@ -36,16 +36,18 @@
         </tr>
       </table>
     </div>
-    <div class="collections-list">
+    <div id="collections-list">
       <h2>My Collections</h2>
+      <button id="add-collection" class="collection-functional-button">Add</button>
+      <div th:insert="/popUp :: popUp"></div>
       <ul>
-        <li><a href="#">Favorites</a></li>
         <div th:each="collection : ${user.collections}">
-          <li><a th:href="@{/userCollection(id=${collection.id})}" th:text="${collection.name}"></a></li>
+          <li><a th:href="@{/userCollection(id=${collection.id})}" th:text="${collection.name}"></a><button class="collection-functional-button edit-btn">Edit</button><button class="collection-functional-button dell-btn">Delete</button></li>
         </div>
       </ul>
     </div>
   </div>
+  <script referrerpolicy="origin" th:src="@{/scripts/userAccountInfo.js}"></script>
 </body>
   <div th:insert="/footer :: footer"></div>
 </html>

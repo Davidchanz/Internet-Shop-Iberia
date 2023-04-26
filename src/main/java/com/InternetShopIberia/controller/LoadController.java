@@ -1,26 +1,18 @@
 package com.InternetShopIberia.controller;
 
-import com.InternetShopIberia.dto.Filter;
-import com.InternetShopIberia.dto.FilterList;
-import com.InternetShopIberia.dto.FilterValue;
 import com.InternetShopIberia.model.Cart;
-import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.User;
-import com.InternetShopIberia.service.CartService;
-import com.InternetShopIberia.service.CategoryService;
-import com.InternetShopIberia.service.ProductService;
-import com.InternetShopIberia.service.UserService;
+import com.InternetShopIberia.model.UserProductList;
+import com.InternetShopIberia.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 import java.util.*;
@@ -39,6 +31,9 @@ public class LoadController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserProductListService userProductListService;
+
     @GetMapping("/l")
     public String loadCategories(ModelMap map){
         map.addAttribute("categories", categoryService.findRootCategory());
@@ -53,18 +48,72 @@ public class LoadController {
         return "headerBar :: #cart-quantity-form";
     }
 
-    @GetMapping("u")
+    @GetMapping("/u")
     public String loadUserName(Principal principal, ModelMap map){
         User currentUser = userService.findUserByUserName(principal.getName());
         map.addAttribute("userName", currentUser.getUsername());
         return "headerBar :: #userAccount";
     }
 
-    @GetMapping("user")
+    @GetMapping("/user")
     public String loadCollections(Principal principal, ModelMap map){
         User currentUser = userService.findUserByUserName(principal.getName());
         map.addAttribute("collections", currentUser.getCollections());
-        System.out.println(currentUser.getCollections());
         return "productDetail :: #add-to-list-select";
+    }
+
+    @GetMapping("/coll")
+    public String addToCollection(@RequestParam("collectionId") String collectionId, @RequestParam("productId") String productId, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        for(var coll: currentUser.getCollections()){
+            if(coll.getId().equals(Long.parseLong(collectionId))){
+                var product = productService.getProductById(Long.parseLong(productId));
+                var collection = userProductListService.findUserProductListById(Long.parseLong(collectionId));
+                collection.getProducts().add(product);
+                userProductListService.save(collection);
+                model.addAttribute("status", true);
+                return "productDetail :: #add-to-list-status";
+            }
+        }
+        model.addAttribute("status", false);
+        return "productDetail :: #add-to-list-status";
+    }
+
+    @PostMapping("/a")
+    public RedirectView addCollection(@RequestParam("newName") String collectionName, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        UserProductList collection = new UserProductList();
+        collection.setName(collectionName);
+        collection.setProducts(new TreeSet<>());
+        collection = userProductListService.save(collection);
+        currentUser.getCollections().add(collection);
+        userService.saveUser(currentUser);
+        return new RedirectView("/userAccount", true);
+    }
+
+    @GetMapping("/coll/d")
+    public RedirectView deleteCollection(@RequestParam("name") String name, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        for(var collection: currentUser.getCollections()){
+            if(collection.getName().equals(name)){
+                currentUser.getCollections().remove(collection);
+                userProductListService.deleteCollection(userProductListService.findUserProductListById(collection.getId()));
+                return new RedirectView("/userAccount", true);
+            }
+        }
+        return new RedirectView("/userAccount", true);
+    }
+
+    @PostMapping("/coll/n")
+    public RedirectView changeCollectionName(@RequestParam("collectionName") String collectionName, @RequestParam("newCollectionName") String newCollectionName, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        for(var collection: currentUser.getCollections()){
+            if(collection.getName().equals(collectionName)){
+                collection.setName(newCollectionName);
+                userProductListService.save(collection);
+                return new RedirectView("/userAccount", true);
+            }
+        }
+        return new RedirectView("/userAccount", true);
     }
 }

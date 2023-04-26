@@ -28,4 +28,8 @@ public class UserProductListService {
     public List<Product> findAllProductsInUserListByIdSortBy(Long collectionId, Sort sort) {
         return userProductListRepository.findAllProductsInUserListByIdSortBy(collectionId, sort.getSortBy(), sort.getSortTo());
     }
+
+    public void deleteCollection(UserProductList collection){
+        userProductListRepository.deleteById(collection.getId());
+    }
 }
