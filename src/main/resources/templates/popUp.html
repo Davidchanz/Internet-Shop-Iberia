@@ -6,11 +6,29 @@
 
     <section id="popUp">
       <div class="popUp-container">
-        <form th:action="@{/a}" method="POST">
-          <label for="collectionName">Collection name:</label>
-          <input type="text" id="collectionName" th:name="collectionName" th:id="collectionName" required="required"/>
-          <button type="submit" class="btn btn-primary">Add</button>
-        </form>
+        <div id="new-collection-name-form" style="display: none;">
+          <form th:action="@{/a}" method="POST">
+            <h2>Enter new collection name</h2>
+            <label for="newName">Collection name:</label>
+            <input type="text" id="newName" th:name="newName" th:id="newName" required="required"/>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+        <div id="change-collection-name" style="display: none;">
+          <form th:action="@{/coll/n}" method="POST">
+            <h2>Change collection name</h2>
+            <input style="display: none;" type="text" id="collectionName" th:name="collectionName" th:id="collectionName"/>
+            <label for="newCollectionName">Collection name:</label>
+            <input type="text" id="newCollectionName" th:name="newCollectionName" th:id="newCollectionName" required="required"/>
+            <button type="submit" class="btn btn-primary">Change</button>
+          </form>
+        </div>
+        <div id="are-you-sure" style="display: none;">
+          <h2 id="are-you-sure-message"></h2>
+          <p id="are-you-sure-text"></p>
+          <span style="display: none;" id="variable"></span>
+          <button id="yesButton" type="submit" class="btn btn-primary">Yes</button>
+        </div>
         <button id="cancelBtn" class="btn btn-primary">Cancel</button>
       </div>
     </section>

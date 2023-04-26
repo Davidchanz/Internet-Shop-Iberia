@@ -19,3 +19,13 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
+
+#are-you-sure{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#are-you-sure-text{
+    font-size: 16px;
+}

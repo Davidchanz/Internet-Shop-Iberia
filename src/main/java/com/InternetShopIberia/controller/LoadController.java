@@ -80,7 +80,7 @@ public class LoadController {
     }
 
     @PostMapping("/a")
-    public RedirectView addCollection(@RequestParam("collectionName") String collectionName, Principal principal, Model model){
+    public RedirectView addCollection(@RequestParam("newName") String collectionName, Principal principal, Model model){
         User currentUser = userService.findUserByUserName(principal.getName());
         UserProductList collection = new UserProductList();
         collection.setName(collectionName);
@@ -88,6 +88,32 @@ public class LoadController {
         collection = userProductListService.save(collection);
         currentUser.getCollections().add(collection);
         userService.saveUser(currentUser);
+        return new RedirectView("/userAccount", true);
+    }
+
+    @GetMapping("/coll/d")
+    public RedirectView deleteCollection(@RequestParam("name") String name, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        for(var collection: currentUser.getCollections()){
+            if(collection.getName().equals(name)){
+                currentUser.getCollections().remove(collection);
+                userProductListService.deleteCollection(userProductListService.findUserProductListById(collection.getId()));
+                return new RedirectView("/userAccount", true);
+            }
+        }
+        return new RedirectView("/userAccount", true);
+    }
+
+    @PostMapping("/coll/n")
+    public RedirectView changeCollectionName(@RequestParam("collectionName") String collectionName, @RequestParam("newCollectionName") String newCollectionName, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        for(var collection: currentUser.getCollections()){
+            if(collection.getName().equals(collectionName)){
+                collection.setName(newCollectionName);
+                userProductListService.save(collection);
+                return new RedirectView("/userAccount", true);
+            }
+        }
         return new RedirectView("/userAccount", true);
     }
 }
