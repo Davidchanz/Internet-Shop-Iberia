@@ -42,17 +42,15 @@ public class UserService {
         user.setUsername(userDto.getUserName());
         user.setEmail(userDto.getEmail());
 
-        UserProductList userProductList = new UserProductList();
-        userProductList.setName("My Laptops");
-        userProductList.setProducts(new TreeSet<>());
-        userProductListService.save(userProductList);
-
-        user.setCollections(List.of(userProductList));
-
         //user.setRoles(List.of("ROLE_USER"));
 
         return userRepository.save(user);
     }
+
+    public User saveUser(User user){
+        return userRepository.save(user);
+    }
+
     private boolean userExists(String username) {
         return userRepository.findByUsername(username) != null;
     }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="popUp" th:remove="tag">
+    <link type="text/css" th:href="@{/styles/popUp.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+
+    <section id="popUp">
+      <div class="popUp-container">
+        <form th:action="@{/a}" method="POST">
+          <label for="collectionName">Collection name:</label>
+          <input type="text" id="collectionName" th:name="collectionName" th:id="collectionName" required="required"/>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <button id="cancelBtn" class="btn btn-primary">Cancel</button>
+      </div>
+    </section>
+    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/popUp.js}"></script>
+  </div>
+</html>
