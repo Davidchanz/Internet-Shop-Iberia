@@ -1,5 +1,6 @@
 package com.InternetShopIberia.controller;
 
+import com.InternetShopIberia.dto.CollectionDTO;
 import com.InternetShopIberia.model.Cart;
 import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.model.UserProductList;
@@ -49,34 +50,37 @@ public class LoadController {
     }
 
     @GetMapping("/u")
-    public String loadUserName(Principal principal, ModelMap map){
+    public String loadUserName(Principal principal, ModelMap map) {
         User currentUser = userService.findUserByUserName(principal.getName());
         map.addAttribute("userName", currentUser.getUsername());
         return "headerBar :: #userAccount";
     }
 
-    @GetMapping("/user")
-    public String loadCollections(Principal principal, ModelMap map){
-        User currentUser = userService.findUserByUserName(principal.getName());
-        map.addAttribute("collections", currentUser.getCollections());
-        return "productDetail :: #add-to-list-select";
-    }
-
     @GetMapping("/coll")
-    public String addToCollection(@RequestParam("collectionId") String collectionId, @RequestParam("productId") String productId, Principal principal, Model model){
+    public String manageCollection(@RequestParam("collectionId") String collectionId, @RequestParam("productId") String productId, Principal principal, Model model){
         User currentUser = userService.findUserByUserName(principal.getName());
+        List<CollectionDTO> collectionDTOList = new ArrayList<>();
+        var product = productService.getProductById(Long.parseLong(productId));
         for(var coll: currentUser.getCollections()){
             if(coll.getId().equals(Long.parseLong(collectionId))){
-                var product = productService.getProductById(Long.parseLong(productId));
-                var collection = userProductListService.findUserProductListById(Long.parseLong(collectionId));
-                collection.getProducts().add(product);
-                userProductListService.save(collection);
-                model.addAttribute("status", true);
-                return "productDetail :: #add-to-list-status";
+                if(coll.getProducts().contains(product)){
+                    coll.getProducts().remove(product);
+                }else {
+                    coll.getProducts().add(product);
+                }
+                userProductListService.save(coll);
             }
+            CollectionDTO collectionDTO = new CollectionDTO();
+            collectionDTO.setCollection(coll);
+            if(coll.getProducts().contains(product)){
+                collectionDTO.setProductExist(true);
+            }else {
+                collectionDTO.setProductExist(false);
+            }
+            collectionDTOList.add(collectionDTO);
         }
-        model.addAttribute("status", false);
-        return "productDetail :: #add-to-list-status";
+        model.addAttribute("collectionDTOList", collectionDTOList);
+        return "productDetail :: #add-to-list-select";
     }
 
     @PostMapping("/a")
