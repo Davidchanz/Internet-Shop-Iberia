@@ -1,5 +1,5 @@
 function addToCollection(value) {
-    $("#add-to-list-status").load("coll?collectionId="+value+"&"+window.location.search.substring(1));
+    $("#add-to-list-select").load("coll?collectionId="+value+"&"+window.location.search.substring(1));
 }
 
 function updateMainImage(value) {
@@ -14,10 +14,3 @@ for(var i = 0; i < smallImages.length; i++){
         updateMainImage(this.src);
     }
 }
-
-console.log(window.location.search);
-
-$('#add-to-list').change(function(){ 
-    var value = $(this).val();
-    addToCollection(value);
-});
