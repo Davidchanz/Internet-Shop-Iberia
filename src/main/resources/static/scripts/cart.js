@@ -1,5 +1,6 @@
 function updateProductQuantity(productId, quantity) {
     $.get("q?productId="+productId+"&quantity="+quantity).done(function(fragment) { // get from controller
+        location.reload();
         $("#products-list").replaceWith(fragment); // update snippet of page
     });
 }

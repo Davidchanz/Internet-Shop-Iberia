@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 
 import java.util.*;
@@ -119,5 +120,17 @@ public class LoadController {
             }
         }
         return new RedirectView("/userAccount", true);
+    }
+
+    @GetMapping("/p")
+    public String loadCartPrice(Principal principal, ModelMap map) {
+        User currentUser = userService.findUserByUserName(principal.getName());
+        var cart = cartService.findCartByUser(currentUser);
+        BigDecimal cartPrice = new BigDecimal(0L);
+        for (var cartProduct: cart.getProducts()){
+            cartPrice = cartPrice.add(cartProduct.getPrice().multiply(new BigDecimal(cartProduct.getQuantity())));
+        }
+        map.addAttribute("cartPrice", cartPrice);
+        return "cart :: #price";
     }
 }
