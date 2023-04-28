@@ -2,8 +2,10 @@ package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.ProductList;
 import com.InternetShopIberia.model.Product;
+import com.InternetShopIberia.model.SearchHistory;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
+import com.InternetShopIberia.service.SearchHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class SearchResultsController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private SearchHistoryService searchHistoryService;
+
     @GetMapping("/search")
     private String showSearchResult(@RequestParam("searchRequest") String searchRequest, Model model){
         if(searchRequest.isEmpty())
@@ -39,6 +44,11 @@ public class SearchResultsController {
             productList.setProducts(uniqueProducts.stream().toList());
             model.addAttribute("products", productList);
             model.addAttribute("searchRequest", searchRequest);
+
+            SearchHistory searchHistory = new SearchHistory();
+            searchHistory.setSearchRequest(searchRequest);
+            searchHistoryService.addSearchHistory(searchHistory);
+
             return "redirect:/products?searchRequest=" + searchRequest;
         }
     }

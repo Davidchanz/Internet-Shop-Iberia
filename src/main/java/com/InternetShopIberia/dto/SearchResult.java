@@ -1,4 +1,4 @@
-package com.InternetShopIberia.model;
+package com.InternetShopIberia.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 @Getter
 public class SearchResult {
-     private List<String> results;
+     private List<SearchResultItem> results;
 }

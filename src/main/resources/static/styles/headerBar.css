@@ -120,12 +120,19 @@ header {
 .dropdown a {
   display: block;
   padding: 5px;
-  color: #333;
   text-decoration: none;
   cursor: pointer;
 }
 .dropdown a:hover {
   background-color: #f4f4f4;
+}
+
+.search-result-decor{
+  color: blueviolet;
+}
+
+.search-result-not-decor{
+    color: #333;
 }
 
 .cart-button {
