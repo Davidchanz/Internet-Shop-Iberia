@@ -1,8 +1,11 @@
 package com.InternetShopIberia.controller;
 
-import com.InternetShopIberia.model.SearchResult;
+import com.InternetShopIberia.dto.SearchResult;
+import com.InternetShopIberia.dto.SearchResultItem;
+import com.InternetShopIberia.model.SearchHistory;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
+import com.InternetShopIberia.service.SearchHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,19 +22,26 @@ public class SearchBarController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SearchHistoryService searchHistoryService;
+
     @GetMapping("/s")
-    public String getEventCount(@RequestParam("searchInput") String searchInput, ModelMap map) {
+    public String findSearchResults(@RequestParam("searchInput") String searchInput, ModelMap map) {
         SearchResult searchResult = new SearchResult();
-        List<String> searchResults = new ArrayList<>();
+        List<SearchResultItem> searchResults = new ArrayList<>();
         if(searchInput.isEmpty()){
             searchResult.setResults(searchResults);
         }else {
+            var searchHistory = searchHistoryService.findAllSearchHistoryLikeRequest(searchInput);
+            for(var history: searchHistory)
+                searchResults.add(new SearchResultItem(history.getSearchRequest(), true));
             var products = productService.getAllProductsNameLike(searchInput);
             for (var product : products)
-                searchResults.add(product.getName());
+                searchResults.add(new SearchResultItem(product.getName(), false));
             var categories = categoryService.findCategoryTitleLike(searchInput);
             for (var category : categories)
-                searchResults.add(category.getTitle());
+                searchResults.add(new SearchResultItem(category.getTitle(), false));
 
             searchResult.setResults(searchResults);
         }

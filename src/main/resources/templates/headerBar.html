@@ -25,8 +25,13 @@
                     dropdown.style.display = 'block';
                   }
                 </script>
-                <div th:each="result : ${searchResults.results}">
-                  <a th:href="@{/search(searchRequest=${result})}" th:text="${result}"></a>
+                <div th:each="resultItem : ${searchResults.results}">
+                  <div th:if="${resultItem.decor == true}">
+                    <a class="search-result-decor" th:href="@{/search(searchRequest=${resultItem.result})}" th:text="${resultItem.result}"></a>
+                  </div>
+                  <div th:unless="${resultItem.decor == true}">
+                    <a class="search-result-not-decor" th:href="@{/search(searchRequest=${resultItem.result})}" th:text="${resultItem.result}"></a>
+                  </div>
                 </div>
               </div>
               <div th:unless="${searchResults != null} and ${#lists.size(searchResults.results) >= 1}">
