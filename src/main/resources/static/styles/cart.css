@@ -1,3 +1,14 @@
+.container {
+	max-width: 1200px;
+	min-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	display: flex;
+	justify-content: top;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .products-list {
   list-style: none;
   margin: 30px;
@@ -78,4 +89,17 @@
 
 .cart-navigation-bar-button:hover{
     cursor: pointer;
+}
+
+#price {
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-price {
+	font-size: 24px;
+	color: #c0392b;
+	margin: 0 0 20px;
 }
