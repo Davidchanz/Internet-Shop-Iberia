@@ -117,6 +117,7 @@ public class CartController {
         for(var cartProduct: cart.getProducts()){
             if(cartProduct.getProductId().equals(product.getId())){
                 cart.getProducts().remove(cartProduct);
+                cartProductService.removeCartProduct(cartProduct);
                 break;
             }
         }
