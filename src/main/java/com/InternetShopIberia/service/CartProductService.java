@@ -17,4 +17,6 @@ public class CartProductService {
     public CartProduct updateCartProduct(CartProduct cartProduct) {
         return cartProductRepository.save(cartProduct);
     }
+
+    public void removeCartProduct(CartProduct product){cartProductRepository.delete(product);}
 }
