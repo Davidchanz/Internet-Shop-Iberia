@@ -4,7 +4,9 @@ import com.InternetShopIberia.dto.UserDto;
 import com.InternetShopIberia.model.*;
 import com.InternetShopIberia.service.*;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.math.BigDecimal;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class InternetShopIberiaApplication {
 	public static void main(String[] args) {
 		//org.h2.tools.Server server = org.h2.tools.Server.createTcpServer().start();
