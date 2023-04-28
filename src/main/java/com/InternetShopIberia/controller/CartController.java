@@ -108,4 +108,19 @@ public class CartController {
         map.addAttribute("products", cartProducts);
         return "cart :: #products-list";
     }
+
+    @GetMapping("/cart/delete")
+    public String deleteProductFromCart(@RequestParam("productId") String productId, Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        Cart cart = cartService.findCartByUser(currentUser);
+        Product product = productService.getProductById(Long.parseLong(productId));
+        for(var cartProduct: cart.getProducts()){
+            if(cartProduct.getProductId().equals(product.getId())){
+                cart.getProducts().remove(cartProduct);
+                break;
+            }
+        }
+        cartService.updateCart(cart);
+        return "redirect:/cart";
+    }
 }

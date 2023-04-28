@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <div th:insert="/headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
-    <link type="text/css" th:href="@{/styles/products.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/cart.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/comboBox.css}" rel="stylesheet" />
 <body>
@@ -41,7 +40,7 @@
                             </div>
                             <input maxlength="3" class="custom-quantity-input"></input>
                             <button style="margin-left: 10px;" class="btn btn-primary custom-quantity-button" th:text="#{button.update}"></button>
-                            <a th:text="#{cart.delete}"></a>
+                            <a class="cart-navigation-bar-button" th:href="@{/cart/delete(productId=${product.productId})}" th:text="#{cart.delete}"></a>
                         </div>
                     </div>
                 </li>
