@@ -56,7 +56,7 @@
                     <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/loadCartPrice.js}"></script>
                 </div>
                 <p class="product-price" th:text="${#numbers.formatCurrency(cartPrice)}"></p>
-                <form th:action="@{/cart/buy}" method="GET" enctype="utf8">
+                <form th:action="@{/buy}" method="GET">
                     <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
                 </form>
             </div>

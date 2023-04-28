@@ -1,5 +1,6 @@
 package com.InternetShopIberia.controller;
 
+import com.InternetShopIberia.dto.UserPurchase;
 import com.InternetShopIberia.model.CartProduct;
 import com.InternetShopIberia.model.Cart;
 import com.InternetShopIberia.model.Product;
@@ -123,5 +124,15 @@ public class CartController {
         }
         cartService.updateCart(cart);
         return "redirect:/cart";
+    }
+
+    @GetMapping("/buy")
+    public String buyAllCartProduct(Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
+        UserPurchase purchase = new UserPurchase();
+        purchase.setEmail(currentUser.getEmail());
+        purchase.setFullName(currentUser.getFirstName() + " " + currentUser.getLastName());
+        model.addAttribute("purchase", purchase);
+        return "buyProducts";
     }
 }
