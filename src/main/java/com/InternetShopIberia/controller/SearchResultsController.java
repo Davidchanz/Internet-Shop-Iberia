@@ -3,9 +3,11 @@ package com.InternetShopIberia.controller;
 import com.InternetShopIberia.dto.ProductList;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.model.SearchHistory;
+import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.SearchHistoryService;
+import com.InternetShopIberia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -28,8 +31,11 @@ public class SearchResultsController {
     @Autowired
     private SearchHistoryService searchHistoryService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/search")
-    private String showSearchResult(@RequestParam("searchRequest") String searchRequest, Model model){
+    private String showSearchResult(@RequestParam("searchRequest") String searchRequest, Principal principal, Model model){
         if(searchRequest.isEmpty())
             return "redirect:/";
         else {
@@ -47,6 +53,7 @@ public class SearchResultsController {
 
             SearchHistory searchHistory = new SearchHistory();
             searchHistory.setSearchRequest(searchRequest);
+            searchHistory.setUser(userService.findUserByUserName(principal.getName()));
             searchHistoryService.addSearchHistory(searchHistory);
 
             return "redirect:/products?searchRequest=" + searchRequest;
