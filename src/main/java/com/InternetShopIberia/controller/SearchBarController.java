@@ -3,15 +3,18 @@ package com.InternetShopIberia.controller;
 import com.InternetShopIberia.dto.SearchResult;
 import com.InternetShopIberia.dto.SearchResultItem;
 import com.InternetShopIberia.model.SearchHistory;
+import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.SearchHistoryService;
+import com.InternetShopIberia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +29,18 @@ public class SearchBarController {
     @Autowired
     private SearchHistoryService searchHistoryService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/s")
-    public String findSearchResults(@RequestParam("searchInput") String searchInput, ModelMap map) {
+    public String findSearchResults(@RequestParam("searchInput") String searchInput, Principal principal, ModelMap map) {
+        User currentUser = userService.findUserByUserName(principal.getName());
         SearchResult searchResult = new SearchResult();
         List<SearchResultItem> searchResults = new ArrayList<>();
         if(searchInput.isEmpty()){
             searchResult.setResults(searchResults);
         }else {
-            var searchHistory = searchHistoryService.findAllSearchHistoryLikeRequest(searchInput);
+            var searchHistory = searchHistoryService.findAllSearchHistoryLikeRequestByUser(searchInput, currentUser);
             for(var history: searchHistory)
                 searchResults.add(new SearchResultItem(history.getSearchRequest(), true));
             var products = productService.getAllProductsNameLike(searchInput);

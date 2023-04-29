@@ -15,6 +15,9 @@ public class SearchHistory {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String searchRequest;
+
+    @OneToOne
+    private User user;
 }
