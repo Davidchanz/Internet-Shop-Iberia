@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title th:text="${user.username}"></title>
     <meta charset="UTF-8">
     <div th:insert="/headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/userAccountInfo.css}" rel="stylesheet" />
