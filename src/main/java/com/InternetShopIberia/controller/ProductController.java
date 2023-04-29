@@ -28,6 +28,9 @@ public class ProductController {
     @Autowired
     private UserProductListService userProductListService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
         String categoryId = allRequestParams.get("categoryId");
@@ -75,6 +78,14 @@ public class ProductController {
         model.addAttribute("filters", filters);
         model.addAttribute("products", filteredProducts);
         model.addAttribute("sortingList", sortList);
+
+        if (searchRequest != null) {
+            model.addAttribute("title", "Result by Search Request '"+searchRequest+"'");
+        } else if(categoryId != null) {
+            model.addAttribute("title", "Category '"+categoryService.findCategoryById(Long.parseLong(categoryId)).getTitle()+"'");
+        } else {
+            model.addAttribute("title", "Collection '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
+        }
 
         return "products";
     }
