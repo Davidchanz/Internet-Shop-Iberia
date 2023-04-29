@@ -10,14 +10,8 @@
             <div class="product-carousel">
                 <button class="slide slide-backward"><i class="gg-push-chevron-left"></i></button>
                 <div class="carousel-wrapper">
-                    <div class="carousel-card">
-                        <img th:src="@{/images/a1.jpg}" alt="Product 1">
-                    </div>
-                    <div class="carousel-card">
-                        <img th:src="@{/images/a2.jpg}" alt="Product 1">
-                    </div>
-                    <div class="carousel-card">
-                        <img th:src="@{/images/a3.jpg}" alt="Product 1">
+                    <div class="carousel-card" th:each="item : ${carouselItems}">
+                        <a th:href="@{/products(categoryId=${item.categoryId})}"><img th:src="@{${'/images/' + item.imagePath}}" alt=""></a>
                     </div>
                 </div>
                 <button class="slide slide-forward"><i class="gg-push-chevron-right"></i></button>
