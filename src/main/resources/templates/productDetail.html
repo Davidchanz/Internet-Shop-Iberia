@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title th:text="${product.name}"></title>
     <div th:insert="/headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/productDetail.css}" rel="stylesheet" />
