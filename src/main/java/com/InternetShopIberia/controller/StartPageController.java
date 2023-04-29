@@ -1,7 +1,9 @@
 package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.ProductCarouselItem;
+import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.service.CategoryService;
+import com.InternetShopIberia.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,22 @@ public class StartPageController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/")
     public String showStartPage(HttpSession session, Model model) {
-        List<ProductCarouselItem> items = new ArrayList<>();
-        items.add(createProductCarouselItem("Asus", "a1.jpg"));
-        items.add(createProductCarouselItem("Asus", "a2.jpg"));
-        items.add(createProductCarouselItem("Asus", "a3.jpg"));
-        model.addAttribute("carouselItems", items);
+        List<ProductCarouselItem> carouselItems = new ArrayList<>();
+        carouselItems.add(createProductCarouselItem("Asus", "a1.jpg"));
+        carouselItems.add(createProductCarouselItem("Asus", "a2.jpg"));
+        carouselItems.add(createProductCarouselItem("Asus", "a3.jpg"));
+        model.addAttribute("carouselItems", carouselItems);
+
+        List<Product> productList = new ArrayList<>();
+        for(int i = 0; i < 5; i++){
+            productList.add(productService.getAllProductsInCategoryById(1L).get(i));//TODO
+        }
+        model.addAttribute("productList", productList);
         return "startPage";
     }
 

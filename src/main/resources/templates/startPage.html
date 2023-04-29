@@ -46,35 +46,11 @@
 
             <div class="product-list">
                 <div class="list-wrapper">
-                    <div class="list-card">
-                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
-                        <h3>Product 1</h3>
-                        <p>$19.99</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
-                    </div>
-                    <div class="list-card">
-                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
-                        <h3>Product 2</h3>
-                        <p>$29.99</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
-                    </div>
-                    <div class="list-card">
-                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
-                        <h3>Product 3</h3>
-                        <p>$39.99</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
-                    </div>
-                    <div class="list-card">
-                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
-                        <h3>Product 4</h3>
-                        <p>$49.99</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
-                    </div>
-                    <div class="list-card">
-                        <img th:src="@{/images/71AGOX9MORL._AC_SX466_.jpg}" alt="Product 1">
-                        <h3>Product 5</h3>
-                        <p>$59.99</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                    <div class="list-card" th:each="product : ${productList}">
+                        <img th:src="@{${'/images/' + product.mainImage.path}}" alt="Product 1">
+                        <h3 th:text="${product.name}"></h3>
+                        <p th:text="${#numbers.formatCurrency(product.price)}"></p>
+                        <a th:href="@{/productDetail(productId=${product.Id})}" class="btn btn-primary">Buy Now</a>
                     </div>
                 </div>
             </div>
