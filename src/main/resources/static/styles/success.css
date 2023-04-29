@@ -40,3 +40,10 @@ p {
 	color: #555;
 	margin-bottom: 30px;
 }
+
+.email{
+	font-size: 1.2em;
+	text-align: center;
+	color: #555;
+    font-weight: bold;
+}

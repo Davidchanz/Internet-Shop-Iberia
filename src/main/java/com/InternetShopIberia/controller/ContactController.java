@@ -48,8 +48,7 @@ public class ContactController {
     }
 
     @PostMapping("/contact")
-    public ModelAndView registerSupportRequest(@ModelAttribute("supportRequest") SupportRequestDto supportRequestDto, Principal principal, HttpServletRequest request, Errors errors) {
-        ModelAndView mav = new ModelAndView();
+    public String registerSupportRequest(@ModelAttribute("supportRequest") SupportRequestDto supportRequestDto, Principal principal, Model model) {
         User currentUser = userService.findUserByUserName(principal.getName());
         var supportRequest = supportRequestService.registerRequest(supportRequestDto, currentUser);
 
@@ -76,6 +75,8 @@ public class ContactController {
         final String result = templateEngine.process("mail", ctx);
 
         emailService.sendSimpleMessage(supportRequest.getEmail(), subject, result);
-        return new ModelAndView("supportSuccess");
+
+        model.addAttribute("email", currentUser.getEmail());
+        return "supportSuccess";
     }
 }
