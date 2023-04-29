@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <body>
-        <div class="content">
-          <h1>Registration success!</h1>
+<head>
+    <title>Registration Successful</title>
+    <link type="text/css" th:href="@{/styles/success.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="content">
+    <div class="container">
+        <div class="header-success">
+            <h1>Registration Successful</h1>
         </div>
-    </body>
-    <div th:insert="/footer :: footer"></div>
+        <main>
+            <img class="image-success" th:src="@{/images/success.png}" alt="Success Image">
+            <p>Thank you for registering with our internet shop. You can now start shopping and enjoying the benefits of being a member.</p>
+            <a th:href="@{/}" class="btn btn-primary">Login</a>
+        </main>
+    </div>
+</div>
+</body>
+<div th:insert="/footer :: footer"></div>
 </html>

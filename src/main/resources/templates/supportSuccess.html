@@ -3,11 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link type="text/css" th:href="@{/styles/success.css}" rel="stylesheet" />
+    <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
 </head>
 <div th:insert="/headerBar :: headerBar"></div>
 <body>
     <div class="content">
-        Support Success!
+        <div class="container">
+            <div class="header-success">
+                <h1>Thank You!</h1>
+            </div>
+            <main>
+                <img class="image-success" th:src="@{/images/success.png}" alt="Success Icon">
+                <p>Your support request has been received.</p>
+                <p>We sent to your email <span class="email" th:text="${email}"></span> request detail.</p>
+                <a th:href="@{/}" class="btn btn-primary">Return to Homepage</a>
+            </main>
+        </div>
     </div>
 </body>
 <div th:insert="/footer :: footer"></div>
