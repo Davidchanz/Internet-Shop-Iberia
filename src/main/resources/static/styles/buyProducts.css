@@ -18,11 +18,25 @@ label {
 	margin-bottom: 5px;
 }
 
-.container input[type="text"], input[type="email"], textarea {
+.input-purchase-detail {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	resize: none;
+}
+
+.input-purchase-detail:invalid {
+  border-color: #900;
+  background-color: #fdd;
+}
+
+.input-purchase-detail:focus:invalid {
+  outline: none;
+}
+
+.wide-btn{
+    width: 100%;
+    max-width: 100%;
 }

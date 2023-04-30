@@ -35,11 +35,7 @@ public class UserPurchase {
 
     @NotEmpty
     @NotNull
-    private String expMonth;
-
-    @NotEmpty
-    @NotNull
-    private String expYear;
+    private String expDate;
 
     @NotEmpty
     @NotNull
