@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+/*Product list*/
+  .product-list {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .list-wrapper {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    padding: 10px;
+
+  }
+
+  .list-card {
+    margin: 5px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+
+  .list-card img {
+    height: 100%;
+    width: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .list-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .list-card p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .purchase-detail p{
+    font-size: 24px;
+  }
+
+  .field p{
+    word-wrap:break-word;
+    margin-right: 50px;
+    font-weight: bold;
+  }
+
+  .value p{
+    text-align: right;
+  }
+
+  p{
+    word-wrap: break-word;
+    max-width: 500px;
+  }
+
+  .logo{
+    position: absolute;
+    z-index: -1;
+    background-color: bisque;
+  }
+    </style>
+</head>
+<body>
+<div class="content">
+  <img class="logo" src="http://localhost:8080/images/logo.png" alt="logo">
+  <div style="background-color: rgba(255, 255, 255, 0.831); padding: 10px;">
+    <h1 th:text="${header}"></h1>
+    <h2 th:text="${subject}"></h2>
+    <div class="product-list">
+      <div class="list-wrapper">
+        <div class="list-card" th:each="product : ${productList}">
+          <img src="http://localhost:8080/images/logo.png" alt="Product">
+          <h3 th:text="${product.name}"></h3>
+          <p th:text="${product.quantity}"><p>шт.</p></p>
+          <p th:text="${#numbers.formatCurrency(product.price)}"></p>
+        </div>
+      </div>
+    </div>
+    <h2>Price: <p th:text="${#numbers.formatCurrency(price)}"></p></h2>
+    <h2>Shipping Address</h2>
+    <div class="purchase-detail">
+      <table>
+        <td class="field">
+          <p>Name</p>
+          <p>Email</p>
+          <p>Address</p>
+          <p>Zip code</p>
+        </td>
+        <td class="value">
+          <p th:text="${purchase.fullName}"></p>
+          <p th:text="${purchase.email}"></p>
+          <p th:text="${purchase.address}"></p>
+          <p th:text="${purchase.zipCode}"></p>
+        </td>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
