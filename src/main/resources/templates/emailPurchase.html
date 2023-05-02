@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+  <title th:remove="all">Template for HTML email with inline image</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
         .content{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    background-image: url('cid:logo');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 /*Product list*/
   .product-list {
@@ -32,7 +37,6 @@
   }
 
   .list-card img {
-    height: 100%;
     width: 200px;
     object-fit: cover;
     margin-bottom: 10px;
@@ -76,14 +80,13 @@
 </head>
 <body>
 <div class="content">
-  <img class="logo" src="http://localhost:8080/images/logo.png" alt="logo">
   <div style="background-color: rgba(255, 255, 255, 0.831); padding: 10px;">
     <h1 th:text="${header}"></h1>
     <h2 th:text="${subject}"></h2>
     <div class="product-list">
       <div class="list-wrapper">
         <div class="list-card" th:each="product : ${productList}">
-          <img src="http://localhost:8080/images/logo.png" alt="Product">
+          <img src="product.png" th:src="|cid:${product.mainImage.path}|" alt="Product">
           <h3 th:text="${product.name}"></h3>
           <p th:text="${product.quantity}"><p>шт.</p></p>
           <p th:text="${#numbers.formatCurrency(product.price)}"></p>
