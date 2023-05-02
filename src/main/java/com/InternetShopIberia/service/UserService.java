@@ -27,7 +27,7 @@ public class UserService {
 
     public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
         if (userExists(userDto.getUserName())) {
-            throw new UserAlreadyExistException("There is an account with that email address: "
+            throw new UserAlreadyExistException("There is an account with that username: "
                     + userDto.getUserName());
         }
         if (emailExists(userDto.getEmail())) {
@@ -41,6 +41,7 @@ public class UserService {
         user.setPassword(encryptPassword(userDto.getPassword()));
         user.setUsername(userDto.getUserName());
         user.setEmail(userDto.getEmail());
+        user.setAdmin(false);
 
         //user.setRoles(List.of("ROLE_USER"));
 

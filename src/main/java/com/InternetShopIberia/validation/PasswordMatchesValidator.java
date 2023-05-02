@@ -6,15 +6,15 @@ import com.InternetShopIberia.validation.annotation.PasswordMatches;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
+public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, UserDto> {
     @Override
     public void initialize(PasswordMatches constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
-    public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-        UserDto user = (UserDto) o;
+    public boolean isValid(UserDto o, ConstraintValidatorContext constraintValidatorContext) {
+        UserDto user = o;
         return user.getPassword().equals(user.getMatchingPassword());
     }
 }
