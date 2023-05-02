@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class GMailServiceImpl implements EmailService {
@@ -51,16 +52,25 @@ public class GMailServiceImpl implements EmailService {
     @Override
     public void sendMimeMessage(String to, String subject, String text, FileSystemResource[] attachments) {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-
+        MimeMessageHelper helper = null;
         try {
-            //mimeMessage.setContent(htmlMsg, "text/html");
+            helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        } catch (MessagingException e) {
+            System.err.println(e.getMessage());
+        }
+        String attachmentsPath = "/home/katsitovlis/Documents/Project/Spring/Internet-Shop-Iberia/src/main/resources/static/images/logo.png";//TODO image server
+
+        FileSystemResource logo = new FileSystemResource(attachmentsPath);
+        try {
             helper.setText(text, true);
+            helper.addInline("logo", logo);
+            //mimeMessage.setContent(htmlMsg, "text/html");
+            for (var attach: attachments) {
+                helper.addInline(attach.getFilename(), attach);
+            }
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setFrom("internetshopiberiasupp@gmail.com");
-            for (var attach: attachments)
-                helper.addAttachment(attach.getFilename(), attach);
             emailSender.send(mimeMessage);
         }catch (MailException | MessagingException ex ){
             System.err.println(ex.getMessage());

@@ -10,12 +10,15 @@ import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.service.CartService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.UserService;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -73,23 +76,17 @@ public class PurchaseController {
 
         ctx.setVariable("productList", productList);
         ctx.setVariable("price", price.longValue());
-        System.out.println(price);
+
+        List<FileSystemResource> attachments = new ArrayList<>();
+        for(var product: productList){
+            var file = new FileSystemResource("/home/katsitovlis/Documents/Project/Spring/Internet-Shop-Iberia/src/main/resources/static/images/"+product.getMainImage().getPath());//TODO image server
+            ctx.setVariable(product.getMainImage().getPath(), file);
+            attachments.add(file);
+        }
 
         final String result = templateEngine.process("emailPurchase", ctx);
 
-////////////////////
-
-        /*String[] attachmentsPath = {"/home/katsitovlis/Documents/Project/Spring/Internet-Shop-Iberia/src/main/resources/static/images/logo.png"};
-
-        FileSystemResource[] attachments = new FileSystemResource[attachmentsPath.length];
-        int i = 0;
-        for (String attachment : attachmentsPath) {
-            attachments[i++] = new FileSystemResource(attachment);
-        }*/
-
-////////////////////////
-
-        emailService.sendSimpleMessage(purchase.getEmail(), "Order Detail", result);
+        emailService.sendMimeMessage(purchase.getEmail(), "Order Detail", result, attachments.toArray(new FileSystemResource[0]));
 
         model.addAttribute("email", currentUser.getEmail());
         return "purchaseSuccess";

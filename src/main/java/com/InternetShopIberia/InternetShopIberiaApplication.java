@@ -40,7 +40,7 @@ public class InternetShopIberiaApplication {
 
 		UserDto user2 = new UserDto();
 		user2.setUserName("GN");
-		user2.setEmail("GN@mail.com");
+		user2.setEmail("tovliskatsi@gmail.com");
 		user2.setFirstName("Giorgi");
 		user2.setLastName("Nodia");
 		user2.setPassword("123");
