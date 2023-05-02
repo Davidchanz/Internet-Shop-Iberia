@@ -30,7 +30,6 @@ public class User {
     private String lastName;
 
     @Column(name="ADMIN", columnDefinition="boolean")
-    @NotEmpty
     private boolean admin;
 
     @Column(unique = true, nullable = false)
