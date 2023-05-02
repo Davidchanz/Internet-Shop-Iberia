@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1 th:text="${header}"></h1>
-    <h2 th:text="${subject}"></h2>
-    <p>Your message code: <span th:text="${code}"></span></p>
+    <img style="width: 150px;" th:src="|cid:logo|">
+    <h1 th:text="#{email.support.header}"></h1>
+    <h2 th:text="#{email.support.subject}"></h2>
+    <div style="display: flex;">
+        <h3 th:text="#{email.support.code}"></h3>
+        <h3 th:text="${code}"></h3>
+    </div>
+    <h3 th:text="#{email.support.message}"></h3>
     <p th:text="${message}"></p>
 </body>
 </html>
