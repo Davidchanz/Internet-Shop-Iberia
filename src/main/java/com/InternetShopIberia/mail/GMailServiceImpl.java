@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Component
 public class GMailServiceImpl implements EmailService {
@@ -34,23 +33,10 @@ public class GMailServiceImpl implements EmailService {
         }catch (MailException | MessagingException ex ){
             System.err.println(ex.getMessage());
         }
-
-
-        /*SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("internetshopiberiasupp@gmail.com");
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        try {
-            emailSender.send(message);
-        }catch (MailException ex){
-            System.err.println(ex.getMessage());
-        }*/
-
     }
 
     @Override
-    public void sendMimeMessage(String to, String subject, String text, FileSystemResource[] attachments) {
+    public void sendMimeMessage(String to, String subject, String text, List<FileSystemResource> attachments) {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper helper = null;
         try {
@@ -64,7 +50,6 @@ public class GMailServiceImpl implements EmailService {
         try {
             helper.setText(text, true);
             helper.addInline("logo", logo);
-            //mimeMessage.setContent(htmlMsg, "text/html");
             for (var attach: attachments) {
                 helper.addInline(attach.getFilename(), attach);
             }

@@ -10,6 +10,8 @@ import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.service.SupportRequestService;
 import com.InternetShopIberia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -28,6 +31,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 @Controller
 public class ContactController {
@@ -40,9 +44,14 @@ public class ContactController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private TemplateEngine templateEngine;
+
     @GetMapping("/contact")
-    public String showContactPage(Model model){
+    public String showContactPage(Principal principal, Model model){
+        User currentUser = userService.findUserByUserName(principal.getName());
         SupportRequestDto supportRequest = new SupportRequestDto();
+        supportRequest.setEmail(currentUser.getEmail());
         model.addAttribute("supportRequest", supportRequest);
         return "contact";
     }
@@ -52,29 +61,14 @@ public class ContactController {
         User currentUser = userService.findUserByUserName(principal.getName());
         var supportRequest = supportRequestService.registerRequest(supportRequestDto, currentUser);
 
-        String subject = "Contacting Support";
-        String text = "Your support ticket has been registered!\n\n";
+        Context ctx = new Context(LocaleContextHolder.getLocale());
 
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setPrefix("templates/");
-        templateResolver.setCacheable(false);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML");
-
-        templateResolver.setForceTemplateMode(true);
-
-        templateEngine.setTemplateResolver(templateResolver);
-
-        Context ctx = new Context();
-
-        ctx.setVariable("header", text);
         ctx.setVariable("code", supportRequest.getCode());
-        ctx.setVariable("subject", supportRequest.getSubject());
         ctx.setVariable("message", supportRequest.getMessage());
+
         final String result = templateEngine.process("mail", ctx);
 
-        emailService.sendSimpleMessage(supportRequest.getEmail(), subject, result);
+        emailService.sendMimeMessage(supportRequest.getEmail(), "Contacting Support", result, new ArrayList<>());
 
         model.addAttribute("email", currentUser.getEmail());
         return "supportSuccess";

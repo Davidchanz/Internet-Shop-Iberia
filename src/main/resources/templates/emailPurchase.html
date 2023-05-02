@@ -81,8 +81,8 @@
 <body>
 <div class="content">
   <div style="background-color: rgba(255, 255, 255, 0.831); padding: 10px;">
-    <h1 th:text="${header}"></h1>
-    <h2 th:text="${subject}"></h2>
+    <h1 th:text="#{email.purchase.header}"></h1>
+    <h2 th:text="#{email.purchase.subject}"></h2>
     <div class="product-list">
       <div class="list-wrapper">
         <div class="list-card" th:each="product : ${productList}">
@@ -93,15 +93,18 @@
         </div>
       </div>
     </div>
-    <h2>Price: <p th:text="${#numbers.formatCurrency(price)}"></p></h2>
-    <h2>Shipping Address</h2>
+    <div style="display: flex;">
+      <h2 th:text="#{email.purchase.price}"></h2>
+      <h2 th:text="${#numbers.formatCurrency(price)}"></h2>
+    </div>
+    <h2 th:text="#{email.purchase.shipping.address}"></h2>
     <div class="purchase-detail">
       <table>
         <td class="field">
-          <p>Name</p>
-          <p>Email</p>
-          <p>Address</p>
-          <p>Zip code</p>
+          <p th:text="#{email.purchase.name}"></p>
+          <p th:text="#{email.purchase.email}"></p>
+          <p th:text="#{email.purchase.address}"></p>
+          <p th:text="#{email.purchase.zipcode}"></p>
         </td>
         <td class="value">
           <p th:text="${purchase.fullName}"></p>
