@@ -47,6 +47,9 @@ public class Product implements Comparable<Product>{
     private List<ProductDetail> details;
 
     @Column(name = "ABOUT", length = 1000)
+    private String origAbout;
+
+    @Transient
     private String about;
 
     @Override
