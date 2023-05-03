@@ -27,6 +27,9 @@ public class CartProduct {
     private String name;
 
     @Column(name = "PRICE", nullable = false)
+    private BigDecimal origPrice;
+
+    @Transient
     private BigDecimal price;
 
     @OneToOne

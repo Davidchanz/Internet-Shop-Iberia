@@ -32,7 +32,7 @@ public class StartPageController {
 
         List<Product> productList = new ArrayList<>();
         for(int i = 0; i < 5; i++){
-            productList.add(productService.getAllProductsInCategoryById(1L).get(i));//TODO
+            productList.add(productService.getAllProductsInCategoryById(1L).get(i));
         }
         model.addAttribute("productList", productList);
         return "startPage";

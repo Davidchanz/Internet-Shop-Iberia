@@ -1,13 +1,11 @@
 package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.UserPurchase;
-import com.InternetShopIberia.model.CartProduct;
-import com.InternetShopIberia.model.Cart;
-import com.InternetShopIberia.model.Product;
-import com.InternetShopIberia.model.User;
+import com.InternetShopIberia.model.*;
 import com.InternetShopIberia.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,21 +34,19 @@ public class CartController {
     @Autowired
     private CartProductService cartProductService;
 
+    @Autowired
+    private Currency currency;
+
     @GetMapping("/cart")
     private String ShowUserCart(Principal principal, Model model){
         User currentUser = userService.findUserByUserName(principal.getName());
         Cart cart = cartService.findCartByUser(currentUser);
-        List<CartProduct> cartProducts = new ArrayList<>();
+
+        var cur = java.util.Currency.getInstance(LocaleContextHolder.getLocale()).getCurrencyCode();
         for(var product: cart.getProducts()){
-            CartProduct cartProduct = new CartProduct();
-            cartProduct.setProductId(product.getProductId());
-            cartProduct.setName(product.getName());
-            cartProduct.setPrice(product.getPrice());
-            cartProduct.setMainImage(product.getMainImage());
-            cartProduct.setQuantity(product.getQuantity());
-            cartProducts.add(cartProduct);
+            product.setPrice(product.getOrigPrice().multiply(BigDecimal.valueOf(currency.getRate(cur).getCurRate())));
         }
-        model.addAttribute("products", cartProducts);
+        model.addAttribute("products", cart.getProducts());
         return "cart";
     }
 
@@ -72,7 +69,7 @@ public class CartController {
             CartProduct cartProduct = new CartProduct();
             cartProduct.setProductId(product.getId());
             cartProduct.setName(product.getName());
-            cartProduct.setPrice(product.getPrice());
+            cartProduct.setOrigPrice(product.getOrigPrice());
             cartProduct.setMainImage(product.getMainImage());
             cartProduct.setQuantity(1);
             cartProduct = cartProductService.addCartProduct(cartProduct);

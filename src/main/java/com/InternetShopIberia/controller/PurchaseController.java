@@ -3,10 +3,7 @@ package com.InternetShopIberia.controller;
 import com.InternetShopIberia.dto.UserDto;
 import com.InternetShopIberia.dto.UserPurchase;
 import com.InternetShopIberia.mail.EmailService;
-import com.InternetShopIberia.model.Cart;
-import com.InternetShopIberia.model.CartProduct;
-import com.InternetShopIberia.model.Product;
-import com.InternetShopIberia.model.User;
+import com.InternetShopIberia.model.*;
 import com.InternetShopIberia.service.CartService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.UserService;
@@ -51,6 +48,9 @@ public class PurchaseController {
     @Autowired
     private TemplateEngine templateEngine;
 
+    @Autowired
+    private Currency currency;
+
     @PostMapping("/purchase")
     public String confirmPurchase(@ModelAttribute("purchase") UserPurchase purchase, Principal principal, Model model){
         User currentUser = userService.findUserByUserName(principal.getName());
@@ -59,7 +59,10 @@ public class PurchaseController {
         List<CartProduct> productList = new ArrayList<>(cart.getProducts());
 
         BigDecimal price = new BigDecimal(0L);
+
+        var cur = java.util.Currency.getInstance(LocaleContextHolder.getLocale()).getCurrencyCode();
         for(var product: cart.getProducts()){
+            product.setPrice(product.getOrigPrice().multiply(BigDecimal.valueOf(currency.getRate(cur).getCurRate())));
             price = price.add(product.getPrice().multiply(new BigDecimal(product.getQuantity())));
         }
 

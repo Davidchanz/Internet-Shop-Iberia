@@ -46,7 +46,7 @@ public class ProductController {
 
         Sort sort = null;
         if(sortBy != null && sortTo != null)
-            sort = new Sort(sortBy, sortTo, true);
+            sort = new Sort("", sortBy, sortTo, true);
         var filteredProducts = getProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
         for(var product: filteredProducts.getProducts()){
@@ -63,13 +63,14 @@ public class ProductController {
         var filters = getFilters(details, allRequestParams);
 
         SortList sortList = new SortList();
-        List<String> sortNames = List.of("name", "price", "rating");
+        String[] sortBys = {"name", "origPrice"};
+        String[] sortNames = {"Name", "Price"};
         List<Sort> sorts = new ArrayList<>();
-        for(var sortName: sortNames){
-            if(sortName.equals(sortBy))
-                sorts.add(new Sort(sortName, sortTo, true));
+        for(int i = 0; i < sortNames.length; i++){
+            if(sortBys[i].equals(sortBy))
+                sorts.add(new Sort(sortNames[i], sortBys[i], sortTo, true));
             else
-                sorts.add(new Sort(sortName, sortTo, false));
+                sorts.add(new Sort(sortNames[i], sortBys[i], sortTo, false));
         }
 
         sortList.setSorts(sorts);

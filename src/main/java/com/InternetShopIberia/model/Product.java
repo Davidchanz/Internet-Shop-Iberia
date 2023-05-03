@@ -24,6 +24,9 @@ public class Product implements Comparable<Product>{
     private String description;
 
     @Column(name = "PRICE", nullable = false)
+    private BigDecimal origPrice;
+
+    @Transient
     private BigDecimal price;
 
     @Column(name = "PID", nullable = false, unique = true)

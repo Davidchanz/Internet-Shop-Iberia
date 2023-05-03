@@ -8,7 +8,7 @@ $(document).ready(function() {
 function sendSortingParams(){
     var sort = document.getElementById("sortBox");
     var sortingParams = "&sortBy=";
-    var sortName = sort.options[sort.selectedIndex].text;
+    var sortName = sort.options[sort.selectedIndex].value;
 
     var sortBy = document.getElementById("sortBy");
     sortBy.value = sortName;

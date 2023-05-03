@@ -10,7 +10,7 @@
         <div class="sorting-combo-box">
             <select class="sortBox" id="sortBox">
                 <div th:each="sort : ${sortingList.sorts}">
-                    <option th:value="${sort.sortBy}" th:text="${sort.sortBy}" th:selected="${sort.selected ? true : false}"></option>
+                    <option th:value="${sort.sortBy}" th:text="${sort.name}" th:selected="${sort.selected ? true : false}"></option>
                 </div>
             </select>
             <div class="sorting-indicator">
