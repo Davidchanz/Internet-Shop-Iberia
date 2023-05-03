@@ -2,10 +2,12 @@ package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.CollectionDTO;
 import com.InternetShopIberia.model.Cart;
+import com.InternetShopIberia.model.Currency;
 import com.InternetShopIberia.model.User;
 import com.InternetShopIberia.model.UserProductList;
 import com.InternetShopIberia.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -35,6 +37,9 @@ public class LoadController {
 
     @Autowired
     private UserProductListService userProductListService;
+
+    @Autowired
+    private Currency currency;
 
     @GetMapping("/l")
     public String loadCategories(ModelMap map){
@@ -127,7 +132,10 @@ public class LoadController {
         User currentUser = userService.findUserByUserName(principal.getName());
         var cart = cartService.findCartByUser(currentUser);
         BigDecimal cartPrice = new BigDecimal(0L);
+
+        var cur = java.util.Currency.getInstance(LocaleContextHolder.getLocale()).getCurrencyCode();
         for (var cartProduct: cart.getProducts()){
+            cartProduct.setPrice(cartProduct.getOrigPrice().multiply(BigDecimal.valueOf(currency.getRate(cur).getCurRate())));
             cartPrice = cartPrice.add(cartProduct.getPrice().multiply(new BigDecimal(cartProduct.getQuantity())));
         }
         map.addAttribute("cartPrice", cartPrice);
