@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Purchase</title>
+    <title th:text="#{title.purchase}"></title>
     <meta charset="UTF-8">
     <div th:insert="/headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
@@ -10,28 +10,28 @@
 <body>
     <main class="content">
         <div class="container">
-            <h1>Confirm Buy Products Page</h1>
-            <h2>Shipping Address</h2>
+            <h1 th:text="#{purchase.header}"></h1>
+            <h2 th:text="#{purchase.shipping.address}"></h2>
             <form th:action="@{/purchase}" th:object="${purchase}" method="POST">
-                <label for="name">Full Name:</label>
+                <label for="name" th:text="#{purchase.name}"></label>
                 <input class="input-purchase-detail" type="text" id="name" name="name" th:field="*{fullName}" required>
-                <label for="email">Email:</label>
+                <label for="email" th:text="#{purchase.email}"></label>
                 <input class="input-purchase-detail" type="email" pattern="[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,4}$" id="email" name="email" th:field="*{email}" required>
-                <label for="address">Address:</label>
+                <label for="address" th:text="#{purchase.address}"></label>
                 <textarea class="input-purchase-detail" id="address" name="address" th:field="*{address}" required></textarea>
-                <label for="zip">Zip Code:</label>
+                <label for="zip" th:text="#{purchase.zipcode}"></label>
                 <input class="input-purchase-detail" inputmode="numeric" pattern="[0-9]{3}" minlength="3" maxlength="3" id="zip" name="zip" th:field="*{zipCode}" required>
-                    <h2>Payment Method</h2>
-                    <label for="cardname">Name on Card:</label>
+                    <h2 th:text="#{purchase.payment.header}"></h2>
+                    <label for="cardname" th:text="#{purchase.payment.card.name}"></label>
                 <input class="input-purchase-detail" type="text" id="cardname" name="cardname" th:field="*{nameOnCard}" required>
-                <label for="cardnumber">Card Number:</label>
+                <label for="cardnumber" th:text="#{purchase.payment.card.number}"></label>
                 <input class="input-purchase-detail" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" id="cardnumber" name="cardnumber" th:field="*{cardNumber}" required>
-                <label for="expdate">Expiration Date:</label>
+                <label for="expdate" th:text="#{purchase.payment.card.expDate}"></label>
                 <input class="input-purchase-detail" type="month" id="expdate" name="expdate" th:field="*{expDate}" required>
-                <label for="cvv">CVV:</label>
+                <label for="cvv" th:text="#{purchase.payment.card.cvv}"></label>
                 <input class="input-purchase-detail cvv" inputmode="numeric" pattern="[0-9]{3}" minlength="3" maxlength="3" id="cvv" name="cvv" th:field="*{CVV}" required>
-                    <h2>Confirm</h2>
-                    <button type="submit" id="confirm-btn" class="btn btn-primary wide-btn">Confirm Purchase</button>
+                    <h2 th:text="#{purchase.confirm}"></h2>
+                    <button type="submit" id="confirm-btn" class="btn btn-primary wide-btn" th:text="#{button.confirm.purchase}"></button>
             </form>
         </div>
     </main>

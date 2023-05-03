@@ -21,13 +21,18 @@ for(var i = 0; i < dellButtons.length; i++){
         const form2 = document.getElementById('change-collection-name');
         form2.style.display = 'none';
 
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", window.origin + "/userCollection/dell", false);
+        xmlHttp.send(null);
+        var answer = xmlHttp.responseText.split(',');
+
         var message = document.getElementById('are-you-sure-message');
-        message.innerHTML = "Are you sure?";
+        message.innerHTML = answer[0];
         var text = document.getElementById('are-you-sure-text');
 
         var name = this.parentElement.firstElementChild.text;
         
-        text.innerHTML = "You want delete collection '" + name + "'?";
+        text.innerHTML = answer[1] + name + "'?";
 
         var variable = document.getElementById('variable');
         variable.innerText = name;

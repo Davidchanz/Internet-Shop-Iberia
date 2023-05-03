@@ -4,7 +4,7 @@
 	margin: 0 auto;
 	padding: 20px;
 	display: flex;
-	justify-content: top;
+	justify-content: space-between;
 	background-color: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -20,7 +20,6 @@
 .products-list li {
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -91,8 +90,8 @@
     cursor: pointer;
 }
 
-#price {
-	margin: 0 auto;
+.fullPrice {
+	margin: 0;
 	padding: 20px;
 	background-color: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

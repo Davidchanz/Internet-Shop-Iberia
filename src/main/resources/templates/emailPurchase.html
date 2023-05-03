@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title th:remove="all">Template for HTML email with inline image</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
         .content{
     display: flex;
@@ -33,7 +32,6 @@
     margin: 5px;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
   }
 
   .list-card img {
@@ -88,13 +86,19 @@
         <div class="list-card" th:each="product : ${productList}">
           <img src="product.png" th:src="|cid:${product.mainImage.path}|" alt="Product">
           <h3 th:text="${product.name}"></h3>
-          <p th:text="${product.quantity}"><p>шт.</p></p>
-          <p th:text="${#numbers.formatCurrency(product.price)}"></p>
+          <div style="display: flex; align-items: center;">
+            <p th:text="#{email.purchase.quantity}"></p>
+            <p th:text="${product.quantity}"></p>
+          </div>
+          <div style="display: flex; align-items: center;">
+            <p th:text="#{email.purchase.price}"></p>
+            <p th:text="${#numbers.formatCurrency(product.price)}"></p>
+          </div>
         </div>
       </div>
     </div>
     <div style="display: flex;">
-      <h2 th:text="#{email.purchase.price}"></h2>
+      <h2 th:text="#{email.purchase.final.price}"></h2>
       <h2 th:text="${#numbers.formatCurrency(price)}"></h2>
     </div>
     <h2 th:text="#{email.purchase.shipping.address}"></h2>

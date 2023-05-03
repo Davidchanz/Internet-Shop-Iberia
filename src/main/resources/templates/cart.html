@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <div th:insert="/headerBar :: headerBar"></div>
+    <title th:text="#{title.cart}"></title>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/cart.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/comboBox.css}" rel="stylesheet" />
 <body>
     <main class="content">
-        <h1 style="margin-left: 25%;padding: 1px 16px;" th:text="#{cart}">Shopping Cart</h1>
+        <h1 style="margin-left: 25%;padding: 1px 16px;" th:text="#{cart}"></h1>
         <div class="container">
             <ul id="products-list" class="products-list">
                 <div th:each="product : ${products}">
@@ -55,10 +56,12 @@
                 <div th:if="${cartPrice == null}">
                     <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/loadCartPrice.js}"></script>
                 </div>
+                <div class="fullPrice">
                 <p class="product-price" th:text="${#numbers.formatCurrency(cartPrice)}"></p>
                 <form th:action="@{/buy}" method="GET">
                     <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
                 </form>
+                </div>
             </div>
         </div>
     </main>

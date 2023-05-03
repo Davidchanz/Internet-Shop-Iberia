@@ -28,7 +28,7 @@ footer {
   align-items: center;
 }
 
-footer p {
+.copyright {
   font-size: 16px;
   margin: 0;
   margin-bottom: 20px;

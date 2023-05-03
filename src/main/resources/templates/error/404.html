@@ -1,6 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <header>
-    <title>Error</title>
+    <title th:text="#{error}"></title>
 </header>
 <div th:fragment="errorSection" th:remove="tag">
     <link type="text/css" th:href="@{/styles/error.css}" rel="stylesheet" />
@@ -8,13 +8,13 @@
     <section id="error">
         <div class="error-container">
             <img th:src="@{/images/error.webp}" alt="Error icon">
-            <h2>ERROR 404 PAGE NOT FOUND!</h2>
-            <p>We're sorry, it looks like there was an error.</p>
-            <p>Please try again later or contact our customer support.</p>
+            <h2 th:text="#{error.notFound}"></h2>
+            <p th:text="#{error.subject}"></p>
+            <p th:text="#{error.message}"></p>
             <div th:if="${userError != null}">
                 <p th:text="${userError.message}"></p>
             </div>
-            <button id="errorBtn" class="btn btn-primary">Go back to home</button>
+            <button id="errorBtn" class="btn btn-primary" th:text="#{button.toHome}"></button>
         </div>
     </section>
     <div th:if="${userError != null}">

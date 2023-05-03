@@ -9,41 +9,41 @@
 <body>
   <div class="content">
     <div class="userInfo">
-      <h1>User Account Info</h1>
+      <h1 th:text="#{user.account.info}"></h1>
       <table>
         <tr>
-          <th>Field</th>
-          <th>Value</th>
+          <th></th>
+          <th></th>
         </tr>
         <tr>
-          <td>First name:</td>
+          <td th:text="#{user.firstName}"></td>
           <td><span th:text="${user.firstName}"></span></td>
         </tr>
         <tr>
-          <td>Last name:</td>
+          <td th:text="#{user.lastName}"></td>
           <td><span th:text="${user.lastName}"></span></td>
         </tr>
         <tr>
-          <td>Email:</td>
+          <td th:text="#{user.email}"></td>
           <td><span th:text="${user.email}"></span></td>
         </tr>
         <tr>
-          <td>UserName:</td>
+          <td th:text="#{user.userName}"></td>
           <td><span th:text="${user.username}"></span></td>
         </tr>
         <tr>
-          <td>Password:</td>
+          <td th:text="#{user.password}"></td>
           <td><span>********</span></td>
         </tr>
       </table>
     </div>
     <div id="collections-list">
-      <h2>My Collections</h2>
-      <button id="add-collection" class="collection-functional-button">Add</button>
+      <h2 th:text="#{user.account.info.collections}"></h2>
+      <button id="add-collection" class="collection-functional-button" th:text="#{button.add}"></button>
       <div th:insert="/popUp :: popUp"></div>
       <ul>
         <div th:each="collection : ${user.collections}">
-          <li><a th:href="@{/userCollection(id=${collection.id})}" th:text="${collection.name}"></a><button class="collection-functional-button edit-btn">Edit</button><button class="collection-functional-button dell-btn">Delete</button></li>
+          <li><a th:href="@{/userCollection(id=${collection.id})}" th:text="${collection.name}"></a><button class="collection-functional-button edit-btn" th:text="#{button.edit}"></button><button class="collection-functional-button dell-btn" th:text="#{button.delete}"></button></li>
         </div>
       </ul>
     </div>

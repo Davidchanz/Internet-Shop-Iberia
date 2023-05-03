@@ -7,28 +7,28 @@
       <div class="popUp-container">
         <div id="new-collection-name-form" style="display: none;">
           <form th:action="@{/a}" method="POST">
-            <h2>Enter new collection name</h2>
-            <label for="newName">Collection name:</label>
+            <h2 th:text="#{popUp.collection.new.header}"></h2>
+            <label for="newName" th:text="#{popUp.collection.name}"></label>
             <input type="text" id="newName" th:name="newName" th:id="newName" required="required"/>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary" th:text="#{button.add}"></button>
           </form>
         </div>
         <div id="change-collection-name" style="display: none;">
           <form th:action="@{/coll/n}" method="POST">
-            <h2>Change collection name</h2>
+            <h2 th:text="#{popUp.collection.change.header}"></h2>
             <input style="display: none;" type="text" id="collectionName" th:name="collectionName" th:id="collectionName"/>
-            <label for="newCollectionName">Collection name:</label>
+            <label for="newCollectionName" th:text="#{popUp.collection.name}"></label>
             <input type="text" id="newCollectionName" th:name="newCollectionName" th:id="newCollectionName" required="required"/>
-            <button type="submit" class="btn btn-primary">Change</button>
+            <button type="submit" class="btn btn-primary" th:text="#{button.change}"></button>
           </form>
         </div>
         <div id="are-you-sure" style="display: none;">
           <h2 id="are-you-sure-message"></h2>
           <p id="are-you-sure-text"></p>
           <span style="display: none;" id="variable"></span>
-          <button id="yesButton" type="submit" class="btn btn-primary">Yes</button>
+          <button id="yesButton" type="submit" class="btn btn-primary" th:text="#{button.yes}"></button>
         </div>
-        <button id="cancelBtn" class="btn btn-primary">Cancel</button>
+        <button id="cancelBtn" class="btn btn-primary" th:text="#{button.cancel}"></button>
       </div>
     </section>
     <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/popUp.js}"></script>
