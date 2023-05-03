@@ -14,8 +14,28 @@
                         <option value="fr" th:text="#{lang.fr}"></option>
                         <option value="ru" th:text="#{lang.ru}"></option>
                     </select>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-                    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/languageChange.js}"></script>
+                    <script th:inline="javascript">
+                        var langChange = document.getElementById("locales");
+                        langChange.onchange = function(){
+                            var nameJs = /*[[${#locale}]]*/;
+                            var userCurr = nameJs.split('_')[1];
+                            var selectedOption = $('#locales').val();
+                              if (selectedOption != ''){
+                                 if(window.location.search != ""){
+                                    if(window.location.search.includes("lang=")){
+                                      var params = window.location.search.substring(0, window.location.search.indexOf("lang")+5);
+                                      var curr = window.location.search.substring(window.location.search.indexOf("lang")+7);
+                                      window.location.replace(params + selectedOption + curr);
+                                    }else{
+                                      window.location.replace(window.location.pathname + window.location.search + '&lang=' + selectedOption + '-' + userCurr);
+                                    }
+                                }
+                                else{
+                                  window.location.replace(window.location.pathname + '?lang=' + selectedOption + '-' + userCurr);
+                                }
+                              }
+                        }
+                    </script>
                 </div>
                 <div>
                     <span th:text="#{curr.change}"></span>:
@@ -25,8 +45,30 @@
                         <option value="FR" th:text="#{curr.FR}"></option>
                         <option value="RU" th:text="#{curr.RU}"></option>
                     </select>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-                    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/currencyChange.js}"></script>
+                    <script th:inline="javascript">
+                      var currChange = document.getElementById("curr");
+                      currChange.onchange = function(){
+                          var nameJs = /*[[${#locale}]]*/;
+                          var userLang = nameJs.split('_')[0];
+                          var selectedOption = $('#curr').val();
+                          if (selectedOption != ''){
+                             if(window.location.search != ""){
+                                if(window.location.search.includes("lang=")){
+                                  if(window.location.search.includes("-")){
+                                    var params = window.location.search.substring(0, window.location.search.indexOf("-"));
+                                    window.location.replace(params + '-' + selectedOption);
+                                  }else
+                                    window.location.replace(window.location.search + '-' + selectedOption);
+                                }else{
+                                  window.location.replace(window.location.pathname + window.location.search + '&lang=' + userLang + '-' + selectedOption);
+                                }
+                            }
+                            else{
+                              window.location.replace(window.location.pathname + '?lang=' + userLang + '-' + selectedOption);
+                            }
+                          }
+                        }
+                    </script>
                 </div>
             </div>
         </footer>
