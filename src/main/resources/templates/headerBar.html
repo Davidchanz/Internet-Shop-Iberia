@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div id="cart-quantity-form">
+      <div style="margin-right: 5px;" id="cart-quantity-form">
         <div th:if="${cartQuantity == null}" >
           <script referrerpolicy="origin" th:src="@{/scripts/loadCartQuantity.js}"></script>
         </div>
@@ -57,15 +57,19 @@
         </form>
         <script referrerpolicy="origin" th:src="@{/scripts/updateCartQuantityPosition.js}"></script>
       </div>
-      <div id="userAccount">
+      <div style="margin-right: 5px;" id="userAccount">
         <div th:if="${userName == null}" >
           <script referrerpolicy="origin" th:src="@{/scripts/loadUserName.js}"></script>
         </div>
         <form method="get" th:action="@{/userAccount}">
-          <button class="user-button" type="submit"><img width="50px" th:src="@{/images/User.webp}">
+          <button class="user-button" type="submit"><img height="50px" th:src="@{/images/User.png}">
             <span id="userName" th:text="${userName}"></span>
           </button>
         </form>
+      </div>
+      <div style="margin-right: 5px; display: flex; flex-direction: column; align-items: center;">
+        <a th:href="@{/logout}"><img height="50px" th:src="@{/images/logout.png}"></a>
+        <span style="color: #FEBD69; font-size: 14px; text-decoration: none;">Logout</span>
       </div>
     </div>
     <nav class="navigationBar">
