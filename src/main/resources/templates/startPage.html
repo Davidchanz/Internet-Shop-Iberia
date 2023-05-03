@@ -17,7 +17,6 @@
                 </div>
                 <button class="slide slide-forward"><i class="gg-push-chevron-right"></i></button>
             </div>
-
             <section class="info-section">
                 <h2 th:text="#{greeting}"></h2>
                 <p th:text="#{greeting.description}"></p>
@@ -49,9 +48,11 @@
                 <div class="list-wrapper">
                     <div class="list-card" th:each="product : ${productList}">
                         <img th:src="@{${'/images/' + product.mainImage.path}}" alt="Product 1">
-                        <h3 th:text="${product.name}"></h3>
+                        <a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a>
                         <p th:text="${#numbers.formatCurrency(product.price)}"></p>
-                        <a th:href="@{/productDetail(productId=${product.Id})}" class="btn btn-primary">Buy Now</a>
+                        <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
+                            <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
+                        </form>
                     </div>
                 </div>
             </div>

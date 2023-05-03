@@ -145,9 +145,13 @@
         margin-bottom: 10px;
       }
 
-      .list-card h3 {
-        font-size: 24px;
-        margin-bottom: 10px;
+      .list-card a {
+          text-decoration: none;
+          font-size: 20px;
+          color: black;
+          display: block;
+          transition: 0.3s;
+          font-weight: bold;
       }
 
       .list-card p {

@@ -7,6 +7,7 @@ import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.UserProductListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,8 @@ public class ProductController {
 
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
+
         String categoryId = allRequestParams.get("categoryId");
         String searchRequest = allRequestParams.get("searchRequest");
         String collectionId = allRequestParams.get("collectionId");
@@ -63,8 +66,8 @@ public class ProductController {
         var filters = getFilters(details, allRequestParams);
 
         SortList sortList = new SortList();
-        String[] sortBys = {"name", "origPrice"};
-        String[] sortNames = {"Name", "Price"};
+        String[] sortBys = resourceBundle.getString("sorting.sortBy").split(",");
+        String[] sortNames = resourceBundle.getString("sorting.name").split(",");
         List<Sort> sorts = new ArrayList<>();
         for(int i = 0; i < sortNames.length; i++){
             if(sortBys[i].equals(sortBy))
@@ -80,12 +83,16 @@ public class ProductController {
         model.addAttribute("products", filteredProducts);
         model.addAttribute("sortingList", sortList);
 
+        var search = resourceBundle.getString("title.search");
+        var category = resourceBundle.getString("title.category");
+        var collection = resourceBundle.getString("title.collection");
+
         if (searchRequest != null) {
-            model.addAttribute("title", "Result by Search Request '"+searchRequest+"'");
+            model.addAttribute("title", search + " '"+searchRequest+"'");
         } else if(categoryId != null) {
-            model.addAttribute("title", "Category '"+categoryService.findCategoryById(Long.parseLong(categoryId)).getTitle()+"'");
+            model.addAttribute("title", category + " '"+categoryService.findCategoryById(Long.parseLong(categoryId)).getTitle()+"'");
         } else {
-            model.addAttribute("title", "Collection '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
+            model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
         }
 
         return "products";

@@ -52,7 +52,7 @@
                     </table>
                 </div>
                 <div class="about">
-                    <h3>About this item</h3>
+                    <h3 th:text="#{product.about}"></h3>
                     <span th:text="${product.about}"></span>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 </form>
                 <div id="add-to-list-select">
                     <select id="add-to-list">
-                        <option disabled selected value="blank">Manage Collection</option>
+                        <option disabled selected value="blank" th:text="#{product.collection}">Manage Collection</option>
                         <div th:each="collectionDTO : ${collectionDTOList}">
                             <div th:if="${collectionDTO.productExist == true}">
                                 <option class="product-in-collection" th:value="${collectionDTO.collection.id}"><span th:text="${collectionDTO.collection.name}"></span></option>

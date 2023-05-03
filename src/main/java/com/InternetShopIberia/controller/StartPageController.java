@@ -31,7 +31,7 @@ public class StartPageController {
         model.addAttribute("carouselItems", carouselItems);
 
         List<Product> productList = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
+        for(int i = 1; i < 6; i++){
             productList.add(productService.getAllProductsInCategoryById(1L).get(i));
         }
         model.addAttribute("productList", productList);

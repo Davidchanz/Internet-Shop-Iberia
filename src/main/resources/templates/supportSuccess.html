@@ -2,22 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Support Success</title>
+    <title th:text="#{title.success.support}"></title>
     <link type="text/css" th:href="@{/styles/success.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <div th:insert="/headerBar :: headerBar"></div>
 <body>
     <div class="content">
         <div class="container">
             <div class="header-success">
-                <h1>Thank You!</h1>
+                <h1 th:text="#{success.support.header}"></h1>
             </div>
             <main>
                 <img class="image-success" th:src="@{/images/success.png}" alt="Success Icon">
-                <p>Your support request has been received.</p>
-                <p>We sent to your email <span class="email" th:text="${email}"></span> request detail.</p>
-                <a th:href="@{/}" class="btn btn-primary">Return to Homepage</a>
+                <p th:text="#{success.support.subject}"></p>
+                <div style="display: flex;">
+                    <p th:text="#{success.support.message.start}"></p>
+                    <p class="email" th:text="${email}"></p>
+                    <p th:text="#{success.support.message.end}"></p>
+                </div>
+                <a th:href="@{/}" class="btn btn-primary" th:text="#{button.toHome}"></a>
             </main>
         </div>
     </div>

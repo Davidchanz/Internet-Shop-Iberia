@@ -4,18 +4,26 @@
     <link type="text/css" th:href="@{/styles/footer.css}" rel="stylesheet" />
     <div style="margin-top: 50px;">
         <footer>
-            <p>&copy; <span th:text="#{footer}"></span></p>
+            <span class="copyright">&copy; <span th:text="#{footer}"></span></span>
             <div class="local-changers">
                 <div>
                     <span th:text="#{lang.change}"></span>:
                     <select id="locales">
-                        <option value=""></option>
                         <option value="en" th:text="#{lang.eng}"></option>
                         <option value="fr" th:text="#{lang.fr}"></option>
                         <option value="ru" th:text="#{lang.ru}"></option>
                     </select>
                     <script th:inline="javascript">
+                        var nameJs = /*[[${#locale}]]*/;
+                        var userLang = nameJs.split('_')[0];
+                        var userCurr = nameJs.split('_')[1];
                         var langChange = document.getElementById("locales");
+                        for(var i = 0; i < langChange.options.length; i++){
+                          if(langChange.options[i].value == userLang){
+                            langChange.options[i].selected = true;
+                            break;
+                          }
+                        }
                         langChange.onchange = function(){
                             var nameJs = /*[[${#locale}]]*/;
                             var userCurr = nameJs.split('_')[1];
@@ -40,13 +48,21 @@
                 <div>
                     <span th:text="#{curr.change}"></span>:
                     <select id="curr">
-                        <option value=""></option>
                         <option value="US" th:text="#{curr.US}"></option>
                         <option value="FR" th:text="#{curr.FR}"></option>
                         <option value="RU" th:text="#{curr.RU}"></option>
                     </select>
                     <script th:inline="javascript">
-                      var currChange = document.getElementById("curr");
+                        var nameJs = /*[[${#locale}]]*/;
+                        var userLang = nameJs.split('_')[0];
+                        var userCurr = nameJs.split('_')[1];
+                        var currChange = document.getElementById("curr");
+                        for(var i = 0; i < currChange.options.length; i++){
+                          if(currChange.options[i].value == userCurr){
+                            currChange.options[i].selected = true;
+                            break;
+                          }
+                        }
                       currChange.onchange = function(){
                           var nameJs = /*[[${#locale}]]*/;
                           var userLang = nameJs.split('_')[0];

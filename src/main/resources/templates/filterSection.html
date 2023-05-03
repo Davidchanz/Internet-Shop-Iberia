@@ -3,7 +3,7 @@
   <div th:fragment="filter" th:remove="tag">
     <link type="text/css" th:href="@{/styles/filterSection.css}" rel="stylesheet" />
     <div class="filter-section">
-      <h2>Filter</h2>
+      <h2 th:text="#{filter}"></h2>
       <form th:action="@{/products/filter}" method="get">
         <input style="display: none;" type="checkbox" th:name="categoryId" th:id="categoryId" value="">
         <input style="display: none;" type="checkbox" th:name="searchRequest" th:id="searchRequest" value="">
@@ -54,7 +54,7 @@
           document.getElementById("sortTo").value = sortToValue;
           document.getElementById("sortTo").checked = true;
         </script>
-        <button id="filter-button" class="filter-button">Filter</button>
+        <button id="filter-button" class="filter-button" th:text="#{button.filter}"></button>
       </form>
     </div>
   </div>

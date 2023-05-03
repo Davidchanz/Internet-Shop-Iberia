@@ -2,22 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Purchase success</title>
+    <title th:text="#{title.success.purchase}"></title>
     <link type="text/css" th:href="@{/styles/success.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <div th:insert="/headerBar :: headerBar"></div>
 <body>
     <div class="content">
         <div class="container">
             <div class="header-success">
-                <h1>Your Order Has Been Successfully Processed</h1>
+                <h1 th:text="#{success.purchase.header}"></h1>
             </div>
             <main>
                 <img class="image-success" th:src="@{/images/success.png}" alt="Success Image">
-                <p>Thank you for shopping with us. Your order will be shipped soon.</p>
-                <p>We sent to your email <span class="email" th:text="${email}"></span> order detail.</p>
-                <a th:href="@{/}" class="btn btn-primary">Continue Shopping</a>
+                <p th:text="#{success.purchase.subject}"></p>
+                <div style="display: flex;">
+                    <p th:text="#{success.purchase.message.start}"></p>
+                    <p class="email" th:text="${email}"></p>
+                    <p th:text="#{success.purchase.message.end}"></p>
+                </div>
+                <a th:href="@{/}" class="btn btn-primary" th:text="#{button.continue.shopping}"></a>
             </main>
         </div>
     </div>
