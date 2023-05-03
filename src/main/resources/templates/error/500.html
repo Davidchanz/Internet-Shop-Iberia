@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header>
+  <title>Error</title>
+</header>
+<div th:fragment="errorSection" th:remove="tag">
+  <link type="text/css" th:href="@{/styles/error.css}" rel="stylesheet" />
+  <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
+  <section id="error">
+    <div class="error-container">
+      <img th:src="@{/images/error.webp}" alt="Error icon">
+      <h2>ERROR 505 INTERNAL SERVER ERROR!</h2>
+      <p>We're sorry, it looks like there was an error.</p>
+      <p>Please try again later or contact our customer support.</p>
+      <div th:if="${userError != null}">
+        <p th:text="${userError.message}"></p>
+      </div>
+      <button id="errorBtn" class="btn btn-primary">Go back to home</button>
+    </div>
+  </section>
+  <div th:if="${userError != null}">
+    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/error.js}"></script>
+  </div>
+</div>
+</html>
