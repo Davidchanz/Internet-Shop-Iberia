@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
-public class CollectionDTO {
+public class CollectionDto {
     @NotEmpty
     @NotNull
     private UserProductList collection;

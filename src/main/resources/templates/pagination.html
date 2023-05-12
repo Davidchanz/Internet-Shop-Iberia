@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="pagination" th:remove="tag">
+    <link type="text/css" th:href="@{/styles/pagination.css}" rel="stylesheet" />
+    <div id="pagination">
+      <span value="@{/}" class="prev">&laquo;</span>
+      <div th:each="page : ${pagination}" th:remove="tag">
+        <span th:if="${page.active == true}" class="page active" th:text="${page.number}"></span>
+        <span th:unless="${page.active == true}" class="page" th:text="${page.number}"></span>
+      </div>
+      <span value="@{/}" class="next">&raquo;</span>
+    </div>
+    <script referrerpolicy="origin" th:src="@{/scripts/pagination.js}"></script>
+  </div>
+</html>
