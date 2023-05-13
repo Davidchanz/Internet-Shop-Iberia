@@ -31,7 +31,7 @@
                     <span class="product-id" style="display: none;" th:text="${product.id}"></span>
                     <li>
                         <div th:if="${product.mainImage != null}">
-                            <img th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
+                            <img th:src="${product.mainImage.path}" alt="Product">
                         </div>
                         <div th:unless="${product.mainImage != null}">
                             <img th:src="@{/images/ProductTemplate.png}" alt="Product">
@@ -42,9 +42,9 @@
                         </div>
                     </li>
                 </div>
+                <div th:insert="/pagination :: pagination"></div>
             </ul>
         </div>
-        <div th:insert="/pagination :: pagination"></div>
     </main>
     <script referrerpolicy="origin" th:src="@{/scripts/sortingComboBox.js}"></script>
 </body>

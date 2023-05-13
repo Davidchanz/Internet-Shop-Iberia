@@ -97,10 +97,7 @@ public class ProductController {
             model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
         }
 
-        System.out.println(Math.ceil(filteredProducts.getProducts().size() / Double.valueOf(pageSize)));
-
         int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / Double.valueOf(pageSize));
-        System.out.println(pageNumbers);
 
         List<PaginationDto> pagination = new ArrayList<>();
         if(page == null)
@@ -114,7 +111,6 @@ public class ProductController {
 
         Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, pageSize);
         var t = getPagedProducts(categoryId, collectionId, searchRequest, allRequestParams, sort, pageable);
-        System.out.println(t);
         model.addAttribute("products", t);
 
         model.addAttribute("pagination", pagination);
@@ -222,6 +218,7 @@ public class ProductController {
                 filters.forEach((name, value) -> {
                     if(detail.getName().equals(name)){
                         if(!detail.getValue().equals(value)) {
+                            System.out.println(detail.getValue());
                             fit.set(false);
                         }
                     }

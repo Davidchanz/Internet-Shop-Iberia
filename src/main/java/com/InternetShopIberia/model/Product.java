@@ -20,9 +20,6 @@ public class Product implements Comparable<Product>{
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "DESCRIPTION" , length = 10000)
-    private String description;
-
     @Column(name = "PRICE", nullable = false)
     private BigDecimal origPrice;
 
