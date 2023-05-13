@@ -121,7 +121,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/filter")
-    public RedirectView filterProducts(@RequestParam Map<String,String> allRequestParams, RedirectAttributes redirectAttributes){
+    public RedirectView filterProducts(@RequestParam Map<String, String> allRequestParams, RedirectAttributes redirectAttributes){
 
         RedirectView redirectView;
         StringBuilder filterStr = new StringBuilder();

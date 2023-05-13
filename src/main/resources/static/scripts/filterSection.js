@@ -26,12 +26,7 @@ var params = window.location.search;
   document.getElementById("sortTo").value = sortToValue;
   document.getElementById("sortTo").checked = true;
 
-
-
   var page = document.getElementsByClassName("page active");
-  console.log(page);
-  console.log(page.length);
-  console.log(page[1]);
   var number = page[0].textContent;
   document.getElementById("page").value = number;
   document.getElementById("page").checked = true;
