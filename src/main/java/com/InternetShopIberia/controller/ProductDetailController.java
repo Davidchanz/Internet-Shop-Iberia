@@ -1,8 +1,7 @@
 package com.InternetShopIberia.controller;
 
-import com.InternetShopIberia.dto.CollectionDTO;
+import com.InternetShopIberia.dto.CollectionDto;
 import com.InternetShopIberia.model.User;
-import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.Translator;
 import com.InternetShopIberia.service.UserService;
@@ -49,9 +48,9 @@ public class ProductDetailController {
         model.addAttribute("product", product);
 
         User currentUser = userService.findUserByUserName(principal.getName());
-        List<CollectionDTO> collectionDTOList = new ArrayList<>();
+        List<CollectionDto> collectionDTOList = new ArrayList<>();
         for(var collection: currentUser.getCollections()){
-            CollectionDTO collectionDTO = new CollectionDTO();
+            CollectionDto collectionDTO = new CollectionDto();
             collectionDTO.setCollection(collection);
             if(collection.getProducts().contains(product)){
                 collectionDTO.setProductExist(true);

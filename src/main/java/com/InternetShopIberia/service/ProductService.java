@@ -8,6 +8,7 @@ import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,6 +30,10 @@ public class ProductService {
         return setProductPrice(productRepository.findAllByCategoryId(categoryId));
     }
 
+    public List<Product> getAllProductsInCategoryById(Long categoryId, Pageable pageable) {
+        return setProductPrice(productRepository.findAllByCategoryId(categoryId, pageable).getContent());
+    }
+
     public Product addProduct(Product product){
         return productRepository.save(product);
     }
@@ -37,12 +42,25 @@ public class ProductService {
         return setProductPrice(productRepository.searchByNameLike(name));
     }
 
+    public List<Product> getAllProductsNameLike(String name, Pageable pageable){
+        System.out.println(pageable);
+        return setProductPrice(productRepository.searchByNameLike(name, pageable).getContent());
+    }
+
     public List<Product> getAllProductsNameLikeSortBy(String name, Sort sort) {
         return setProductPrice(productRepository.searchByNameLikeSortBy(name, sort.getSortBy(), sort.getSortTo()));
     }
 
+    public List<Product> getAllProductsNameLikeSortBy(String name, Pageable pageable) {
+        return setProductPrice(productRepository.searchByNameLikeSortBy(name, pageable).getContent());
+    }
+
     public List<Product> getAllProductsInCategoryByIdSortBy(Long categoryId, Sort sort) {
         return setProductPrice(productRepository.findAllByCategoryIdSortBy(categoryId, sort.getSortBy(), sort.getSortTo()));
+    }
+
+    public List<Product> getAllProductsInCategoryByIdSortBy(Long categoryId, Pageable pageable) {
+        return setProductPrice(productRepository.findAllByCategoryId(categoryId, pageable).getContent());
     }
 
     private Product setProductPrice(Product product){

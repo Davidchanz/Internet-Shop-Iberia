@@ -25,35 +25,8 @@
         </div>
         <input style="display: none;" type="checkbox" th:name="sortBy" th:id="sortBy" value="">
         <input style="display: none;" type="checkbox" th:name="sortTo" th:id="sortTo" value="">
-        <script th:inline="javascript">
-          var params = window.location.search;
-          if(params.includes("categoryId=")){
-            var categoryId = params.split("&")[0].substring(params.indexOf("=")+1);
-            document.getElementById("categoryId").value = categoryId;
-            document.getElementById("categoryId").checked = true;
-          }else if(params.includes("searchRequest=")){
-            var searchRequest = params.split("&")[0].substring(params.indexOf("=")+1);
-            document.getElementById("searchRequest").value = searchRequest;
-            document.getElementById("searchRequest").checked = true;
-          } else{
-            var collectionId = params.split("&")[0].substring(params.indexOf("=")+1);
-            document.getElementById("collectionId").value = collectionId;
-            document.getElementById("collectionId").checked = true;
-          }
-          var sort = document.getElementById("sortBox");
-          var sortName = sort.options[sort.selectedIndex].value;
-          document.getElementById("sortBy").value = sortName;
-          document.getElementById("sortBy").checked = true;
-
-          var sortToValue = "";
-          if(asc.classList[1] == "active"){
-              sortToValue = "asc";
-          }else{
-              sortToValue = "desc";
-          }
-          document.getElementById("sortTo").value = sortToValue;
-          document.getElementById("sortTo").checked = true;
-        </script>
+        <input style="display: none;" type="checkbox" th:name="page" th:id="page" value="">
+        <script referrerpolicy="origin" defer th:src="@{/scripts/filterSection.js}"></script>
         <button id="filter-button" class="filter-button" th:text="#{button.filter}"></button>
       </form>
     </div>

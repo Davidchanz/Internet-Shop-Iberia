@@ -11,4 +11,7 @@ import java.util.List;
 public interface SearchHistoryRepository extends JpaRepository<SearchHistory, Long> {
     @Query("SELECT h FROM SearchHistory h WHERE h.user = :user AND h.searchRequest LIKE %:request%")
     public List<SearchHistory> findAllSearchHistoryLikeRequestByUser(@Param("request") String request, @Param("user") User user);
+
+    @Query("SELECT h FROM SearchHistory h WHERE h.user = :user AND h.searchRequest = :request")
+    public SearchHistory findSearchHistoryBySearchRequest(@Param("request") String request, @Param("user") User user);
 }

@@ -17,7 +17,13 @@ public class SearchHistoryService {
         return searchHistoryRepository.findAllSearchHistoryLikeRequestByUser(request, user);
     }
 
-    public SearchHistory addSearchHistory(SearchHistory searchHistory){
-        return searchHistoryRepository.save(searchHistory);
+    public void addSearchHistory(SearchHistory searchHistory){
+        if(findSearchHistoryBySearchRequest(searchHistory) == null) {
+            searchHistoryRepository.save(searchHistory);
+        }
+    }
+
+    private SearchHistory findSearchHistoryBySearchRequest(SearchHistory searchHistory){
+        return searchHistoryRepository.findSearchHistoryBySearchRequest(searchHistory.getSearchRequest(), searchHistory.getUser());
     }
 }

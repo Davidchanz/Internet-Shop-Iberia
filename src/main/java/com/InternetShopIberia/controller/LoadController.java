@@ -1,6 +1,6 @@
 package com.InternetShopIberia.controller;
 
-import com.InternetShopIberia.dto.CollectionDTO;
+import com.InternetShopIberia.dto.CollectionDto;
 import com.InternetShopIberia.model.Cart;
 import com.InternetShopIberia.model.Currency;
 import com.InternetShopIberia.model.User;
@@ -65,7 +65,7 @@ public class LoadController {
     @GetMapping("/coll")
     public String manageCollection(@RequestParam("collectionId") String collectionId, @RequestParam("productId") String productId, Principal principal, Model model){
         User currentUser = userService.findUserByUserName(principal.getName());
-        List<CollectionDTO> collectionDTOList = new ArrayList<>();
+        List<CollectionDto> collectionDTOList = new ArrayList<>();
         var product = productService.getProductById(Long.parseLong(productId));
         for(var coll: currentUser.getCollections()){
             if(coll.getId().equals(Long.parseLong(collectionId))){
@@ -76,7 +76,7 @@ public class LoadController {
                 }
                 userProductListService.save(coll);
             }
-            CollectionDTO collectionDTO = new CollectionDTO();
+            CollectionDto collectionDTO = new CollectionDto();
             collectionDTO.setCollection(coll);
             if(coll.getProducts().contains(product)){
                 collectionDTO.setProductExist(true);
