@@ -47,7 +47,7 @@
             <div class="product-list">
                 <div class="list-wrapper">
                     <div class="list-card" th:each="product : ${productList}">
-                        <img th:src="@{${'/images/' + product.mainImage.path}}" alt="Product 1">
+                        <img th:src="${product.mainImage.path}" alt="Product 1">
                         <a th:href="@{/productDetail(productId=${product.Id})}" th:text="${product.name}"></a>
                         <p th:text="${#numbers.formatCurrency(product.price)}"></p>
                         <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">

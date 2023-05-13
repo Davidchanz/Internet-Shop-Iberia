@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainImageUpdateController {
     @GetMapping("update/image")
     public String updateMainImage(@RequestParam("image") String image, Model model){
-        String path = image.substring(image.lastIndexOf("/")+1);
-        model.addAttribute("chosenImage", path);
+        model.addAttribute("chosenImage", image);
         return "productDetail :: #mainImage";
     }
 }

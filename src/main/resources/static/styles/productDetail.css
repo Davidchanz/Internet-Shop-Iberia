@@ -6,7 +6,6 @@ main {
 }
 
 .container {
-	max-width: 1200px;
 	min-width: 1200px;
 	margin: 0 auto;
 	padding: 20px;
@@ -31,7 +30,6 @@ main {
 }
 
 .images{
-	width: 453px;
 	min-width: 453px;
 }
 
@@ -47,7 +45,7 @@ main {
 }
 
 .product-image .mainImage {
-	height: 380px;
+	max-width: 380px;
 	overflow-clip-margin: content-box;
 	overflow: clip;
 }

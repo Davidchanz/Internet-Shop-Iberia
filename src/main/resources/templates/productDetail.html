@@ -13,24 +13,21 @@
                 <div class="images">
                     <div class="product-image">
                         <div class="all-images">
-                            <div th:if="${product.mainImage != null}">
-                                <img class="small-image" th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
-                            </div>
                             <div th:each="image : ${product.allImages}">
-                                <img class="small-image" th:src="@{${'/images/' + image.path}}">
+                                <img class="small-image" th:src="${image.path}">
                             </div>
                         </div>
                         <div id="mainImage">
                             <div th:if="${chosenImage == null}">
                                 <div th:if="${product.mainImage != null}">
-                                    <img class="mainImage" th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
+                                    <img class="mainImage" th:src="${product.mainImage.path}" alt="Product">
                                 </div>
                                 <div th:unless="${product.mainImage != null}">
                                     <img class="mainImage" th:src="@{/images/ProductTemplate.png}" alt="Product">
                                 </div>
                             </div>
                             <div th:unless="${chosenImage == null}">
-                                <img class="mainImage" th:src="@{${'/images/' + chosenImage}}" alt="Product">
+                                <img class="mainImage" th:src="${chosenImage}" alt="Product">
                             </div>
                         </div>
                     </div>
@@ -38,11 +35,10 @@
                 <div class="description">
                     <div class="product-details">
                         <h1 class="product-name" th:text="${product.name}"></h1>
-                        <p class="product-description" th:text="${product.description}"></p>
                     </div>
                     <div class="about">
                         <h3 th:text="#{product.about}"></h3>
-                        <span th:text="${product.about}"></span>
+                        <span style="overflow-wrap: anywhere;" th:text="${product.about}"></span>
                     </div>
                 </div>
                 <div class="price">
