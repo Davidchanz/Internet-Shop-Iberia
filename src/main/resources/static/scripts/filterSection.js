@@ -30,3 +30,20 @@ var params = window.location.search;
   var number = page[0].textContent;
   document.getElementById("page").value = number;
   document.getElementById("page").checked = true;
+
+  var sectionHeaders = document.getElementsByClassName("section-header");
+  for(var k = 0; k < sectionHeaders.length; k++){
+      sectionHeaders[k].onclick = function(){
+          console.log(this);
+          var section = this.parentElement;
+          console.log(section);
+          section.classList.toggle("minimized");
+          var sectionContent = this.nextElementSibling;
+          console.log(sectionContent);
+          if (section.classList.contains("minimized")) {
+              sectionContent.style.maxHeight = "0";
+          } else {
+              sectionContent.style.maxHeight = sectionContent.scrollHeight + "px";
+          }
+      }
+  }

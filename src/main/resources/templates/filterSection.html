@@ -9,17 +9,24 @@
         <input style="display: none;" type="checkbox" th:name="searchRequest" th:id="searchRequest" value="">
         <input style="display: none;" type="checkbox" th:name="collectionId" th:id="collectionId" value="">
         <div class="filter-category" id="filter-category">
-          <div th:if="${filters != null}">
-            <div th:each="filter : ${filters.filters}">
-              <h3 th:text="${filter.name}"></h3>
-              <ul>
-                <div th:each="filterValue : ${filter.values}">
-                  <li>
-                    <input type="checkbox" th:name="${filter.name}" th:id="${filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
-                    <label th:for="${filterValue.value}" th:text="${filterValue.value}"></label>
-                  </li>
+          <div th:if="${filters != null}" th:remove="tag">
+            <div th:each="filter : ${filters.filters}" th:remove="tag">
+              <div class="section">
+                <div class="section-header">
+                  <span>&#x25BC;</span>
+                  <h3 th:text="${filter.name}"></h3>
                 </div>
-              </ul>
+                <div class="section-content">
+                  <ul>
+                    <div th:each="filterValue : ${filter.values}" th:remove="tag">
+                      <li>
+                        <input type="checkbox" th:name="${filter.name}" th:id="${filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
+                        <label th:for="${filterValue.value}" th:text="${filterValue.value}"></label>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
