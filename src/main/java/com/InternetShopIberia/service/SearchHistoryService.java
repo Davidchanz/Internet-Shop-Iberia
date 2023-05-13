@@ -18,8 +18,9 @@ public class SearchHistoryService {
     }
 
     public void addSearchHistory(SearchHistory searchHistory){
-        if(findSearchHistoryBySearchRequest(searchHistory) != null)
+        if(findSearchHistoryBySearchRequest(searchHistory) == null) {
             searchHistoryRepository.save(searchHistory);
+        }
     }
 
     private SearchHistory findSearchHistoryBySearchRequest(SearchHistory searchHistory){
