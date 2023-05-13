@@ -1,24 +1,22 @@
 package com.InternetShopIberia.controller;
 
 import com.InternetShopIberia.dto.*;
-import com.InternetShopIberia.model.Category;
 import com.InternetShopIberia.model.Product;
 import com.InternetShopIberia.service.CategoryService;
 import com.InternetShopIberia.service.ProductService;
 import com.InternetShopIberia.service.UserProductListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -32,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Value("${pageSize}")
+    private int pageSize;
 
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
@@ -52,7 +53,7 @@ public class ProductController {
         Sort sort = null;
         if(sortBy != null && sortTo != null)
             sort = new Sort("", sortBy, sortTo, true);
-        var filteredProducts = getProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
+        var filteredProducts = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
         for(var product: filteredProducts.getProducts()){
             for(var detail: product.getDetails()){
@@ -82,7 +83,6 @@ public class ProductController {
         sortList.setSortTo(sortTo);
 
         model.addAttribute("filters", filters);
-        model.addAttribute("products", filteredProducts);
         model.addAttribute("sortingList", sortList);
 
         var search = resourceBundle.getString("title.search");
@@ -97,23 +97,25 @@ public class ProductController {
             model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
         }
 
-        final int pageSize = 3;
-        int pageNumbers = filteredProducts.getProducts().size() / pageSize;
+        System.out.println(Math.ceil(filteredProducts.getProducts().size() / Double.valueOf(pageSize)));
+
+        int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / Double.valueOf(pageSize));
+        System.out.println(pageNumbers);
 
         List<PaginationDto> pagination = new ArrayList<>();
+        if(page == null)
+            page = "1";
         for(int i = 1; i <= pageNumbers; i++){
-            if(page != null) {
-                if (i == Integer.parseInt(page))
-                    pagination.add(new PaginationDto(true, i));
-                else
-                    pagination.add(new PaginationDto(false, i));
-            }else {
-                if(i == 1)
-                    pagination.add(new PaginationDto(true, i));
-                else
-                    pagination.add(new PaginationDto(false, i));
-            }
+            if (i == Integer.parseInt(page))
+                pagination.add(new PaginationDto(true, i));
+            else
+                pagination.add(new PaginationDto(false, i));
         }
+
+        Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, pageSize);
+        var t = getPagedProducts(categoryId, collectionId, searchRequest, allRequestParams, sort, pageable);
+        System.out.println(t);
+        model.addAttribute("products", t);
 
         model.addAttribute("pagination", pagination);
 
@@ -122,9 +124,11 @@ public class ProductController {
 
     @GetMapping("/products/filter")
     public RedirectView filterProducts(@RequestParam Map<String, String> allRequestParams, RedirectAttributes redirectAttributes){
-
         RedirectView redirectView;
         StringBuilder filterStr = new StringBuilder();
+
+        allRequestParams.remove("page");//refresh page when filtering
+
         allRequestParams.forEach((name, value) -> {
             if(!name.equals("categoryId") && !name.equals("searchRequest") && !name.equals("collectionId"))
                 filterStr.append("&").append(name).append("=").append(value);
@@ -159,7 +163,7 @@ public class ProductController {
         return filters;
     }
 
-    private ProductList getProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort){
+    private ProductList getAllProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort){
         List<Product> productList = null;
         if(sort == null) {
             if (searchRequest != null) {
@@ -167,7 +171,7 @@ public class ProductController {
             } else if(categoryId != null) {
                 productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId));
             } else {
-                productList = userProductListService.findUserProductListById(Long.parseLong(collectionId)).getProducts().stream().toList();
+                productList = userProductListService.findAllProductsInUserListById(Long.parseLong(collectionId));
             }
         }else {
             if (searchRequest != null) {
@@ -179,16 +183,46 @@ public class ProductController {
             }
         }
 
+        return getFilteredProducts(productList, allRequestParams);
+    }
+
+    private ProductList getPagedProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort, Pageable pageable){
+        List<Product> productList = null;
+        if(sort == null) {
+            if (searchRequest != null) {
+                productList = productService.getAllProductsNameLike(searchRequest, pageable);
+            } else if(categoryId != null) {
+                productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId), pageable);
+            } else {
+                productList = userProductListService.findAllProductsInUserListById(Long.parseLong(collectionId), pageable);
+            }
+        }else {
+            if(sort.getSortTo().equals("asc"))
+                pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), org.springframework.data.domain.Sort.by(sort.getSortBy()).ascending());
+            else
+                pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), org.springframework.data.domain.Sort.by(sort.getSortBy()).descending());
+            if (searchRequest != null) {
+                productList = productService.getAllProductsNameLikeSortBy(searchRequest, pageable);
+            } else if(categoryId != null){
+                productList = productService.getAllProductsInCategoryByIdSortBy(Long.parseLong(categoryId), pageable);
+            } else {
+                productList = userProductListService.findAllProductsInUserListByIdSortBy(Long.parseLong(collectionId), pageable);
+            }
+        }
+
+        return getFilteredProducts(productList, allRequestParams);
+    }
+
+    private ProductList getFilteredProducts(List<Product> productList, Map<String,String> filters){
         ProductList filteredProducts = new ProductList();
         filteredProducts.setProducts(new ArrayList<>());
         for(var product: productList) {
             AtomicBoolean fit = new AtomicBoolean(true);
             for(var detail: product.getDetails()) {
-                allRequestParams.forEach((name, value) -> {
+                filters.forEach((name, value) -> {
                     if(detail.getName().equals(name)){
                         if(!detail.getValue().equals(value)) {
                             fit.set(false);
-                            return;
                         }
                     }
                 });
