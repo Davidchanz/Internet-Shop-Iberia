@@ -9,72 +9,73 @@
 <body>
     <main class="content">
         <div class="container">
-            <div class="images">
-                <div class="product-image">
-                    <div class="all-images">
-                        <div th:if="${product.mainImage != null}">
-                            <img class="small-image" th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
-                        </div>
-                        <div th:each="image : ${product.allImages}">
-                            <img class="small-image" th:src="@{${'/images/' + image.path}}">
-                        </div>
-                    </div>
-                    <div id="mainImage">
-                        <div th:if="${chosenImage == null}">
+            <div class="product-detail-section">
+                <div class="images">
+                    <div class="product-image">
+                        <div class="all-images">
                             <div th:if="${product.mainImage != null}">
-                                <img class="mainImage" th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
+                                <img class="small-image" th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
                             </div>
-                            <div th:unless="${product.mainImage != null}">
-                                <img class="mainImage" th:src="@{/images/ProductTemplate.png}" alt="Product">
+                            <div th:each="image : ${product.allImages}">
+                                <img class="small-image" th:src="@{${'/images/' + image.path}}">
                             </div>
                         </div>
-                        <div th:unless="${chosenImage == null}">
-                            <img class="mainImage" th:src="@{${'/images/' + chosenImage}}" alt="Product">
+                        <div id="mainImage">
+                            <div th:if="${chosenImage == null}">
+                                <div th:if="${product.mainImage != null}">
+                                    <img class="mainImage" th:src="@{${'/images/' + product.mainImage.path}}" alt="Product">
+                                </div>
+                                <div th:unless="${product.mainImage != null}">
+                                    <img class="mainImage" th:src="@{/images/ProductTemplate.png}" alt="Product">
+                                </div>
+                            </div>
+                            <div th:unless="${chosenImage == null}">
+                                <img class="mainImage" th:src="@{${'/images/' + chosenImage}}" alt="Product">
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="description">
+                    <div class="product-details">
+                        <h1 class="product-name" th:text="${product.name}"></h1>
+                        <p class="product-description" th:text="${product.description}"></p>
+                    </div>
+                    <div class="about">
+                        <h3 th:text="#{product.about}"></h3>
+                        <span th:text="${product.about}"></span>
+                    </div>
+                </div>
+                <div class="price">
+                    <p class="product-price" th:text="${#numbers.formatCurrency(product.price)}"></p>
+                    <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
+                        <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
+                    </form>
+                    <div id="add-to-list-select">
+                        <select id="add-to-list">
+                            <option disabled selected value="blank" th:text="#{product.collection}">Manage Collection</option>
+                            <div th:each="collectionDTO : ${collectionDTOList}">
+                                <div th:if="${collectionDTO.productExist == true}">
+                                    <option class="product-in-collection" th:value="${collectionDTO.collection.id}"><span th:text="${collectionDTO.collection.name}"></span></option>
+                                </div>
+                                <div th:unless="${collectionDTO.productExist == true}">
+                                    <option th:value="${collectionDTO.collection.id}"><span th:text="${collectionDTO.collection.name}"></span></option>
+                                </div>
+                            </div>
+                        </select>
+                        <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/collections.js}"></script>
+                    </div>
+                </div>
             </div>
-            <div class="description">
-                <div class="product-details">
-                    <h1 class="product-name" th:text="${product.name}"></h1>
-                    <p class="product-description" th:text="${product.description}"></p>
-                    <table class="product-info">
+            <div class="product-specifications">
+                <h3 th:text="#{product.specification}"></h3>
+                <table class="product-info">
+                    <div th:each="detail : ${product.details}" th:remove="tag">
                         <tr>
-                            <th></th>
-                            <th></th>
+                            <td><span class="detail-name" th:text="${detail.name}"></span></td>
+                            <td><span class="detail-value" th:text="${detail.value}"></span></td>
                         </tr>
-                        <div th:each="detail : ${product.details}">
-                            <tr>
-                                <td><span class="detail-name" th:text="${detail.name}"></span></td>
-                                <td><span class="detail-value" th:text="${detail.value}"></span></td>
-                            </tr>
-                        </div>
-                    </table>
-                </div>
-                <div class="about">
-                    <h3 th:text="#{product.about}"></h3>
-                    <span th:text="${product.about}"></span>
-                </div>
-            </div>
-            <div class="price">
-                <p class="product-price" th:text="${#numbers.formatCurrency(product.price)}"></p>
-                <form th:action="@{/cart(productId=${product.Id})}" method="POST" enctype="utf8">
-                    <button type="submit" class="btn btn-primary" th:text="#{button.buy}"></button>
-                </form>
-                <div id="add-to-list-select">
-                    <select id="add-to-list">
-                        <option disabled selected value="blank" th:text="#{product.collection}">Manage Collection</option>
-                        <div th:each="collectionDTO : ${collectionDTOList}">
-                            <div th:if="${collectionDTO.productExist == true}">
-                                <option class="product-in-collection" th:value="${collectionDTO.collection.id}"><span th:text="${collectionDTO.collection.name}"></span></option>
-                            </div>
-                            <div th:unless="${collectionDTO.productExist == true}">
-                                <option th:value="${collectionDTO.collection.id}"><span th:text="${collectionDTO.collection.name}"></span></option>
-                            </div>
-                        </div>
-                    </select>
-                    <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/collections.js}"></script>
-                </div>
+                    </div>
+                </table>
             </div>
         </div>
     </main>
