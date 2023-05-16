@@ -23,14 +23,14 @@
   background-color: #ddd;
 }
 
-#pagination .prev,
-#pagination .next {
+#prev-page,
+#next-page {
   background-color: #f2f2f2;
   color: #666;
 }
 
-#pagination .prev:hover,
-#pagination .next:hover {
+#prev-page:hover,
+#next-page:hover {
   background-color: #ddd;
 }
 

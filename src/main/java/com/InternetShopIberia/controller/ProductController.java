@@ -34,6 +34,9 @@ public class ProductController {
     @Value("${pageSize}")
     private int pageSize;
 
+    @Value("${maxPages}")
+    private int maxPages;
+
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
@@ -98,11 +101,23 @@ public class ProductController {
         }
 
         int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / Double.valueOf(pageSize));
-
         List<PaginationDto> pagination = new ArrayList<>();
+
         if(page == null)
             page = "1";
-        for(int i = 1; i <= pageNumbers; i++){
+        if(page.equals("0"))
+            page = "1";
+        if(Integer.parseInt(page) > pageNumbers)
+            page = String.valueOf(pageNumbers);
+
+        int currentStartPage = Integer.parseInt(page) - maxPages;
+        int currentLastPage = Integer.parseInt(page) + maxPages;
+
+        for(int i = currentStartPage; i <= currentLastPage; i++){
+            if(i < 1)
+                continue;
+            if(i > pageNumbers)
+                break;
             if (i == Integer.parseInt(page))
                 pagination.add(new PaginationDto(true, i));
             else
