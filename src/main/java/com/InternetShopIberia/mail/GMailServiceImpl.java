@@ -1,6 +1,7 @@
 package com.InternetShopIberia.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,7 +37,31 @@ public class GMailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMimeMessage(String to, String subject, String text, List<FileSystemResource> attachments) {
+    public void sendMimeMessage(String to, String subject, String text) {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessageHelper helper = null;
+        try {
+            helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        } catch (MessagingException e) {
+            System.err.println(e.getMessage());
+        }
+        String attachmentsPath = "src/main/resources/static/images/logo.png";
+
+        FileSystemResource logo = new FileSystemResource(attachmentsPath);
+        try {
+            helper.setText(text, true);
+            helper.addInline("logo", logo);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setFrom("internetshopiberiasupp@gmail.com");
+            emailSender.send(mimeMessage);
+        }catch (MailException | MessagingException ex ){
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendAttachmentMessage(String to, String subject, String text, List<FileSystemResource> attachments) {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper helper = null;
         try {
