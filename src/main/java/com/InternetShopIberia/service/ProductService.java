@@ -43,7 +43,6 @@ public class ProductService {
     }
 
     public List<Product> getAllProductsNameLike(String name, Pageable pageable){
-        System.out.println(pageable);
         return setProductPrice(productRepository.searchByNameLike(name, pageable).getContent());
     }
 
