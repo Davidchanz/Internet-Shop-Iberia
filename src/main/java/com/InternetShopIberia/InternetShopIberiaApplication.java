@@ -25,12 +25,13 @@ public class InternetShopIberiaApplication {
 		var context = SpringApplication.run(InternetShopIberiaApplication.class, args);
 		addCategoryTemplate(context);
 		//addProductsTemplate(context);
-		addProducts(context);
+		addProducts(context, "data/images/images_url.text", "data/products/laptops");
+		addProducts(context, "data/images/phones.text", "data/products/phones");
 		addUser(context);
 		//192.168.100.10
 	}
 
-	private static void addProducts(ConfigurableApplicationContext context) {
+	private static void addProducts(ConfigurableApplicationContext context, String imageUrlsFilePath, String prosuctFilePath) {
 		var productService = context.getBean(ProductService.class);
 		var productDetailService = context.getBean(ProductDetailService.class);
 		var productImageService = context.getBean(ProductImageService.class);
@@ -38,12 +39,13 @@ public class InternetShopIberiaApplication {
 
 		TreeMap<String, String> images = new TreeMap<>();
 		try {
-			Scanner sc = new Scanner(new File("data/images/images_url.text"));
+			Scanner sc = new Scanner(new File(imageUrlsFilePath));
 			sc.useDelimiter(", ");
 			while (sc.hasNext()){
 				String url_name = sc.next();
-				String path = url_name.split(" | ")[0];
-				String name = url_name.split(" | ")[2];
+				//System.out.println(url_name);
+				String path = url_name.split(" \\| ")[0];
+				String name = url_name.split(" \\| ")[1];
 				name = name.substring(name.indexOf("_")+1, name.indexOf("."));
 				images.put(name, path);
 			}
@@ -52,7 +54,7 @@ public class InternetShopIberiaApplication {
 			System.exit(1);
 		}
 
-		File data = new File("data/products");
+		File data = new File(prosuctFilePath);
 		for(var file: data.listFiles()){
 			String str = "";
 			try {
@@ -246,14 +248,11 @@ public class InternetShopIberiaApplication {
 				Laptops
 		));
 		categoryService.addCategory(Laptops);
-		var Android =  new Category("Android", "", new ArrayList<>());
+		/*var Android =  new Category("Android", "", new ArrayList<>());
 		categoryService.addCategory(Android);
 		var Apple = new Category("Apple", "", new ArrayList<>());
-		categoryService.addCategory(Apple);
-		var Phones = new Category("Phones", "", List.of(
-				Apple,
-				Android
-		));
+		categoryService.addCategory(Apple);*/
+		var Phones = new Category("Phones", "", new ArrayList<>());
 		categoryService.addCategory(Phones);
 
 		Category categories = new Category("Categories", "", List.of(
