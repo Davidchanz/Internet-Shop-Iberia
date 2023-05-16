@@ -62,6 +62,9 @@
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: fixed;
+    bottom: 20px;
+    width: 200px;
 }
 
 .filter-button:hover {
