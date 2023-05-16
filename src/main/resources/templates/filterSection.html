@@ -20,8 +20,8 @@
                   <ul>
                     <div th:each="filterValue : ${filter.values}" th:remove="tag">
                       <li>
-                        <input type="checkbox" th:name="${filter.name}" th:id="${filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
-                        <label th:for="${filterValue.value}" th:text="${filterValue.value}"></label>
+                        <input type="checkbox" th:name="${filter.name}" th:id="${filter.name +'_'+ filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
+                        <label th:for="${filter.name +'_'+ filterValue.value}" th:text="${filterValue.value}"></label>
                       </li>
                     </div>
                   </ul>
