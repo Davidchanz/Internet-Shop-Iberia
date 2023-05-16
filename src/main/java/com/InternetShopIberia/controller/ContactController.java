@@ -68,7 +68,7 @@ public class ContactController {
 
         final String result = templateEngine.process("mail", ctx);
 
-        emailService.sendMimeMessage(supportRequest.getEmail(), "Contacting Support", result, new ArrayList<>());
+        emailService.sendMimeMessage(supportRequest.getEmail(), "Contacting Support", result);
 
         model.addAttribute("email", currentUser.getEmail());
         return "supportSuccess";

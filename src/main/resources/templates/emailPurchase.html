@@ -84,7 +84,7 @@
     <div class="product-list">
       <div class="list-wrapper">
         <div class="list-card" th:each="product : ${productList}">
-          <img src="product.png" th:src="|cid:${product.mainImage.path}|" alt="Product">
+          <img src="product.png" th:src="${product.mainImage.path}" alt="Product">
           <h3 th:text="${product.name}"></h3>
           <div style="display: flex; align-items: center;">
             <p th:text="#{email.purchase.quantity}"></p>

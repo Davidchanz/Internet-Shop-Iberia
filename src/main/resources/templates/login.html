@@ -23,7 +23,7 @@
           <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help-block"></span>
         </div>
         <div style="display: flex; margin-bottom: 10px;">
-          <label style="margin-bottom: 0;" for="remember-me" th:text="#{login.remember}"></label>
+          <label style="margin-bottom: 0; margin-right: 10px;" for="remember-me" th:text="#{login.remember}"></label>
           <input type="checkbox" name="remember-me" id="remember-me" />
         </div>
         <div class="form-group">

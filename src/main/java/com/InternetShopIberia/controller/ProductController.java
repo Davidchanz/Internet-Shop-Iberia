@@ -34,6 +34,9 @@ public class ProductController {
     @Value("${pageSize}")
     private int pageSize;
 
+    @Value("${maxPages}")
+    private int maxPages;
+
     @GetMapping("/products")
     public String showProductCategoryPage(@RequestParam Map<String,String> allRequestParams, Model model){
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
@@ -97,12 +100,25 @@ public class ProductController {
             model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
         }
 
-        int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / Double.valueOf(pageSize));
-
+        int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / (double) pageSize);
         List<PaginationDto> pagination = new ArrayList<>();
+
         if(page == null)
             page = "1";
-        for(int i = 1; i <= pageNumbers; i++){
+        if(Integer.parseInt(page) > pageNumbers) {
+            page = String.valueOf(pageNumbers);
+        }
+        if(page.equals("0"))
+            page = "1";
+
+        int currentStartPage = Integer.parseInt(page) - maxPages;
+        int currentLastPage = Integer.parseInt(page) + maxPages;
+
+        for(int i = currentStartPage; i <= currentLastPage; i++){
+            if(i < 1)
+                continue;
+            if(i > pageNumbers)
+                break;
             if (i == Integer.parseInt(page))
                 pagination.add(new PaginationDto(true, i));
             else
@@ -110,8 +126,10 @@ public class ProductController {
         }
 
         Pageable pageable = PageRequest.of(Integer.parseInt(page)-1, pageSize);
-        var t = getPagedProducts(categoryId, collectionId, searchRequest, allRequestParams, sort, pageable);
-        model.addAttribute("products", t);
+
+        var pagedProducts = getPagedProducts(categoryId, collectionId, searchRequest, allRequestParams, sort, pageable);
+
+        model.addAttribute("products", pagedProducts);
 
         model.addAttribute("pagination", pagination);
 
@@ -183,30 +201,14 @@ public class ProductController {
     }
 
     private ProductList getPagedProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort, Pageable pageable){
-        List<Product> productList = null;
-        if(sort == null) {
-            if (searchRequest != null) {
-                productList = productService.getAllProductsNameLike(searchRequest, pageable);
-            } else if(categoryId != null) {
-                productList = productService.getAllProductsInCategoryById(Long.parseLong(categoryId), pageable);
-            } else {
-                productList = userProductListService.findAllProductsInUserListById(Long.parseLong(collectionId), pageable);
-            }
-        }else {
-            if(sort.getSortTo().equals("asc"))
-                pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), org.springframework.data.domain.Sort.by(sort.getSortBy()).ascending());
-            else
-                pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), org.springframework.data.domain.Sort.by(sort.getSortBy()).descending());
-            if (searchRequest != null) {
-                productList = productService.getAllProductsNameLikeSortBy(searchRequest, pageable);
-            } else if(categoryId != null){
-                productList = productService.getAllProductsInCategoryByIdSortBy(Long.parseLong(categoryId), pageable);
-            } else {
-                productList = userProductListService.findAllProductsInUserListByIdSortBy(Long.parseLong(collectionId), pageable);
-            }
+        var productList = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort).getProducts();
+        int max = (pageable.getPageNumber() * pageSize) + pageSize;
+        if(max > productList.size()-1)
+            max = productList.size()-1;
+        if(productList.size() > pageSize){
+            productList = productList.subList(pageable.getPageNumber() * pageSize, max);
         }
-
-        return getFilteredProducts(productList, allRequestParams);
+        return new ProductList(productList);
     }
 
     private ProductList getFilteredProducts(List<Product> productList, Map<String,String> filters){
@@ -218,7 +220,6 @@ public class ProductController {
                 filters.forEach((name, value) -> {
                     if(detail.getName().equals(name)){
                         if(!detail.getValue().equals(value)) {
-                            System.out.println(detail.getValue());
                             fit.set(false);
                         }
                     }
@@ -231,6 +232,7 @@ public class ProductController {
                 filteredProducts.getProducts().add(product);
             }
         }
+
         return filteredProducts;
     }
 }
