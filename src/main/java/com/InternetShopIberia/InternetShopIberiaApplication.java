@@ -27,6 +27,15 @@ public class InternetShopIberiaApplication {
 		//addProductsTemplate(context);
 		addProducts(context, "data/images/images_url.text", "data/products/laptops");
 		addProducts(context, "data/images/phones.text", "data/products/phones");
+		addProducts(context, "data/images/desktop.text", "data/products/desktop");
+		addProducts(context, "data/images/monitors.text", "data/products/monitors");
+		addProducts(context, "data/images/tablets.text", "data/products/tablets");
+		addProducts(context, "data/images/smart-tv.text", "data/products/smart-tv");
+		addProducts(context, "data/images/standard-tv.text", "data/products/standard-tv");
+		addProducts(context, "data/images/headphones.text", "data/products/headphones");
+		addProducts(context, "data/images/speakers.text", "data/products/speakers");
+		addProducts(context, "data/images/refrigerators.text", "data/products/refrigerators");
+		addProducts(context, "data/images/microwave.text", "data/products/microwave");
 		addUser(context);
 		//192.168.100.10
 	}
@@ -237,27 +246,61 @@ public class InternetShopIberiaApplication {
 		var categoryService = context.getBean(CategoryService.class);
 		var Laptops = new Category("Laptops", "", new ArrayList<>());
 		categoryService.addCategory(Laptops);
-		var VivoBook = new Category("VivoBook", "", new ArrayList<>());
-		categoryService.addCategory(VivoBook);
-		var Asus = new Category("Asus", "", List.of(
-				VivoBook
+		var Monitors = new Category("Monitors", "", new ArrayList<>());
+		categoryService.addCategory(Monitors);
+		var Desktop = new Category("Desktop", "", new ArrayList<>());
+		categoryService.addCategory(Desktop);
+		var PC = new Category("PC", "", List.of(
+				Desktop,
+				Laptops,
+				Monitors
 		));
-		categoryService.addCategory(Asus);
-		var Electronics = new Category("Electronics", "", List.of(
-				Asus,
-				Laptops
-		));
-		categoryService.addCategory(Laptops);
-		/*var Android =  new Category("Android", "", new ArrayList<>());
-		categoryService.addCategory(Android);
-		var Apple = new Category("Apple", "", new ArrayList<>());
-		categoryService.addCategory(Apple);*/
+		categoryService.addCategory(PC);
 		var Phones = new Category("Phones", "", new ArrayList<>());
 		categoryService.addCategory(Phones);
+		var Tablets = new Category("Tablets", "", new ArrayList<>());
+		categoryService.addCategory(Tablets);
+		var MobilDevices = new Category("MobilDevices", "", List.of(
+				Phones,
+				Tablets
+		));
+		categoryService.addCategory(MobilDevices);
+		var SmartTV = new Category("Smart-TV", "", new ArrayList<>());
+		categoryService.addCategory(SmartTV);
+		var StandardTV = new Category("Standard-TV", "", new ArrayList<>());
+		categoryService.addCategory(StandardTV);
+		var TV = new Category("TV", "", List.of(
+				SmartTV,
+				StandardTV
+		));
+		categoryService.addCategory(TV);
+
+		var Headphones = new Category("Headphones", "", new ArrayList<>());
+		categoryService.addCategory(Headphones);
+		var Speakers = new Category("Speakers", "", new ArrayList<>());
+		categoryService.addCategory(Speakers);
+		var AudioDevices = new Category("AudioDevices", "", List.of(
+				Headphones,
+				Speakers
+		));
+		categoryService.addCategory(AudioDevices);
+
+		var Refrigerators = new Category("Refrigerators", "", new ArrayList<>());
+		categoryService.addCategory(Refrigerators);
+		var Microwave = new Category("Microwave", "", new ArrayList<>());
+		categoryService.addCategory(Microwave);
+		var Home = new Category("Home", "", List.of(
+				Refrigerators,
+				Microwave
+		));
+		categoryService.addCategory(Home);
 
 		Category categories = new Category("Categories", "", List.of(
-				Phones,
-				Laptops
+				MobilDevices,
+				PC,
+				TV,
+				AudioDevices,
+				Home
 		));
 		categoryService.addCategory(categories);
 	}
