@@ -46,6 +46,7 @@ main {
 
 .product-image .mainImage {
 	max-width: 380px;
+	max-height: 300px;
 	overflow-clip-margin: content-box;
 	overflow: clip;
 }
