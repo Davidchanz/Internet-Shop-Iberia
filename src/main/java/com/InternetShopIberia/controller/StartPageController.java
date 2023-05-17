@@ -25,9 +25,9 @@ public class StartPageController {
     @GetMapping("/")
     public String showStartPage(HttpSession session, Model model) {
         List<ProductCarouselItem> carouselItems = new ArrayList<>();
-        carouselItems.add(createProductCarouselItem("Asus", "a1.jpg"));
-        carouselItems.add(createProductCarouselItem("Asus", "a2.jpg"));
-        carouselItems.add(createProductCarouselItem("Asus", "a3.jpg"));
+        carouselItems.add(createProductCarouselItem("Desktop", "a1.jpg"));
+        carouselItems.add(createProductCarouselItem("Laptops", "a2.jpg"));
+        carouselItems.add(createProductCarouselItem("Phones", "a3.jpg"));
         model.addAttribute("carouselItems", carouselItems);
 
         List<Product> productList = new ArrayList<>();
