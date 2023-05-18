@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 public class ProductController {
@@ -160,15 +161,16 @@ public class ProductController {
     private FilterList getFilters(TreeMap<String, TreeSet<String>> details, Map<String,String> allRequestParams){
         FilterList filters = new FilterList();
         filters.setFilters(new ArrayList<>());
-        details.forEach((s, strings) -> {
+        details.forEach((name, values) -> {
             Filter filter = new Filter();
-            filter.setName(s);
+            filter.setName(name);
             List<FilterValue> filterValues = new ArrayList<>();
-            strings.forEach(value -> {
-                if(allRequestParams.containsValue(value)) {
+            values.forEach(value -> {
+                if(allRequestParams.get(name) == null)
+                    filterValues.add(new FilterValue(value, false));
+                else if(allRequestParams.get(name).equals(value)) {
                     filterValues.add(new FilterValue(value, true));
-                }
-                else
+                } else
                     filterValues.add(new FilterValue(value, false));
             });
             filter.setValues(filterValues);
@@ -215,24 +217,26 @@ public class ProductController {
         ProductList filteredProducts = new ProductList();
         filteredProducts.setProducts(new ArrayList<>());
         for(var product: productList) {
-            AtomicBoolean fit = new AtomicBoolean(true);
+            AtomicInteger filtersCount = new AtomicInteger(0);
+            AtomicBoolean productFit = new AtomicBoolean(true);
             for(var detail: product.getDetails()) {
+                AtomicBoolean detailFit = new AtomicBoolean(false);
                 filters.forEach((name, value) -> {
                     if(detail.getName().equals(name)){
+                        filtersCount.incrementAndGet();
                         if(!detail.getValue().equals(value)) {
-                            fit.set(false);
+                            detailFit.set(false);
+                        }else {
+                            detailFit.set(true);
                         }
+                        productFit.set(productFit.get() && detailFit.get());
                     }
                 });
-                if(!fit.get()){
-                    break;
-                }
             }
-            if(fit.get()){
+            if(productFit.get() && filtersCount.get() == filters.size()){
                 filteredProducts.getProducts().add(product);
             }
         }
-
         return filteredProducts;
     }
 }
