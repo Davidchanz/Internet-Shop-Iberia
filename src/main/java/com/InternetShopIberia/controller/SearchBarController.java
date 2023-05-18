@@ -24,9 +24,6 @@ public class SearchBarController {
     private ProductService productService;
 
     @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
     private SearchHistoryService searchHistoryService;
 
     @Autowired
@@ -41,14 +38,17 @@ public class SearchBarController {
             searchResult.setResults(searchResults);
         }else {
             var searchHistory = searchHistoryService.findAllSearchHistoryLikeRequestByUser(searchInput, currentUser);
-            for(var history: searchHistory)
+            for(var history: searchHistory) {
                 searchResults.add(new SearchResultItem(history.getSearchRequest(), true));
+                if(searchResults.size() >= 15)
+                    break;
+            }
             var products = productService.getAllProductsNameLike(searchInput);
-            for (var product : products)
+            for (var product : products) {
                 searchResults.add(new SearchResultItem(product.getName(), false));
-            var categories = categoryService.findCategoryTitleLike(searchInput);
-            for (var category : categories)
-                searchResults.add(new SearchResultItem(category.getTitle(), false));
+                if(searchResults.size() >= 15)
+                    break;
+            }
 
             searchResult.setResults(searchResults);
         }
