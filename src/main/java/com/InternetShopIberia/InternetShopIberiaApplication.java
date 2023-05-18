@@ -23,7 +23,7 @@ public class InternetShopIberiaApplication {
 	public static void main(String[] args) {
 		//org.h2.tools.Server server = org.h2.tools.Server.createTcpServer().start();
 		var context = SpringApplication.run(InternetShopIberiaApplication.class, args);
-		addCategoryTemplate(context);
+		/*addCategoryTemplate(context);
 		//addProductsTemplate(context);
 		addProducts(context, "data/images/images_url.text", "data/products/laptops");
 		addProducts(context, "data/images/phones.text", "data/products/phones");
@@ -36,7 +36,7 @@ public class InternetShopIberiaApplication {
 		addProducts(context, "data/images/speakers.text", "data/products/speakers");
 		addProducts(context, "data/images/refrigerators.text", "data/products/refrigerators");
 		addProducts(context, "data/images/microwave.text", "data/products/microwave");
-		addUser(context);
+		addUser(context);*/
 		//192.168.100.10
 	}
 
