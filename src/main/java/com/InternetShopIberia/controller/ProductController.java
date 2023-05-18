@@ -57,9 +57,9 @@ public class ProductController {
         Sort sort = null;
         if(sortBy != null && sortTo != null)
             sort = new Sort("", sortBy, sortTo, true);
-        var filteredProducts = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
+        var allProducts = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
         TreeMap<String, TreeSet<String>> details = new TreeMap<>();
-        for(var product: filteredProducts.getProducts()){
+        for(var product: allProducts.getProducts()){
             for(var detail: product.getDetails()){
                 if(details.get(detail.getName()) == null){
                     var value = new TreeSet<String>();
@@ -90,11 +90,13 @@ public class ProductController {
         model.addAttribute("sortingList", sortList);
 
         var search = resourceBundle.getString("title.search");
-        var badSearchRequest = resourceBundle.getString("title.search.badSearchRequest");
+        var badRequest = resourceBundle.getString("title.search.badRequest");
         var category = resourceBundle.getString("title.category");
         var collection = resourceBundle.getString("title.collection");
 
-        int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / (double) pageSize);
+        var filteredProducts = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort);
+        int productCount = getFilteredProducts(filteredProducts.getProducts(), allRequestParams).getProducts().size();
+        int pageNumbers = (int) Math.ceil(productCount / (double) pageSize);
         List<PaginationDto> pagination = new ArrayList<>();
 
         if(page == null)
@@ -128,15 +130,14 @@ public class ProductController {
         model.addAttribute("pagination", pagination);
 
         if (searchRequest != null) {
-            if(pagedProducts.getProducts().isEmpty())
-                model.addAttribute("title", badSearchRequest + " '"+searchRequest+"'");
-            else
-                model.addAttribute("title", search + " '"+searchRequest+"'");
+            model.addAttribute("title", search + " '"+searchRequest+"'");
         } else if(categoryId != null) {
             model.addAttribute("title", category + " '"+categoryService.findCategoryById(Long.parseLong(categoryId)).getTitle()+"'");
         } else {
             model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
         }
+        if(pagedProducts.getProducts().isEmpty())
+            model.addAttribute("title", badRequest);
 
         return "products";
     }
@@ -203,11 +204,12 @@ public class ProductController {
             }
         }
 
-        return getFilteredProducts(productList, allRequestParams);
+        return new ProductList(productList);
     }
 
     private ProductList getPagedProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort, Pageable pageable){
-        var productList = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort).getProducts();
+        var products = getAllProducts(categoryId, collectionId, searchRequest, allRequestParams, sort).getProducts();
+        var productList = getFilteredProducts(products, allRequestParams).getProducts();
         int max = (pageable.getPageNumber() * pageSize) + pageSize;
         if(max > productList.size()-1)
             max = productList.size()-1;

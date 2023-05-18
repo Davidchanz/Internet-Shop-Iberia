@@ -20,8 +20,29 @@
                   <ul>
                     <div th:each="filterValue : ${filter.values}" th:remove="tag">
                       <li>
-                        <input type="checkbox" th:name="${filter.name}" th:id="${filter.name +'_'+ filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
-                        <label th:for="${filter.name +'_'+ filterValue.value}" th:text="${filterValue.value}"></label>
+                        <div style="display: flex; align-items: center;">
+                          <div th:if="${filterValue.checked}">
+                            <span class="deselectInput w" style="color: crimson; visibility: visible;">X</span>
+                            <script th:inline="javascript">
+                              var t = document.getElementsByClassName("deselectInput w");
+                              var r = t[0];
+                              /*<![CDATA[*/
+      
+                              var name = /*[[${filter.name}]]*/ '';
+                              name = name.replace(/\s/g, '');
+                              r.classList = "deselectInput " + name;
+  
+                               /*]]>*/
+                            </script>
+                          </div>
+                          <div th:unless="${filterValue.checked}">
+                            <span class="deselectInput" style="color: crimson; visibility: hidden;">X</span>
+                          </div>
+                          <div>
+                            <input class="inputs" type="radio" th:name="${filter.name}" th:id="${filter.name +'_'+ filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
+                            <label th:for="${filter.name +'_'+ filterValue.value}" th:text="${filterValue.value}"></label>
+                          </div>
+                        </div>
                       </li>
                     </div>
                   </ul>
@@ -36,6 +57,33 @@
         <script referrerpolicy="origin" defer th:src="@{/scripts/filterSection.js}"></script>
         <button id="filter-button" class="filter-button" th:text="#{button.filter}"></button>
       </form>
+      <script>
+        var deselectInput = document.getElementsByClassName("deselectInput");
+        for(var i = 0; i < deselectInput.length; i++){
+          deselectInput[i].onclick = function(){
+            this.parentElement.nextElementSibling.children[0].checked = false;
+            this.style.visibility = "hidden";
+            this.className = "deselectInput";
+          }
+        }
+
+        var inputs = document.getElementsByClassName("inputs");
+        for(var i = 0; i < inputs.length; i++){
+          inputs[i].onclick = function(){
+            var name = this.name;
+            name = name.replace(/\s/g, '');
+            var deselectInput = document.getElementsByClassName("deselectInput " + name);
+            console.log(deselectInput);
+            if(deselectInput.length > 0){
+              var d = deselectInput[0];
+              d.style.visibility = "hidden";
+              d.className = "deselectInput";
+            }
+            this.parentElement.previousElementSibling.children[0].classList.add(name);
+            this.parentElement.previousElementSibling.children[0].style.visibility = "visible";
+          }
+        }
+      </script>
     </div>
   </div>
 </html>
