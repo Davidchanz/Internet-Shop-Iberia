@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   z-index: 30;
-  display: none;
 }
 
 .error-container {

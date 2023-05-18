@@ -90,16 +90,9 @@ public class ProductController {
         model.addAttribute("sortingList", sortList);
 
         var search = resourceBundle.getString("title.search");
+        var badSearchRequest = resourceBundle.getString("title.search.badSearchRequest");
         var category = resourceBundle.getString("title.category");
         var collection = resourceBundle.getString("title.collection");
-
-        if (searchRequest != null) {
-            model.addAttribute("title", search + " '"+searchRequest+"'");
-        } else if(categoryId != null) {
-            model.addAttribute("title", category + " '"+categoryService.findCategoryById(Long.parseLong(categoryId)).getTitle()+"'");
-        } else {
-            model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
-        }
 
         int pageNumbers = (int) Math.ceil(filteredProducts.getProducts().size() / (double) pageSize);
         List<PaginationDto> pagination = new ArrayList<>();
@@ -133,6 +126,17 @@ public class ProductController {
         model.addAttribute("products", pagedProducts);
 
         model.addAttribute("pagination", pagination);
+
+        if (searchRequest != null) {
+            if(pagedProducts.getProducts().isEmpty())
+                model.addAttribute("title", badSearchRequest + " '"+searchRequest+"'");
+            else
+                model.addAttribute("title", search + " '"+searchRequest+"'");
+        } else if(categoryId != null) {
+            model.addAttribute("title", category + " '"+categoryService.findCategoryById(Long.parseLong(categoryId)).getTitle()+"'");
+        } else {
+            model.addAttribute("title", collection + " '"+userProductListService.findUserProductListById(Long.parseLong(collectionId)).getName()+"'");
+        }
 
         return "products";
     }
@@ -180,7 +184,7 @@ public class ProductController {
     }
 
     private ProductList getAllProducts(String categoryId, String collectionId, String searchRequest, Map<String,String> allRequestParams, Sort sort){
-        List<Product> productList = null;
+        List<Product> productList;
         if(sort == null) {
             if (searchRequest != null) {
                 productList = productService.getAllProductsNameLike(searchRequest);

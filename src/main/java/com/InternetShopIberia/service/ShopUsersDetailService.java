@@ -26,7 +26,7 @@ public class ShopUsersDetailService implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("User with the username %s doesn't exist", username));
         }
         // Create a granted authority based on user's role.
-        // Can't pass null authorities to user. Hence initialize with an empty arraylist
+        // Can't pass null authorities to user, hence initialize with an empty arraylist
         List<GrantedAuthority> authorities = new ArrayList<>();
         if(user.isAdmin()) {
             authorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN");

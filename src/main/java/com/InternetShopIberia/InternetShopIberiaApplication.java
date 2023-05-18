@@ -120,15 +120,6 @@ public class InternetShopIberiaApplication {
 		var userService = context.getBean(UserService.class);
 		var cartService = context.getBean(CartService.class);
 
-		/*UserDto user = new UserDto();
-		user.setUserName("Admin");
-		user.setEmail("admin@mail.com");
-		user.setFirstName("Admin");
-		user.setLastName("Admin");
-		user.setPassword("Admin");
-		user.setMatchingPassword("Admin");
-		userService.registerNewUserAccount(user);*/
-
 		UserDto user2 = new UserDto();
 		user2.setUserName("GN");
 		user2.setEmail("tovliskatsi@gmail.com");

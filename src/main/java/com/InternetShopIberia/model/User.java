@@ -37,7 +37,4 @@ public class User {
 
     @OneToMany
     private List<UserProductList> collections;
-
-    /*@Column(name = "ROLES")
-    private List<String> roles;*/
 }

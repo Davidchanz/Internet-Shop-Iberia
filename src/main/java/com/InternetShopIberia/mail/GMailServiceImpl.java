@@ -69,7 +69,7 @@ public class GMailServiceImpl implements EmailService {
         } catch (MessagingException e) {
             System.err.println(e.getMessage());
         }
-        String attachmentsPath = "/home/katsitovlis/Documents/Project/Spring/Internet-Shop-Iberia/src/main/resources/static/images/logo.png";//TODO image server
+        String attachmentsPath = "src/main/resources/static/images/logo.png";
 
         FileSystemResource logo = new FileSystemResource(attachmentsPath);
         try {
