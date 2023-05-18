@@ -37,7 +37,33 @@ public class InternetShopIberiaApplication {
 		addProducts(context, "data/images/refrigerators.text", "data/products/refrigerators");
 		addProducts(context, "data/images/microwave.text", "data/products/microwave");
 		addUser(context);*/
+
+		/*try {
+			getNameAbout(context);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}*/
+
 		//192.168.100.10
+	}
+
+	public static void getNameAbout(ConfigurableApplicationContext context) throws FileNotFoundException {
+		var productService = context.getBean(ProductService.class);
+
+		Scanner sc = new Scanner(new File("data/abouts/abouts.text"));
+		sc.useDelimiter(" ~ ");
+		while (sc.hasNext()){
+			Scanner product = new Scanner(sc.next());
+			product.useDelimiter(" \\| ");
+			while (product.hasNext()){
+				String name = product.next();
+				String about = product.next();
+				System.out.println(name + ": " + about);
+				var p = productService.getAllProductsNameLike(name).get(0);
+				p.setOrigAbout(about);
+				productService.addProduct(p);
+			}
+		}
 	}
 
 	private static void addProducts(ConfigurableApplicationContext context, String imageUrlsFilePath, String prosuctFilePath) {
