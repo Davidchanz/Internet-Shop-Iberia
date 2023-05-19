@@ -90,3 +90,7 @@
 .section.minimized .section-content {
     max-height: 0;
 }
+
+.deselectInputDiv:hover{
+    cursor: pointer;
+}

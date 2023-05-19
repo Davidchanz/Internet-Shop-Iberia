@@ -21,8 +21,11 @@
                     <div th:each="filterValue : ${filter.values}" th:remove="tag">
                       <li>
                         <div style="display: flex; align-items: center;">
-                          <div th:if="${filterValue.checked}">
-                            <span class="deselectInput w" style="color: crimson; visibility: visible;">X</span>
+                          <div class="deselectInputDiv" style="margin-right: 5px;" th:if="${filterValue.checked}">
+                            <span class="deselectInput w" style="font-family: system-ui;
+                                                               font-weight: bold;
+                                                               color: crimson;
+                                                               visibility: visible;">X</span>
                             <script th:inline="javascript">
                               var t = document.getElementsByClassName("deselectInput w");
                               var r = t[0];
@@ -35,8 +38,11 @@
                                /*]]>*/
                             </script>
                           </div>
-                          <div th:unless="${filterValue.checked}">
-                            <span class="deselectInput" style="color: crimson; visibility: hidden;">X</span>
+                          <div class="deselectInputDiv" style="margin-right: 5px;" th:unless="${filterValue.checked}">
+                            <span class="deselectInput" style="font-family: system-ui;
+                                                               font-weight: bold;
+                                                               color: crimson;
+                                                               visibility: hidden;">X</span>
                           </div>
                           <div>
                             <input class="inputs" type="radio" th:name="${filter.name}" th:id="${filter.name +'_'+ filterValue.value}" th:value="${filterValue.value}" th:checked="${filterValue.checked ? true : false}">
