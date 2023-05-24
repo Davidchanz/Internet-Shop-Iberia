@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${product.name}"></title>
-    <div th:insert="/headerBar :: headerBar"></div>
+    <div th:insert="headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/productDetail.css}" rel="stylesheet" />
 </head>
@@ -77,5 +77,5 @@
     </main>
     <script defer="defer" referrerpolicy="origin" th:src="@{/scripts/productDetail.js}"></script>
 </body>
-    <div th:insert="/footer :: footer"></div>
+    <div th:insert="footer :: footer"></div>
 </html>

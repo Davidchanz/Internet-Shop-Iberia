@@ -4,7 +4,7 @@
   <link type="text/css" th:href="@{/styles/headerBar.css}" rel="stylesheet" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <header>
-    <div th:insert="/sideMenu :: sidebar"></div>
+    <div th:insert="sideMenu :: sidebar"></div>
     <div class="header-wrapper">
       <div class="logo-wrapper">
         <img id="header-logo-img" style="width: 70px; cursor: pointer;" th:src="@{/images/logo.png}">
@@ -74,7 +74,7 @@
     </div>
     <nav class="navigationBar">
       <ul class="navigationList">
-        <li><a><div th:insert="/sideMenu :: sidebarButton"></div></a></li>
+        <li><a><div th:insert="sideMenu :: sidebarButton"></div></a></li>
         <li><a th:href="@{/}" th:text="#{home}"></a></li>
         <li><a th:href="@{/about}" th:text="#{about}"></a></li>
         <li><a th:href="@{/contact}" th:text="#{contact}"></a></li>

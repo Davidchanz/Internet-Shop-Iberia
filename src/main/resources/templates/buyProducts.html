@@ -3,7 +3,7 @@
 <head>
     <title th:text="#{title.purchase}"></title>
     <meta charset="UTF-8">
-    <div th:insert="/headerBar :: headerBar"></div>
+    <div th:insert="headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/buyProducts.css}" rel="stylesheet" />
 </head>
@@ -36,5 +36,5 @@
         </div>
     </main>
 </body>
-<div th:insert="/footer :: footer"></div>
+<div th:insert="footer :: footer"></div>
 </html>

@@ -5,7 +5,7 @@
   <title th:text="#{title.about}"></title>
   <link type="text/css" th:href="@{/styles/about.css}" rel="stylesheet" />
 </head>
-<div th:insert="/headerBar :: headerBar"></div>
+<div th:insert="headerBar :: headerBar"></div>
 <body>
 <main class="content">
   <main>
@@ -26,5 +26,5 @@
   </section>
 </main>
 </body>
-<div th:insert="/footer :: footer"></div>
+<div th:insert="footer :: footer"></div>
 </html>

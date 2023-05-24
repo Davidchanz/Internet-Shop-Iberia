@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <div th:insert="/headerBar :: headerBar"></div>
+    <div th:insert="headerBar :: headerBar"></div>
     <title th:text="#{title.cart}"></title>
     <link type="text/css" th:href="@{/styles/button.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/cart.css}" rel="stylesheet" />
@@ -66,5 +66,5 @@
         </div>
     </main>
 </body>
-    <div th:insert="/footer :: footer"></div>
+    <div th:insert="footer :: footer"></div>
 </html>

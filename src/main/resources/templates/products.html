@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <title th:text="${title}"></title>
-    <div th:insert="/headerBar :: headerBar"></div>
+    <div th:insert="headerBar :: headerBar"></div>
     <link type="text/css" th:href="@{/styles/products.css}" rel="stylesheet" />
     <link type="text/css" th:href="@{/styles/sortingComboBox.css}" rel="stylesheet" />
 <body>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="product-filter-wrapper">
-            <div th:insert="/filterSection :: filter"></div>
+            <div th:insert="filterSection :: filter"></div>
             <ul class="products-list">
                 <div th:each="product : ${products.products}">
                     <span class="product-id" style="display: none;" th:text="${product.id}"></span>
@@ -42,11 +42,11 @@
                         </div>
                     </li>
                 </div>
-                <div th:insert="/pagination :: pagination"></div>
+                <div th:insert="pagination :: pagination"></div>
             </ul>
         </div>
     </main>
     <script referrerpolicy="origin" th:src="@{/scripts/sortingComboBox.js}"></script>
 </body>
-    <div th:insert="/footer :: footer"></div>
+    <div th:insert="footer :: footer"></div>
 </html>
