@@ -11,10 +11,37 @@ import java.net.*;
 @Controller
 public class CustomErrorController {
 
-    /*@GetMapping("/403")
-    public String forbidden(Model model) {
-        return "error/403";
-    }*/
+    @GetMapping("/error/400")
+    public String show4Error400(HttpServletRequest request, Model model){
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Bad request: " + getCurrentURL(request));
+        model.addAttribute("userError", errorDto);
+        return "error/400";
+    }
+
+    @GetMapping("/error/404")
+    public String show4Error404(HttpServletRequest request, Model model){
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Page could not be found: " + getCurrentURL(request));
+        model.addAttribute("userError", errorDto);
+        return "error/404";
+    }
+
+    @GetMapping("/error/500")
+    public String show4Error500(HttpServletRequest request, Model model){
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Internal serer error for request: " + getCurrentURL(request));
+        model.addAttribute("userError", errorDto);
+        return "error/500";
+    }
+
+    @GetMapping("/400")
+    public String badRequest(HttpServletRequest request, Model model) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("Bad request: " + getCurrentURL(request));
+        model.addAttribute("userError", errorDto);
+        return "error/400";
+    }
 
     @GetMapping("/404")
     public String notFound(HttpServletRequest request, Model model) {
@@ -31,11 +58,6 @@ public class CustomErrorController {
         model.addAttribute("userError", errorDto);
         return "error/500";
     }
-
-    /*@GetMapping("/access-denied")
-    public String accessDenied() {
-        return "error/access-denied";
-    }*/
 
     private String getCurrentURL(HttpServletRequest request){
         try {

@@ -44,11 +44,11 @@
   transition: background-color 0.3s ease;
 }
 
-.filter-section input[type="checkbox"] {
+.filter-section input[type="radio"] {
   display: none;
 }
 
-.filter-section input[type="checkbox"]:checked + label {
+.filter-section input[type="radio"]:checked + label {
   background-color: #fcb92c;
   color: white;
 }
@@ -89,4 +89,8 @@
 
 .section.minimized .section-content {
     max-height: 0;
+}
+
+.deselectInputDiv:hover{
+    cursor: pointer;
 }

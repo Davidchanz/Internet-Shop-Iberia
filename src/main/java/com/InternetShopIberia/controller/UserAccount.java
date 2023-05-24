@@ -36,6 +36,6 @@ public class UserAccount {
                 return new RedirectView("/products?collectionId="+id, true);
             }
         }
-        return new RedirectView("/error", true);//TODO
+        return new RedirectView("/error/400", true);
     }
 }

@@ -73,13 +73,6 @@ public class PurchaseController {
         ctx.setVariable("productList", productList);
         ctx.setVariable("price", price.longValue());
 
-        /*List<FileSystemResource> attachments = new ArrayList<>();
-        for(var product: productList){
-            var file = new FileSystemResource("/home/katsitovlis/Documents/Project/Spring/Internet-Shop-Iberia/src/main/resources/static/images/"+product.getMainImage().getPath());//TODO image server
-            ctx.setVariable(product.getMainImage().getPath(), file);
-            attachments.add(file);
-        }*/
-
         final String result = templateEngine.process("emailPurchase", ctx);
 
         emailService.sendMimeMessage(purchase.getEmail(), "Order Detail", result);

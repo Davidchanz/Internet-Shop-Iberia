@@ -15,6 +15,8 @@ public class Currency {
     ArrayList<CurrencyRate> rates;
 
     public CurrencyRate getRate(String country){
+        if(rates == null)
+            return new CurrencyRate("EU", 1.0);
         for(var rate: rates){
             if (rate.getCurAbbreviation().equals(country.toUpperCase())){
                 return rate;

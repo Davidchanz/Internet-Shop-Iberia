@@ -39,9 +39,8 @@ public class SearchResultsController {
         if(searchRequest.isEmpty())
             return "redirect:/";
         else {
-            TreeSet<Product> uniqueProducts = new TreeSet<>();
             var products = productService.getAllProductsNameLike(searchRequest);
-            uniqueProducts.addAll(products);
+            TreeSet<Product> uniqueProducts = new TreeSet<>(products);
             var categories = categoryService.findCategoryTitleLike(searchRequest);
             for(var category: categories){
                 uniqueProducts.addAll(productService.getAllProductsInCategoryById(category.getId()));

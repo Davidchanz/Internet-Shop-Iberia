@@ -51,10 +51,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(2592000)
                 .and()
                 .csrf().disable();
-
-        //for h2db console
-        http.csrf().disable();//TODO for dev
-        http.headers().frameOptions().disable();
-        //
     }
 }
