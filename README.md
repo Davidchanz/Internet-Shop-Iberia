@@ -9,6 +9,7 @@ Pet-project, Alfa-version Internet Shop.
 
 Functional
 
+-
 1. User cart
 2. Product categories
 3. Search panel
@@ -20,6 +21,7 @@ Functional
 10. Localization
 11. Mail notification
 12. Currency transfer
+- 
 
 1. **User cart**
   
