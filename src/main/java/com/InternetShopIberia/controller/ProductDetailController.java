@@ -36,14 +36,15 @@ public class ProductDetailController {
 
         product.setAbout(product.getOrigAbout());
         var lang = LocaleContextHolder.getLocale().getLanguage();
-        if(!lang.equals("en")) {
+
+        /*if(!lang.equals("en")) {
             try {
                 var translatedText = translator.translate("en", lang, product.getOrigAbout());
                 product.setAbout(translatedText);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
 
         model.addAttribute("product", product);
 
