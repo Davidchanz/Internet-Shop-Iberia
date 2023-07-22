@@ -1,6 +1,7 @@
 # Internet-Shop-Iberia
 
 **Link** https://internet-shop-iberia-production.up.railway.app/
+**LOGIN:** GN | **Password:** 123
 
 ![image](https://github.com/Davidchanz/Internet-Shop-Iberia/assets/92250001/79c8b0ee-430a-4084-8a9f-50192a7bfb7c)
 
